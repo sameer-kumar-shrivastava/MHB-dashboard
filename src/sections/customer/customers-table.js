@@ -5,6 +5,8 @@ import {
   Box,
   Card,
   Checkbox,
+  Collapse, 
+  IconButton,  
   Stack,
   Table,
   TableBody,
@@ -16,6 +18,135 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
+import { useState } from 'react';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+
+function CollapsibleRow(props) {
+  const { row, open, onToggle } = props;
+
+  return (
+    <>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={onToggle}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.name}
+        </TableCell>
+        <TableCell align="right">{row.calories}</TableCell>
+        <TableCell align="right">{row.fat}</TableCell>
+        <TableCell align="right">{row.carbs}</TableCell>
+        <TableCell align="right">{row.protein}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Beacon
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Battery Level</TableCell>
+                    <TableCell >Solar Level</TableCell>
+                    <TableCell >Temprature</TableCell>
+                    <TableCell >RSSI</TableCell>
+                    <TableCell >Firmware Version</TableCell>
+                    <TableCell >Beacon Logs</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+
+                  {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
+                    <TableRow key={historyRow.date}>
+                      <TableCell component="th" scope="row">
+                        {historyRow.date}
+                      </TableCell>
+                      <TableCell>{historyRow.customerId}</TableCell>
+                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">
+                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                  ))     }
+                </TableBody>
+
+              </Table>
+            </Box>
+
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Puck
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Battery Level</TableCell>
+                    <TableCell >Accelerometer</TableCell>
+                    <TableCell >RSSI</TableCell>
+                    <TableCell >Firmware Version</TableCell>
+                    <TableCell >Puck Logs</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+
+                  {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
+                    <TableRow key={historyRow.date}>
+                      <TableCell component="th" scope="row">
+                        {historyRow.date}
+                      </TableCell>
+                      <TableCell>{historyRow.customerId}</TableCell>
+                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">
+                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                  ))     }
+                </TableBody>
+
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+
+
+  );
+}
+
+CollapsibleRow.propTypes = {
+  row: PropTypes.shape({
+    calories: PropTypes.number.isRequired,
+    carbs: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    history: PropTypes.arrayOf(
+      PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        customerId: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    protein: PropTypes.number.isRequired,
+  }).isRequired,
+  open: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired,
+};
 
 export const CustomersTable = (props) => {
   const {
@@ -23,7 +154,7 @@ export const CustomersTable = (props) => {
     items = [],
     onDeselectAll,
     onDeselectOne,
-    onPageChange = () => {},
+    onPageChange = () => { },
     onRowsPerPageChange,
     onSelectAll,
     onSelectOne,
@@ -34,6 +165,17 @@ export const CustomersTable = (props) => {
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
+
+  // State to track the open/closed state of rows
+  const [openRows, setOpenRows] = useState({});
+
+  // Function to toggle the open state of a row
+  const handleRowToggle = (id) => {
+    setOpenRows((prevOpenRows) => ({
+      ...prevOpenRows,
+      [id]: !prevOpenRows[id],
+    }));
+  };
 
   return (
     <Card>
@@ -56,72 +198,44 @@ export const CustomersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                ID
                 </TableCell>
                 <TableCell>
-                  Email
+                 Username
                 </TableCell>
                 <TableCell>
-                  Location
+                 First Name
                 </TableCell>
                 <TableCell>
-                  Phone
+                 Middle name
                 </TableCell>
                 <TableCell>
-                  Signed Up
+                 Last Name
                 </TableCell>
+                {/* <TableCell>
+                 DOB
+                </TableCell>
+                <TableCell>
+                 Contact Number
+                </TableCell>
+                <TableCell>
+                 Hub ID
+                </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((customer) => {
                 const isSelected = selected.includes(customer.id);
                 const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+                const isRowOpen = openRows[customer.id] || false;
 
                 return (
-                  <TableRow
-                    hover
+                  <CollapsibleRow
                     key={customer.id}
-                    selected={isSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.id);
-                          } else {
-                            onDeselectOne?.(customer.id);
-                          }
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={2}
-                      >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
-                        <Typography variant="subtitle2">
-                          {customer.name}
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                    <TableCell>
-                      {customer.email}
-                    </TableCell>
-                    <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
-                    </TableCell>
-                    <TableCell>
-                      {customer.phone}
-                    </TableCell>
-                    <TableCell>
-                      {createdAt}
-                    </TableCell>
-                  </TableRow>
+                    row={customer}
+                    open={isRowOpen}
+                    onToggle={() => handleRowToggle(customer.id)}
+                  />
                 );
               })}
             </TableBody>
@@ -140,6 +254,8 @@ export const CustomersTable = (props) => {
     </Card>
   );
 };
+
+
 
 CustomersTable.propTypes = {
   count: PropTypes.number,
