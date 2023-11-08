@@ -1,5 +1,6 @@
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import ArrowTopRightOnSquareIcon from '@heroicons/react/24/solid/ArrowTopRightOnSquareIcon';
 import ChevronUpDownIcon from '@heroicons/react/24/solid/ChevronUpDownIcon';
@@ -13,7 +14,8 @@ import {
   Typography,
   useMediaQuery
 } from '@mui/material';
-import { Logo } from 'src/components/logo';
+// import { Logo } from 'src/components/logo';
+import Logo from '../../../public/favicon-16x16.png';
 import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
@@ -48,11 +50,18 @@ export const SideNav = (props) => {
             href="/"
             sx={{
               display: 'inline-flex',
-              height: 32,
-              width: 32
+              height: 100,
+              width: 100
             }}
           >
-            <Logo />
+            {/* <img src={<Logo />} /> */}
+            <Image
+              src="/favicon-16x16.png" // Provide the path to your image in the public directory
+              alt="Description of the image"
+              width={100} // Set the width of the image
+              height={100} // Set the height of the image
+            />
+
           </Box>
           <Box
             sx={{
@@ -71,21 +80,21 @@ export const SideNav = (props) => {
                 color="inherit"
                 variant="subtitle1"
               >
-                Devias
+                MyHomeBeacon
               </Typography>
               <Typography
                 color="neutral.400"
                 variant="body2"
               >
-                Production
+                Dashboard
               </Typography>
             </div>
-            <SvgIcon
+            {/* <SvgIcon
               fontSize="small"
               sx={{ color: 'neutral.500' }}
             >
               <ChevronUpDownIcon />
-            </SvgIcon>
+            </SvgIcon> */}
           </Box>
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
@@ -123,7 +132,7 @@ export const SideNav = (props) => {
             })}
           </Stack>
         </Box>
-        <Divider sx={{ borderColor: 'neutral.700' }} />
+        {/* <Divider sx={{ borderColor: 'neutral.700' }} />
         <Box
           sx={{
             px: 2,
@@ -173,7 +182,7 @@ export const SideNav = (props) => {
           >
             Pro Live Preview
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </Scrollbar>
   );

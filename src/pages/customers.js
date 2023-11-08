@@ -199,7 +199,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Customers | Devias Kit
+          Customers | MyHomeBeacon
         </title>
       </Head>
       <Box
@@ -260,7 +260,7 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            <CustomersSearch />
+            {/* <CustomersSearch /> */}
             <CustomersTable
               count={data.length}
               items={customers}

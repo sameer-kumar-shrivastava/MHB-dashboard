@@ -4,9 +4,10 @@ import {
   Avatar,
   Box,
   Card,
+  Button,
   Checkbox,
-  Collapse, 
-  IconButton,  
+  Collapse,
+  IconButton,
   Stack,
   Table,
   TableBody,
@@ -14,13 +15,20 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  TextField,
+  Typography,
+  OutlinedInput,
+  InputAdornment,
+  SvgIcon,
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 import { useState } from 'react';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
+import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 function CollapsibleRow(props) {
@@ -51,6 +59,42 @@ function CollapsibleRow(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
+                Home Hub
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Slaves Connected</TableCell>
+                    <TableCell >Beacon ID</TableCell>
+                    <TableCell >Puck ID</TableCell>
+                    <TableCell >Firmware Version</TableCell>
+                    <TableCell >Landline</TableCell>
+                    <TableCell >WiFi Strength</TableCell>
+                    <TableCell >Hub Logs</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+
+                  {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
+                    <TableRow key={historyRow.date}>
+                      <TableCell component="th" scope="row">
+                        {historyRow.date}
+                      </TableCell>
+                      <TableCell>{historyRow.customerId}</TableCell>
+                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">
+                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+
+              </Table>
+            </Box>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
                 Beacon
               </Typography>
               <Table size="small" aria-label="purchases">
@@ -79,7 +123,7 @@ function CollapsibleRow(props) {
                         {Math.round(historyRow.amount * row.price * 100) / 100}
                       </TableCell>
                     </TableRow>
-                  ))     }
+                  ))}
                 </TableBody>
 
               </Table>
@@ -114,7 +158,7 @@ function CollapsibleRow(props) {
                         {Math.round(historyRow.amount * row.price * 100) / 100}
                       </TableCell>
                     </TableRow>
-                  ))     }
+                  ))}
                 </TableBody>
 
               </Table>
@@ -160,16 +204,27 @@ export const CustomersTable = (props) => {
     onSelectOne,
     page = 0,
     rowsPerPage = 0,
-    selected = []
+    selected = [],
   } = props;
 
-  const selectedSome = (selected.length > 0) && (selected.length < items.length);
-  const selectedAll = (items.length > 0) && (selected.length === items.length);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // State to track the open/closed state of rows
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const filteredItems = items.filter((customer) => {
+    const searchTerms = Object.values(customer).map(String);
+    return searchTerms.some((term) =>
+      term.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
+  const selectedSome = (selected.length > 0) && (selected.length < filteredItems.length);
+  const selectedAll = (filteredItems.length > 0) && (selected.length === filteredItems.length);
+
   const [openRows, setOpenRows] = useState({});
 
-  // Function to toggle the open state of a row
   const handleRowToggle = (id) => {
     setOpenRows((prevOpenRows) => ({
       ...prevOpenRows,
@@ -177,67 +232,85 @@ export const CustomersTable = (props) => {
     }));
   };
 
+  const allRowsCollapsed = Object.values(openRows).every((row) => !row);
+
   return (
-    <Card>
+
+    <>
+
+    {/* //Search bar card */}
+
+     <Card sx={{ p: 2 }}>
+        <OutlinedInput
+          value={searchQuery}
+          fullWidth
+          placeholder="Search customer"
+          onChange={(e) => handleSearch(e.target.value)}
+          startAdornment={(
+            <InputAdornment position="start">
+              <SvgIcon
+                color="action"
+                fontSize="small"
+              >
+                <SearchIcon />
+              </SvgIcon>
+            </InputAdornment>
+          )}
+          sx={{ maxWidth: 500 }}
+        />
+      </Card>
+
+    <Card>  
+
       <Scrollbar>
         <Box sx={{ minWidth: 800 }}>
+
+          <div>
+
+            <IconButton
+              variant="outlined"
+              onClick={() => {
+                const newOpenRows = {};
+                filteredItems.forEach((customer) => {
+                  newOpenRows[customer.id] = allRowsCollapsed;
+                });
+                setOpenRows(newOpenRows);
+              }}
+            >
+              {allRowsCollapsed ? (
+                <Button variant="contained">
+                  <ExpandCircleDownIcon style={{ marginRight: '8px' }} />
+                  Expand All
+                </Button>
+              ) : (
+                <Button variant="contained">
+                  <DoDisturbOnIcon style={{ marginRight: '8px' }} />
+                  Collapse All
+                </Button>
+              )}
+            </IconButton>
+          </div>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                ID
-                </TableCell>
-                <TableCell>
-                 Username
-                </TableCell>
-                <TableCell>
-                 First Name
-                </TableCell>
-                <TableCell>
-                 Middle name
-                </TableCell>
-                <TableCell>
-                 Last Name
-                </TableCell>
-                {/* <TableCell>
-                 DOB
-                </TableCell>
-                <TableCell>
-                 Contact Number
-                </TableCell>
-                <TableCell>
-                 Hub ID
-                </TableCell> */}
+                <TableCell padding="checkbox"></TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>First Name</TableCell>
+                <TableCell>Middle name</TableCell>
+                <TableCell>Last Name</TableCell>
+                {/* Additional table headers */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
-                const isRowOpen = openRows[customer.id] || false;
-
-                return (
-                  <CollapsibleRow
-                    key={customer.id}
-                    row={customer}
-                    open={isRowOpen}
-                    onToggle={() => handleRowToggle(customer.id)}
-                  />
-                );
-              })}
+              {filteredItems.map((customer) => (
+                <CollapsibleRow
+                  key={customer.id}
+                  row={customer}
+                  open={openRows[customer.id] || false}
+                  onToggle={() => handleRowToggle(customer.id)}
+                />
+              ))}
             </TableBody>
           </Table>
         </Box>
@@ -252,10 +325,9 @@ export const CustomersTable = (props) => {
         rowsPerPageOptions={[5, 10, 25]}
       />
     </Card>
+    </>
   );
 };
-
-
 
 CustomersTable.propTypes = {
   count: PropTypes.number,
@@ -268,5 +340,7 @@ CustomersTable.propTypes = {
   onSelectOne: PropTypes.func,
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  selected: PropTypes.array
+  selected: PropTypes.array,
 };
+
+

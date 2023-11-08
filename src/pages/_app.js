@@ -27,7 +27,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Devias Kits
+          MyHomeBeacon
         </title>
         <meta
           name="viewport"
@@ -36,7 +36,7 @@ const App = (props) => {
       </Head>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <AuthProvider>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme} >
             <CssBaseline />
             <AuthConsumer>
               {

@@ -28,7 +28,7 @@ export const items = [
     )
   },
   {
-    title: 'Companies',
+    title: 'Tickets',
     path: '/companies',
     icon: (
       <SvgIcon fontSize="small">
@@ -71,14 +71,14 @@ export const items = [
         <UserPlusIcon />
       </SvgIcon>
     )
-  },
-  {
-    title: 'Error',
-    path: '/404',
-    icon: (
-      <SvgIcon fontSize="small">
-        <XCircleIcon />
-      </SvgIcon>
-    )
   }
+  // {
+  //   title: 'Error',
+  //   path: '/404',
+  //   icon: (
+  //     <SvgIcon fontSize="small">
+  //       <XCircleIcon />
+  //     </SvgIcon>
+  //   )
+  // }
 ];
