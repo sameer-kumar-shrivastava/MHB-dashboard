@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
@@ -36,26 +37,50 @@ function CollapsibleRow(props) {
 
   return (
     <>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={onToggle}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell padding="checkbox"></TableCell>
+            <TableCell>ID</TableCell>
+            <TableCell>Username</TableCell>
+            <TableCell>First Name</TableCell>
+            <TableCell>Middle name</TableCell>
+            <TableCell>Last Name</TableCell>
+            <TableCell>State</TableCell>
+          </TableRow>
+        </TableHead>
+   
+
+      <TableBody>
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={onToggle}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.name}
+          </TableCell>
+          <TableCell>{row.id}</TableCell>
+          <TableCell>{row.email}</TableCell>
+          <TableCell>{row.phone}</TableCell>
+          <TableCell>{row.address.city}</TableCell>
+          <TableCell>{row.address.state}</TableCell>
+          {/* <TableCell align="right">{row.calories}</TableCell>
         <TableCell align="right">{row.fat}</TableCell>
         <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
-      </TableRow>
+        <TableCell align="right">{row.protein}</TableCell> */}
+        </TableRow>
+      </TableBody>
+      </Table>
+
+
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
@@ -238,9 +263,9 @@ export const CustomersTable = (props) => {
 
     <>
 
-    {/* //Search bar card */}
+      {/* //Search bar card */}
 
-     <Card sx={{ p: 2 }}>
+      <Card sx={{ p: 2 }}>
         <OutlinedInput
           value={searchQuery}
           fullWidth
@@ -260,71 +285,87 @@ export const CustomersTable = (props) => {
         />
       </Card>
 
-    <Card>  
+      <Card>
 
-      <Scrollbar>
-        <Box sx={{ minWidth: 800 }}>
+        <Scrollbar>
+          <Box sx={{ minWidth: 800 }}>
 
-          <div>
+            <div>
 
-            <IconButton
-              variant="outlined"
-              onClick={() => {
-                const newOpenRows = {};
-                filteredItems.forEach((customer) => {
-                  newOpenRows[customer.id] = allRowsCollapsed;
-                });
-                setOpenRows(newOpenRows);
-              }}
-            >
-              {allRowsCollapsed ? (
-                <Button variant="contained">
-                  <ExpandCircleDownIcon style={{ marginRight: '8px' }} />
-                  Expand All
-                </Button>
-              ) : (
-                <Button variant="contained">
-                  <DoDisturbOnIcon style={{ marginRight: '8px' }} />
-                  Collapse All
-                </Button>
-              )}
-            </IconButton>
-          </div>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell padding="checkbox"></TableCell>
-                <TableCell>ID</TableCell>
-                <TableCell>Username</TableCell>
-                <TableCell>First Name</TableCell>
-                <TableCell>Middle name</TableCell>
-                <TableCell>Last Name</TableCell>
-                {/* Additional table headers */}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredItems.map((customer) => (
-                <CollapsibleRow
-                  key={customer.id}
-                  row={customer}
-                  open={openRows[customer.id] || false}
-                  onToggle={() => handleRowToggle(customer.id)}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </Scrollbar>
-      <TablePagination
-        component="div"
-        count={count}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
+              <IconButton
+                variant="outlined"
+                onClick={() => {
+                  const newOpenRows = {};
+                  filteredItems.forEach((customer) => {
+                    newOpenRows[customer.id] = allRowsCollapsed;
+                  });
+                  setOpenRows(newOpenRows);
+                }}
+              >
+                {allRowsCollapsed ? (
+                  <Button variant="contained">
+                    <ExpandCircleDownIcon style={{ marginRight: '8px' }} />
+                    Expand All
+                  </Button>
+                ) : (
+                  <Button variant="contained">
+                    <DoDisturbOnIcon style={{ marginRight: '8px' }} />
+                    Collapse All
+                  </Button>
+                )}
+              </IconButton>
+            </div>
+            {/* <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell padding="checkbox"></TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Username</TableCell>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Middle name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell>State</TableCell>
+                </TableRow>
+              </TableHead>
+            </Table> */}
+
+            <Table>
+
+
+              <TableBody>
+                {filteredItems.map((customer) => (
+                  <React.Fragment key={customer.id}>
+                    <TableRow>
+                      <CollapsibleRow
+                        row={customer}
+                        open={openRows[customer.id] || false}
+                        onToggle={() => handleRowToggle(customer.id)}
+                      />
+                      {/* <TableCell>{customer.id}</TableCell>
+                      <TableCell>{customer.email}</TableCell>
+                      <TableCell>{customer.phone}</TableCell>
+                      <TableCell>{customer.address.city}</TableCell>
+                      <TableCell>{customer.address.state}</TableCell> */}
+                      {/* Additional table cells for other attributes */}
+                    </TableRow>
+
+
+                  </React.Fragment>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+        </Scrollbar>
+        <TablePagination
+          component="div"
+          count={count}
+          onPageChange={onPageChange}
+          onRowsPerPageChange={onRowsPerPageChange}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
+      </Card>
     </>
   );
 };

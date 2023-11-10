@@ -10,6 +10,11 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
+import CustomerssTable from 'src/sections/customer/table';
+// import Demo from '../sections/customer/demo.js';
+// import {createSvgIcon} from '@mui/material';
+import ExpandableRowGrid from 'src/sections/customer/table';
+import Materialtable from 'src/sections/customer/material-table';
 
 const now = new Date();
 
@@ -261,7 +266,7 @@ const Page = () => {
               </div>
             </Stack>
             {/* <CustomersSearch /> */}
-            <CustomersTable
+            {/* <CustomersTable
               count={data.length}
               items={customers}
               onDeselectAll={customersSelection.handleDeselectAll}
@@ -273,7 +278,13 @@ const Page = () => {
               page={page}
               rowsPerPage={rowsPerPage}
               selected={customersSelection.selected}
-            />
+            /> */}
+            {/* <CustomerssTable/>
+             */}
+             {/* <Demo/> */}
+             {/* <ExpandableRowGrid/> */}
+             <Materialtable/>
+
           </Stack>
         </Container>
       </Box>
