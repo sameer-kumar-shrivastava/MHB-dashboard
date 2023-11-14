@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import Head from 'next/head';
+import Emergencytable from './emergency-table';
+import Householdtable from './household-table';
 
 const UserPage = () => {
   const router = useRouter();
@@ -36,6 +38,18 @@ const UserPage = () => {
                 </Typography>
               </Stack>
           </Stack>
+
+            <Stack spacing={1}>
+              <Typography variant="h6">Emergency Contacts</Typography>
+              <Emergencytable/>
+            </Stack>
+
+
+            <Stack spacing={1}>
+              <Typography variant="h6">Household Members</Typography>
+              <Householdtable/>
+            </Stack>
+            
 
             </Stack>
         </Container>
