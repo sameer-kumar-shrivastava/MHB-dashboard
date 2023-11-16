@@ -16,6 +16,8 @@ import {
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
+import { useRouter } from 'next/router';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -24,6 +26,12 @@ export const TopNav = (props) => {
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
+
+  const router = useRouter(); // Access the router instance
+
+  const handleBack = () => {
+    router.back(); // Navigate to the previous URL
+  };
 
   return (
     <>
@@ -65,10 +73,10 @@ export const TopNav = (props) => {
                 </SvgIcon>
               </IconButton>
             )}
-            <Tooltip title="Search">
-              <IconButton>
+            <Tooltip title="Back">
+              <IconButton onClick={handleBack}> {/* Use handleBack for back navigation */}
                 <SvgIcon fontSize="small">
-                  <MagnifyingGlassIcon />
+                  <ArrowBackIcon /> {/* Use the back icon */}
                 </SvgIcon>
               </IconButton>
             </Tooltip>

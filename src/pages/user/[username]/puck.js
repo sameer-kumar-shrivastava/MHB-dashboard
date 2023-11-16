@@ -1,19 +1,15 @@
-// pages/user/[username].js
+// pages/user/[username]/[logType].js
+
 import { useRouter } from 'next/router';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import Head from 'next/head';
-import Emergencytable from './emergency-table';
-import Householdtable from './household-table';
+import Pucklogtable from './pucklog-table';
 
-const UserPage = () => {
+const LogPage = () => {
   const router = useRouter();
   const { username } = router.query;
 
-  const handleButtonClick = (logType) => {
-    // Navigate to the corresponding URL based on the logType
-    router.push(`/user/${username}/${logType.toLowerCase()}`);
-  };
 
   return (
     <div>
@@ -40,29 +36,21 @@ const UserPage = () => {
 
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  User Page: {username}
+                  Puck logs : {username}
                 </Typography>
 
               </Stack>
             </Stack>
-            <Stack direction="row" spacing={3}>
-              <Button variant='contained' onClick={() => handleButtonClick('HomeHub')}>HomeHub Logs</Button>
-              <Button variant='contained' onClick={() => handleButtonClick('Beacon')}>Beacon Logs</Button>
-              <Button variant='contained' onClick={() => handleButtonClick('Puck')}>Puck Logs</Button>
-            </Stack>
+    
 
 
             <Stack spacing={1}>
-
-              <Typography variant="h6">Emergency Contacts</Typography>
-              <Emergencytable />
+              <Typography variant="h6">Puck Logs</Typography>
+            <Pucklogtable/>
             </Stack>
 
 
-            <Stack spacing={1}>
-              <Typography variant="h6">Household Members</Typography>
-              <Householdtable />
-            </Stack>
+       
 
 
           </Stack>
@@ -73,9 +61,10 @@ const UserPage = () => {
   );
 };
 
-UserPage.getLayout = (page) => (
+LogPage.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
-export default UserPage;
+export default LogPage;
+

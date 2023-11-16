@@ -94,18 +94,7 @@ const ExpandedComponent = ({ data }) =>
             data={[data]} />
     </pre>;
 
-// const data = [
-//     {
-//         id: 1,
-//         title: 'Beetlejuice',
-//         year: '1988',
-//     },
-//     {
-//         id: 2,
-//         title: 'Ghostbusters',
-//         year: '1984',
-//     },
-// ]
+
 
 const data = [
     {
@@ -222,29 +211,49 @@ const data = [
 ]
 
 
-const ExpandableRowGrid = () => {
+// const ExpandableRowGrid = () => {
 
-    const paginationComponentOptions = {
-        rowsPerPageText: 'No. of Users per page',
-        rangeSeparatorText: 'of',
-        selectAllRowsItem: false,
-        selectAllRowsItemText: 'Show All',
-    };
+//     const paginationComponentOptions = {
+//         rowsPerPageText: 'No. of Users per page',
+//         rangeSeparatorText: 'of',
+//         selectAllRowsItem: false,
+//         selectAllRowsItemText: 'Show All',
+//     };
 
-    return (
+//     return (
+//         <DataTable
+//             columns={columns}
+//             data={data}
+//             expandableRows
+//             expandableRowsComponent={ExpandedComponent}
+//             pagination
+//             paginationComponentOptions={paginationComponentOptions}
+//             // customStyles={customStyles}
+//             highlightOnHover
+//             pointerOnHover
+//         // theme="dark"
+//         />
+//     );
+// };
+
+// export default ExpandableRowGrid;
+
+const ExpandTable = () => {
+    return(
+    <>
+            <DataTable
+            title="Home Hub"
+            columns={columns1}
+            data={[data]} />
         <DataTable
-            columns={columns}
-            data={data}
-            expandableRows
-            expandableRowsComponent={ExpandedComponent}
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
-            // customStyles={customStyles}
-            highlightOnHover
-            pointerOnHover
-        // theme="dark"
-        />
-    );
-};
+            title="Beacon"
+            columns={columns1}
+            data={[data]} />
+        <DataTable
+            title="Puck"
+            columns={columns1}
+            data={[data]} />    
+    </>);
+}
 
-export default ExpandableRowGrid;
+export default ExpandTable;
