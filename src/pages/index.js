@@ -12,6 +12,15 @@ import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 
 
+export async function getServerSideProps(context) {
+  return {
+    redirect: {
+      destination: '/customers', // Redirect to the '/customers' route
+      permanent: false, // Set to true for a permanent redirect (301), or false for temporary (302)
+    },
+  };
+}
+
 const now = new Date();
 
 const Page = () => (
