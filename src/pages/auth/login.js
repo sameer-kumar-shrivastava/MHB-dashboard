@@ -25,8 +25,8 @@ const Page = () => {
   const [method, setMethod] = useState('email');
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
+      email: '',
+      password: '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -42,11 +42,32 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
-        router.push('/');
+        // login API endpoint
+        const response = await axios.post('https://5pntov2pie.execute-api.us-west-1.amazonaws.com/dev/api/v1/public/signin', {
+          email: values.email,
+          password: values.password
+        });
+        //API returns a success status and an idToken
+        if (response.data.success) {
+          const idToken = response.data.idToken;
+          
+    
+          // Store the idToken in local storage
+          localStorage.setItem('idToken', idToken);
+    
+          // Update this part based on your actual authentication logic
+          await auth.signIn(values.email, values.password);
+          router.push('/');
+        } else {
+          // Handle unsuccessful login
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: 'Login failed. Please check your credentials.' });
+          helpers.setSubmitting(false);
+        }
       } catch (err) {
+        // Handle network or other errors
         helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
+        helpers.setErrors({ submit: 'An error occurred while processing your request.' });
         helpers.setSubmitting(false);
       }
     }
@@ -121,13 +142,10 @@ const Page = () => {
               value={method}
             >
               <Tab
-                label="Email"
+                label="MyHomeBeacon"
                 value="email"
               />
-              <Tab
-                label="Phone Number"
-                value="phoneNumber"
-              />
+              
             </Tabs>
             {method === 'email' && (
               <form
@@ -187,15 +205,7 @@ const Page = () => {
                 >
                   Skip authentication
                 </Button>
-                <Alert
-                  color="primary"
-                  severity="info"
-                  sx={{ mt: 3 }}
-                >
-                  <div>
-                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
-                  </div>
-                </Alert>
+                
               </form>
             )}
             {method === 'phoneNumber' && (
