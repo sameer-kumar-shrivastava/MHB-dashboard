@@ -840,10 +840,10 @@ const Materialtable = () => {
                 accessorKey: 'Hub_id',
                 header: 'HubID',
             },
-            {
-                accessorKey: 'current_time',
-                header: 'Current Time',
-            },
+            // {
+            //     accessorKey: 'current_time',
+            //     header: 'Current Time',
+            // },
 
         ],
         [],

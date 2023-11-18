@@ -1,4 +1,5 @@
 // pages/user/[username].js
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
@@ -13,6 +14,26 @@ const UserPage = () => {
   const handleButtonClick = (logType) => {
     // Navigate to the corresponding URL based on the logType
     router.push(`/user/${username}/${logType.toLowerCase()}`);
+  };
+
+  const TimeDisplay = () => {
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    // Update the current time every second
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }, []);
+
+    return (
+      <Typography variant="h6" textAlign='end'>
+        Current Time: {currentTime.toLocaleTimeString()}
+      </Typography>
+
+    );
   };
 
   return (
@@ -42,9 +63,19 @@ const UserPage = () => {
                 <Typography variant="h4">
                   User Page: {username}
                 </Typography>
-
               </Stack>
+
             </Stack>
+            <Box
+              component="main"
+              // sx={{
+              //   flexGrow: 1,
+              //   py: 8,
+              //   textAlign: 'center',
+              // }}
+            >
+              <TimeDisplay />
+            </Box>
             <Stack direction="row" spacing={3}>
               <Button variant='contained' onClick={() => handleButtonClick('HomeHub')}>HomeHub Logs</Button>
               <Button variant='contained' onClick={() => handleButtonClick('Beacon')}>Beacon Logs</Button>
