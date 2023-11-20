@@ -6,6 +6,7 @@ import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/materia
 import Head from 'next/head';
 import Emergencytable from './emergency-table';
 import Householdtable from './household-table';
+import {latitude,longitude} from '../../sections/customer/material-table';
 
 const UserPage = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const UserPage = () => {
 
   const TimeDisplay = () => {
     const [currentTime, setCurrentTime] = useState(null);
-    const [geoCoordinates, setGeoCoordinates] = useState({ latitude: 13.173898, longitude: 77.743729 });
+    const [geoCoordinates, setGeoCoordinates] = useState({ latitude: latitude, longitude: longitude });
   
     useEffect(() => {
       const getTimeForCoordinates = async () => {
@@ -51,7 +52,7 @@ const UserPage = () => {
   
     return (
       <Typography variant="h6" textAlign='end'>
-        Current Time: {currentTime.toLocaleTimeString()}
+       Device Current Time: {currentTime.toLocaleTimeString()}
       </Typography>
     );
   };
