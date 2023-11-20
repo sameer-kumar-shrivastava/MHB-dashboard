@@ -13,6 +13,7 @@ import {
     TableRow
 } from '@mui/material';
 
+
 import { useRouter } from 'next/router';
 
 import ExpandableRowGrid from './table';
@@ -24,12 +25,12 @@ export const data = [
         sub: "38c67d21-a1f5-430d-90cd-b145d1b28ec8",
         email: "dylan@email.com",
         firstName: 'Dylan',
-        middleName: 'S',
         lastName: 'Murray',
         birthdate: "1978-11-07",
         phone_number: "9876543210",
-        Hub_id: "161",
         address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
         city: 'East Daphne',
         state: 'Kentucky',
         current_time:"19:33:21",
@@ -87,12 +88,12 @@ export const data = [
         sub: "38c67d21-a1f5-430d-90cd-b145d1b28ec8",
         email: "raquel@email.com",
         firstName: 'Raquel',
-        middleName: 'R',
         lastName: 'Kohler',
         birthdate: "1978-11-07",
-        Hub_id: "151",
         phone_number: "75433890864",
         address: '769 Dominic Grove',
+        lon : "77.743729",
+        lat : "13.173898",
         city: 'Columbus',
         state: 'Ohio',
         current_time:"19:33:21",
@@ -148,12 +149,12 @@ export const data = [
         sub: "38c67d21-a1f5-430d-90cd-b145d1b28ec8",
         email: "robert@email.com",
         firstName: "Robert",
-        middleName: "J",
         lastName: "Openheimer",
         birthdate: "1919-02-01",
         phone_number: "26210224522",
-        Hub_id: "101",
-        current_time:"19:33:21",
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
         homehub: [{
             active: true,
             Hub_id: "101",
@@ -209,13 +210,12 @@ export const data = [
         sub: "4bf5ed68-523d-4c32-9563-94154d038a9d",
         email: "alice@example.com",
         firstName: "Alice",
-        middleName: "k",
         lastName: "Johnson",
         birthdate: "1985-09-12",
-        phone_number: "1234567890",
-        current_time:"19:33:21",
-        Hub_id: "102"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -268,13 +268,13 @@ export const data = [
         sub: "8b5c7a34-77f3-4d8c-ae2b-9995e4501f68",
         email: "john.doe@example.com",
         firstName: "John",
-        middleName: "A",
         lastName: "Doe",
         birthdate: "1990-03-25",
         phone_number: "9876543210",
-        current_time:"19:33:21",
-        Hub_id: "103"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -327,13 +327,13 @@ export const data = [
         sub: "df05d64c-8347-482a-a446-b89b0d1c9ac0",
         email: "mary.smith@example.com",
         firstName: "Mary",
-        middleName: "j",
         lastName: "Smith",
         birthdate: "1978-11-07",
         phone_number: "5551234567",
-        current_time:"19:33:21",
-        Hub_id: "104"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -386,13 +386,13 @@ export const data = [
         sub: "2ae82b38-543a-4d4e-9643-c19d581352c6",
         email: "sam.jones@example.com",
         firstName: "Sam",
-        middleName: "l",
         lastName: "Jones",
         birthdate: "2000-06-30",
         phone_number: "9998887777",
-        current_time:"19:33:21",
-        Hub_id: "105"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+        homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -445,13 +445,13 @@ export const data = [
         sub: "a9c73c1f-2bb9-42f9-9d8c-7e86b33ef531",
         email: "alex.smith@example.com",
         firstName: "Alex",
-        middleName: "y",
         lastName: "Smith",
         birthdate: "1993-04-15",
         phone_number: "4445556666",
-        current_time:"19:33:21",
-        Hub_id: "106"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -504,13 +504,13 @@ export const data = [
         sub: "1b4f49ab-58a2-4fe2-b4e0-3a4375f88fc7",
         email: "kate.johnson@example.com",
         firstName: "Kate",
-        middleName: "o",
         lastName: "Johnson",
         birthdate: "1982-12-22",
         phone_number: "77788899909",
-        current_time:"19:33:21",
-        Hub_id: "107"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -563,13 +563,13 @@ export const data = [
         sub: "1d8f7469-9761-4ab7-9e21-d6d2167e20fb",
         email: "james.wilson@example.com",
         firstName: "James",
-        middleName: "t",
         lastName: "Wilson",
         birthdate: "1965-08-02",
         phone_number: "2223334444",
-        current_time:"19:33:21",
-        Hub_id: "108"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",        
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -622,14 +622,13 @@ export const data = [
         sub: "81cc9185-5d8a-42c2-9e1b-167935edf017",
         email: "linda.taylor@example.com",
         firstName: "Linda",
-        middleName: "w",
         lastName: "Taylor",
         birthdate: "1998-01-18",
         phone_number: "6667778888",
-        current_time:"19:33:21",    
-
-        Hub_id: "109"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -682,13 +681,13 @@ export const data = [
         sub: "6f07d1b6-345e-45de-b147-e1cd46cd3ec3",
         email: "peter.miller@example.com",
         firstName: "Peter",
-        middleName: "n",
         lastName: "Miller",
         birthdate: "1970-07-10",
         phone_number: "1112223333",
-        current_time:"19:33:21",
-        Hub_id: "110"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
             Hub_id: "102",
 
@@ -745,9 +744,10 @@ export const data = [
         lastName: "Brown",
         birthdate: "1989-05-28",
         phone_number: "3334445555",
-        current_time:"19:33:21",
-        Hub_id: "111"
-        , homehub: [{
+        address: '261 Erdman Ford',
+        lon : "77.743729",
+        lat : "13.173898",
+         homehub: [{
             active: true,
 
             Hub_id: "102",
@@ -799,6 +799,18 @@ export const data = [
         }],
     }
 ];
+function getSubByEmail(email) {
+    for (const entry of data) {
+      if (entry.email === email) {
+        return {sub:entry.sub, lat: entry.lat, lon: entry.lon };
+      }
+    }
+    return null;
+  }
+
+export let latitude = '';
+export let longitude = '';
+
 
 const Materialtable = () => {
 
@@ -807,24 +819,16 @@ const Materialtable = () => {
     const columns = useMemo(
         //column definitions...
         () => [
-            {
-                accessorKey: 'sub',
-                header: 'ID',
-            },
-            {
-                accessorKey: 'email',
-                header: 'Username',
-            },
+            // {
+            //     accessorKey: 'sub',
+            //     header: 'ID',
+            // },
+            
 
             {
                 accessorKey: 'firstName',
                 header: 'Firstname',
             },
-            {
-                accessorKey: 'middleName',
-                header: 'Middlename',
-            },
-
             {
                 accessorKey: 'lastName',
                 header: 'Lastname',
@@ -846,7 +850,6 @@ const Materialtable = () => {
             {
                 accessorKey: 'Hub_id',
                 header: 'HubID',
-                filterVariant: 'range',                
             },
             // {
             //     accessorKey: 'current_time',
@@ -858,10 +861,17 @@ const Materialtable = () => {
         //end
     );
 
+    
+
     const handleRowClick = (row) => {
         // Extract the username from the clicked row data
         const username = row.original.lastName.toLowerCase(); // Assuming 'lastName' contains the username
-
+        const email = row.original.email;
+        const body = getSubByEmail(email);
+        console.log(email,body);
+        latitude = body.lat;
+        longitude = body.lon;
+        //Make a API call to get geo co-ordinates by sending sub
         // Navigate to a new page with the username in the URL
         router.push(`/user/${username}`);
     };
@@ -893,9 +903,9 @@ const Materialtable = () => {
         renderDetailPanel: ({ row }) => (
             <Box
                 sx={{
-                    // display: 'grid',
-                    // margin: 'auto',
-                    // gridTemplateColumns: '1fr 1fr',
+                        // display: 'grid',
+                        // margin: 'auto',
+                        // gridTemplateColumns: '1fr 1fr',
                     width: '100%',
                 }}
             >
