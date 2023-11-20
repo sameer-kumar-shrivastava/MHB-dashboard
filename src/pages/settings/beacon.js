@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { ChromePicker } from 'react-color';
+import Slider from '@mui/material/Slider';
 
 
 const Page = () => {
@@ -107,18 +108,22 @@ const Page = () => {
                             <CardContent>
                                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
                                     <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+                                    <Box sx={{ width: 300 }}>
+                                        <Typography >Brightness:</Typography>
+                                        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+                                    </Box>
                                     <TextField
-                                        label="On-Time"
+                                        label="Pattern On-Time (ms)"
                                         value={beaconData.onTime}
                                         onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
                                     />
                                     <TextField
-                                        label="Off-Time"
+                                        label="Pattern Off-Time (ms)"
                                         value={beaconData.offTime}
                                         onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
                                     />
                                     <TextField
-                                        label="Duration"
+                                        label="Active Duration (sec)"
                                         value={beaconData.duration}
                                         onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
                                     />

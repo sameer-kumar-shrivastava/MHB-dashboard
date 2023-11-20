@@ -83,7 +83,9 @@ const UserPage = () => {
             </Stack>
 
 
-            <Stack spacing={1}>
+            <Stack spacing={2}>
+
+              <Typography variant="h6">SET-UP Time : November 19, 2023 3:30 PM </Typography>
 
               <Typography variant="h6">Emergency Contacts</Typography>
               <Emergencytable />

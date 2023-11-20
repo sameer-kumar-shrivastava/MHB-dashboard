@@ -103,12 +103,12 @@ const Page = () => {
                             <CardContent>
                                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
                                     <TextField
-                                        label="On-Time"
+                                        label="On-Time (ms)"
                                         value={buzzerData.onTime}
                                         onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
                                     />
                                     <TextField
-                                        label="Off-Time"
+                                        label="Off-Time (ms)"
                                         value={buzzerData.offTime}
                                         onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
                                     />

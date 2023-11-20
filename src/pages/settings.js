@@ -41,7 +41,7 @@ const Page = () => {
             <Typography variant="h4">
               Settings
             </Typography>
-            <Stack spacing={2}  sx={{width:'25%'}}>
+            <Stack spacing={4}  sx={{width:'25%'}}>
               {/* Buttons to navigate */}
               <Button variant="contained" color="primary" onClick={handleBeconClick}>
                 Beacon Settings
