@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import ExpandableRowGrid from './table';
 import ExpandTable from './table';
 
+
 export const data = [
     {
         sub: "38c67d21-a1f5-430d-90cd-b145d1b28ec8",
@@ -829,8 +830,14 @@ const Materialtable = () => {
                 header: 'Lastname',
             },
             {
+                // accessorFn: (originalRow) => new Date(originalRow.birthdate), //convert to date for sorting and filtering
                 accessorKey: 'birthdate',
                 header: 'DOB',
+                // filterVariant: 'date-range',
+                // Cell: ({ cell }) => cell.getValue().toLocaleDateString(), // convert back to string for display
+                filterVariant: 'range', 
+                
+              
             },
             {
                 accessorKey: 'phone_number',
@@ -839,6 +846,7 @@ const Materialtable = () => {
             {
                 accessorKey: 'Hub_id',
                 header: 'HubID',
+                filterVariant: 'range',                
             },
             // {
             //     accessorKey: 'current_time',
@@ -873,6 +881,7 @@ const Materialtable = () => {
         paginateExpandedRows: false, //When rows are expanded, do not count sub-rows as number of rows on the page towards pagination
         filterFromLeafRows: true,
         enableFullScreenToggle: false,
+        columnFilterDisplayMode: 'popover',
         muiTableBodyRowProps: ({ row }) => ({
             onClick: (event) => {
                 handleRowClick(row);

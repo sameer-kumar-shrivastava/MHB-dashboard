@@ -1,11 +1,13 @@
 // src/pages/settings.js
 
 import Head from 'next/head';
-import { Box, Container, Stack, Typography, Button } from '@mui/material';
+import { Box, Container, Stack, Typography, Button, Grid } from '@mui/material';
 import { SettingsNotifications } from 'src/sections/settings/settings-notifications';
 import { SettingsPassword } from 'src/sections/settings/settings-password';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useRouter } from 'next/router';
+import { AccountProfile } from 'src/sections/account/account-profile';
+import { AccountProfileDetails } from 'src/sections/account/account-profile-details';
 
 const Page = () => {
   const router = useRouter();
@@ -37,11 +39,11 @@ const Page = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Stack spacing={3}>
+          <Stack spacing={3} >
             <Typography variant="h4">
               Settings
             </Typography>
-            <Stack spacing={4}  sx={{width:'25%'}}>
+            <Stack spacing={4} direction="row" sx={{ width: '100%' }}>
               {/* Buttons to navigate */}
               <Button variant="contained" color="primary" onClick={handleBeconClick}>
                 Beacon Settings
@@ -53,6 +55,25 @@ const Page = () => {
                 User Settings
               </Button>
             </Stack>
+            <Grid
+              container
+              spacing={3}
+            >
+              <Grid
+                xs={12}
+                md={6}
+                lg={4}
+              >
+                <AccountProfile />
+              </Grid>
+              <Grid
+                xs={12}
+                md={6}
+                lg={8}
+              >
+                <AccountProfileDetails />
+              </Grid>
+            </Grid>
             {/* <SettingsNotifications /> */}
             {/* <SettingsPassword /> */}
           </Stack>
