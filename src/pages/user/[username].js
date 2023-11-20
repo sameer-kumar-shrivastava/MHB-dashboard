@@ -17,24 +17,45 @@ const UserPage = () => {
   };
 
   const TimeDisplay = () => {
-    const [currentTime, setCurrentTime] = useState(new Date());
-
-    // Update the current time every second
+    const [currentTime, setCurrentTime] = useState(null);
+    const [geoCoordinates, setGeoCoordinates] = useState({ latitude: 13.173898, longitude: 77.743729 });
+  
     useEffect(() => {
+      const getTimeForCoordinates = async () => {
+        try {
+          const response = await fetch(`https://www.timeapi.io/api/Time/current/coordinate?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`);
+  
+          if (!response.ok) {
+            throw new Error('Failed to fetch time data');
+          }
+  
+          const data = await response.json();
+          setCurrentTime(new Date(data.dateTime));
+        } catch (error) {
+          console.error('Error fetching time data:', error);
+        }
+      };
+  
+      
       const interval = setInterval(() => {
-        setCurrentTime(new Date());
+        getTimeForCoordinates();
       }, 1000);
-
+  
+      
       return () => clearInterval(interval);
-    }, []);
-
+    }, [geoCoordinates]);
+  
+    if (!currentTime) {
+      return <Typography variant="h6" textAlign='end'>Loading...</Typography>;
+    }
+  
     return (
       <Typography variant="h6" textAlign='end'>
         Current Time: {currentTime.toLocaleTimeString()}
       </Typography>
-
     );
   };
+  
 
   return (
     <div>

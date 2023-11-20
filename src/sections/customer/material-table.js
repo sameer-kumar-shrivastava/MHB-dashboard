@@ -853,7 +853,8 @@ const Materialtable = () => {
     const handleRowClick = (row) => {
         // Extract the username from the clicked row data
         const username = row.original.lastName.toLowerCase(); // Assuming 'lastName' contains the username
-
+        const user_id = row.original.sub
+        //Make a API call to get geo co-ordinates by sending user_id
         // Navigate to a new page with the username in the URL
         router.push(`/user/${username}`);
     };
