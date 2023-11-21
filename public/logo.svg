@@ -1,0 +1,17 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1024" height="1024" rx="170" fill="white"/>
+<mask id="path-2-inside-1_203_494" fill="white">
+<rect x="921.166" y="525.165" width="399.704" height="407.862" rx="40" transform="rotate(135 921.166 525.165)"/>
+</mask>
+<rect x="921.166" y="525.165" width="399.704" height="407.862" rx="40" transform="rotate(135 921.166 525.165)" stroke="#2B55AF" stroke-width="90" mask="url(#path-2-inside-1_203_494)"/>
+<rect x="546.236" y="634.758" width="57.1006" height="171.302" transform="rotate(135 546.236 634.758)" fill="white"/>
+<ellipse cx="397.47" cy="504.269" rx="53.022" ry="53.022" transform="rotate(135 397.47 504.269)" fill="#2B55AF"/>
+<mask id="path-5-inside-2_203_494" fill="white">
+<rect x="102.093" y="502.093" width="399.704" height="407.862" rx="40" transform="rotate(-45 102.093 502.093)"/>
+</mask>
+<rect x="102.093" y="502.093" width="399.704" height="407.862" rx="40" transform="rotate(-45 102.093 502.093)" stroke="#DD051B" stroke-width="90" mask="url(#path-5-inside-2_203_494)"/>
+<path d="M508.628 424.081L549.005 383.705L640.365 475.097L599.989 515.473L508.628 424.081Z" fill="white"/>
+<path d="M495.596 409.608L535.972 369.232L549.933 383.224L509.557 423.6L495.596 409.608Z" fill="#2B55AF"/>
+<path d="M477.239 392.728L517.616 352.352L537.382 370.409L495.581 412.8L477.239 392.728Z" fill="#2B55AF"/>
+<ellipse cx="621.198" cy="521.932" rx="53.022" ry="53.022" transform="rotate(-45 621.198 521.932)" fill="#DD051B"/>
+</svg>
