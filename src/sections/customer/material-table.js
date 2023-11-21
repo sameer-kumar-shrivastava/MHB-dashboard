@@ -823,7 +823,7 @@ const Materialtable = () => {
             //     accessorKey: 'sub',
             //     header: 'ID',
             // },
-            
+
 
             {
                 accessorKey: 'firstName',
@@ -834,27 +834,28 @@ const Materialtable = () => {
                 header: 'Lastname',
             },
             {
-                // accessorFn: (originalRow) => new Date(originalRow.birthdate), //convert to date for sorting and filtering
-                accessorKey: 'birthdate',
-                header: 'DOB',
-                // filterVariant: 'date-range',
-                // Cell: ({ cell }) => cell.getValue().toLocaleDateString(), // convert back to string for display
-                filterVariant: 'range', 
-                
-              
+                accessorKey:'address',
+                header:'Address'
+            },
+            {
+                accessorKey: 'email',
+                header: 'Email',
             },
             {
                 accessorKey: 'phone_number',
                 header: 'Contact number',
             },
             {
-                accessorKey: 'Hub_id',
-                header: 'HubID',
-            },
-            // {
-            //     accessorKey: 'current_time',
-            //     header: 'Current Time',
-            // },
+                // accessorFn: (originalRow) => new Date(originalRow.birthdate), //convert to date for sorting and filtering
+                accessorKey: 'birthdate',
+                header: 'Date of Birth',
+                // filterVariant: 'date-range',
+                // Cell: ({ cell }) => cell.getValue().toLocaleDateString(), // convert back to string for display
+                filterVariant: 'range', 
+                
+              
+            }
+
 
         ],
         [],
