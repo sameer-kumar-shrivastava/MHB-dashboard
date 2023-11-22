@@ -93,7 +93,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | MyHomeBeacon
         </title>
       </Head>
       <Box

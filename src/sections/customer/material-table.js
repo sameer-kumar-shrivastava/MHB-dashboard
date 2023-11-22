@@ -41,7 +41,7 @@ export const data = [
 
             Hub_id: "102",
 
-            Slaves_Connected: "1",
+            Slaves_Connected: "2",
 
             Beacon_id: "202",
 
@@ -64,9 +64,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -125,9 +125,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -185,9 +185,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -244,9 +244,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -303,9 +303,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -362,9 +362,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -421,9 +421,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -480,9 +480,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -539,9 +539,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -598,9 +598,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -657,9 +657,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -716,9 +716,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -777,9 +777,9 @@ export const data = [
 
             Solar_Level: "5",
 
-            Temp: "104F",
+            Temp: "50°C",
 
-            RSSI: "20DBm",
+            RSSI: "20DBM",
 
             Firmware_version: "1.1",
 
@@ -951,7 +951,7 @@ const Materialtable = () => {
                                 <TableCell>{row.original.homehub[0].Slaves_Connected}</TableCell>
                             </TableRow>
 
-                            <TableRow>
+                            {/* <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Beacon ID</TableCell>
                                 <TableCell>{row.original.homehub[0].Beacon_id}</TableCell>
                             </TableRow>
@@ -959,7 +959,7 @@ const Materialtable = () => {
                             <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Puck ID</TableCell>
                                 <TableCell >{row.original.homehub[0].Puck_id}</TableCell>
-                            </TableRow>
+                            </TableRow> */}
 
                             <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
@@ -970,15 +970,15 @@ const Materialtable = () => {
                                 <TableCell >{row.original.homehub[0].Landline}</TableCell>
                             </TableRow>
 
-                            <TableRow>
+                            {/* <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>WiFi Strength</TableCell>
                                 <TableCell >{row.original.homehub[0].Wifi_Strength}</TableCell>
-                            </TableRow>
+                            </TableRow> */}
 
-                            <TableRow>
+                            {/* <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>HomeHub Logs</TableCell>
                                 <TableCell >{row.original.homehub[0].Hub_logs}</TableCell>
-                            </TableRow>
+                            </TableRow> */}
 
                             {/* </TableBody> */}
                         </Table>
@@ -1024,10 +1024,10 @@ const Materialtable = () => {
                                     <TableCell> {row.original.beacon[0].Firmware_version}</TableCell>
 
                                 </TableRow>
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Beacon Logs</TableCell>
                                     <TableCell> {row.original.beacon[0].Beacon_logs}</TableCell>
-                                </TableRow>
+                                </TableRow> */}
 
                             </Table>
                         </Box>
@@ -1146,10 +1146,10 @@ const Materialtable = () => {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Puck Logs</TableCell>
                                     <TableCell>{row.original.puck[0].Puck_logs}</TableCell>
-                                </TableRow>
+                                </TableRow> */}
                           
 
 

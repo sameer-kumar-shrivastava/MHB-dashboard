@@ -97,12 +97,13 @@ export const Layout = (props) => {
             </Typography>
             <img
               alt=""
-              // src="/assets/auth-illustration.svg"
+              // src="/logo.png"
             />
           </Box>
         </Grid>
       </Grid>
     </Box>
+   
   );
 };
 

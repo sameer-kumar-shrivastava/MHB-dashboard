@@ -56,7 +56,7 @@ export const SideNav = (props) => {
           >
             {/* <img src={<Logo />} /> */}
             <Image
-              src="/logo.svg" // Provide the path to your image in the public directory
+              src="/logo.png" // Provide the path to your image in the public directory
               alt="Description of the image"
               width={100} // Set the width of the image
               height={100} // Set the height of the image

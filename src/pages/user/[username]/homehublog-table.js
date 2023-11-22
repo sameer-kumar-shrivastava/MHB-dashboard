@@ -10,7 +10,7 @@ export const data = [
     {
         date: '16/11/2023',
         time: '18:20',
-        setup_start_time: '17:40:00',
+        landline_pickup: 'Yes',
         setup_finish_time: '18:22:30',
         support:'Yes',     
       
@@ -18,7 +18,7 @@ export const data = [
     {
         date: '14/11/2023',
         time: '11:24',
-        setup_start_time: '09:23:00',
+        landline_pickup: 'No',
         setup_finish_time: '10:55:10',
         support:'No',     
       
@@ -42,17 +42,17 @@ const Homehublogtable = () => {
             },
 
             {
-                accessorKey: 'setup_start_time',
-                header: 'Setup start time',
+                accessorKey: 'landline_pickup',
+                header: 'Landline Being Picked up',
             },
-            {
-                accessorKey: 'setup_finish_time',
-                header: 'Setup finish time',
-            },
-            {
-                accessorKey: 'support',
-                header: 'Support required',
-            }
+            // {
+            //     accessorKey: 'setup_finish_time',
+            //     header: 'Setup finish time',
+            // },
+            // {
+            //     accessorKey: 'support',
+            //     header: 'Support required',
+            // }
         ],
         [],
         //end

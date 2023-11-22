@@ -51,9 +51,9 @@ const Page = () => {
               <Button variant="contained" color="primary" onClick={handleGaragePuckClick}>
                 Garage Puck Settings
               </Button>
-              <Button variant="contained" color="primary" onClick={handleUserSettingsClick}>
+              {/* <Button variant="contained" color="primary" onClick={handleUserSettingsClick}>
                 User Settings
-              </Button>
+              </Button> */}
             </Stack>
             <Grid
               container
@@ -62,17 +62,18 @@ const Page = () => {
               <Grid
                 xs={12}
                 md={6}
-                lg={4}
-              >
-                <AccountProfile />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
                 lg={8}
               >
                 <AccountProfileDetails />
               </Grid>
+              <Grid
+                xs={12}
+                md={6}
+                lg={4}
+              >
+                {/* <AccountProfile /> */}
+              </Grid>
+              
             </Grid>
             {/* <SettingsNotifications /> */}
             {/* <SettingsPassword /> */}

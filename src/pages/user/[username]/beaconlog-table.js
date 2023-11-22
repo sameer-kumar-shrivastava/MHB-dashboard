@@ -5,22 +5,30 @@ import {
 } from 'material-react-table';
 
 import { useRouter } from 'next/router';
+import DoneIcon from '@mui/icons-material/Done';
 
 export const data = [
     {
         date: '16/11/2023',
         time: '18:20',
-        setup_start_time: '17:40:00',
-        setup_finish_time: '18:22:30',
-        support:'Yes',     
-      
+        battery_start: 75,      
+        battery_end: 50,
+        color: "Red",
+        output_power: "5W",
+        temp_start: "25°C",
+        temp_end: "28°C",
+        home: "NO"
     },
     {
         date: '14/11/2023',
         time: '11:24',
-        setup_start_time: '09:23:00',
-        setup_finish_time: '10:55:10',
-        support:'No',     
+        battery_start: 80,      
+        battery_end: 55,
+        color: "Green",
+        output_power: "5W",
+        temp_start: "25°C",
+        temp_end: "28°C",
+        home: "YES"
       
     },
 ];
@@ -42,16 +50,32 @@ const Beaconlogtable = () => {
             },
 
             {
-                accessorKey: 'setup_start_time',
-                header: 'Setup start time',
+                accessorKey: 'battery_start',
+                header: 'Battery Level at  Start',
             },
             {
-                accessorKey: 'setup_finish_time',
-                header: 'Setup finish time',
+                accessorKey: 'battery_end',
+                header: 'Battery Level at end',
             },
             {
-                accessorKey: 'support',
-                header: 'Support required',
+                accessorKey: 'color',
+                header: 'Color',
+            },
+            {
+                accessorKey: 'output_power',
+                header: 'Output Power',
+            },
+            {
+                accessorKey: 'temp_start',
+                header: 'Temperature at Start',
+            },
+            {
+                accessorKey: 'temp_end',
+                header: 'Temperature at End',
+            },
+            {
+                accessorKey: 'home',
+                header: 'In Home',
             }
         ],
         [],

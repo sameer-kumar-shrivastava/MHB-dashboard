@@ -12,30 +12,30 @@ import {
 } from '@mui/material';
 
 const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  },
-  {
-    value: 'los-angeles',
-    label: 'Los Angeles'
-  }
+    {
+      value: 'alabama',
+      label: 'Alabama'
+    },
+    {
+      value: 'new-york',
+      label: 'New York'
+    },
+    {
+      value: 'san-francisco',
+      label: 'San Francisco'
+    },
+    {
+      value: 'los-angeles',
+      label: 'Los Angeles'
+    }
 ];
 
 export const AccountProfileDetails = () => {
   const [values, setValues] = useState({
-    firstName: 'Anika',
-    lastName: 'Visser',
-    email: 'demo@devias.io',
-    phone: '',
+    firstName: 'Jhon',
+    lastName: 'doe',
+    email: 'admin@myhonebeacon.com',
+    phone: '123456789',
     state: 'los-angeles',
     country: 'USA'
   });

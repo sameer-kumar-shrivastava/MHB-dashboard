@@ -10,17 +10,20 @@ export const data = [
     {
         date: '16/11/2023',
         time: '18:20',
-        setup_start_time: '17:40:00',
-        setup_finish_time: '18:22:30',
-        support:'Yes',     
+        status: "Open",
+        open_duration: 5,
+        battery_level: 56,
+        open_per: 100
+
       
     },
     {
         date: '14/11/2023',
         time: '11:24',
-        setup_start_time: '09:23:00',
-        setup_finish_time: '10:55:10',
-        support:'No',     
+        status: "Open",
+        open_duration: 10,
+        battery_level: 57,
+        open_per: 84   
       
     },
 ];
@@ -42,16 +45,20 @@ const Pucklogtable = () => {
             },
 
             {
-                accessorKey: 'setup_start_time',
-                header: 'Setup start time',
+                accessorKey: 'status',
+                header: 'Status',
             },
             {
-                accessorKey: 'setup_finish_time',
-                header: 'Setup finish time',
+                accessorKey: 'open_duration',
+                header: 'Open Duration(min)',
             },
             {
-                accessorKey: 'support',
-                header: 'Support required',
+                accessorKey: 'battery_level',
+                header: 'Battery Level',
+            },
+            {
+                accessorKey: 'open_per',
+                header: 'Open %',
             }
         ],
         [],

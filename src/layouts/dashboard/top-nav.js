@@ -106,7 +106,7 @@ export const TopNav = (props) => {
                 </Badge>
               </IconButton>
             </Tooltip> */}
-            <Avatar
+            {/* <Avatar
               onClick={accountPopover.handleOpen}
               ref={accountPopover.anchorRef}
               sx={{
@@ -115,7 +115,7 @@ export const TopNav = (props) => {
                 width: 40
               }}
               src="/assets/avatars/avatar-anika-visser.png"
-            />
+            /> */}
           </Stack>
         </Stack>
       </Box>
