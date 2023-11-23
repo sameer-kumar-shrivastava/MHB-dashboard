@@ -18,13 +18,15 @@ import {
 } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import axios from 'axios';
+
 
 
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
   const [method, setMethod] = useState('email');
-  const formik = useFormik({
+  const formik = useFormik({  
     initialValues: {
       email: '',
       password: '',
@@ -42,33 +44,39 @@ const Page = () => {
         .required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
-      try {
+      
+        try {
         // login API endpoint
-        const response = await axios.post('https://5pntov2pie.execute-api.us-west-1.amazonaws.com/dev/api/v1/public/signin', {
+        const response = await axios.post('https://rwsbj9yl7b.execute-api.us-west-1.amazonaws.com/dev/api/v1/public/signin', {
           email: values.email,
           password: values.password
         });
+        // const response = await axios.post('http://localhost:4040/api/v1/public/signin', {
+        //   email: values.email,
+        //   password: values.password
+        // });
+        
         //API returns a success status and an idToken
         if (response.data.success) {
-          const idToken = response.data.idToken;
+          const idToken = response.data.data.AuthenticationResult.IdToken;
           
     
           // Store the idToken in local storage
           localStorage.setItem('idToken', idToken);
     
-          // Update this part based on your actual authentication logic
-          await auth.signIn(values.email, values.password);
+          // await auth.signIn(values.email, values.password);
           router.push('/');
         } else {
           // Handle unsuccessful login
           helpers.setStatus({ success: false });
           helpers.setErrors({ submit: 'Login failed. Please check your credentials.' });
           helpers.setSubmitting(false);
-        }
-      } catch (err) {
+        
+      } }
+       catch (err) {
         // Handle network or other errors
         helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: 'An error occurred while processing your request.' });
+        helpers.setErrors({ submit: 'An error occurred while processing your requesttttt.' });
         helpers.setSubmitting(false);
       }
     }
