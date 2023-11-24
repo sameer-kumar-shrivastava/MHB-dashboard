@@ -30,6 +30,7 @@
     "date-fns": "2.29.3",
     "formik": "2.2.9",
     "material-react-table": "^2.0.4",
+    "muicss": "^0.10.3",
     "next": "13.1.6",
     "nprogress": "0.2.0",
     "prop-types": "15.8.1",
