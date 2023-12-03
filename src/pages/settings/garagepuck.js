@@ -16,11 +16,7 @@ import { ChromePicker } from 'react-color';
 
 const Page = () => {
 
-    const [buzzerData, setBuzzerData] = useState({
-        onTime: '',
-        offTime: '',
-        duration: '',
-    });
+    
 
     const [chargeControlData, setChargeControlData] = useState({
         minBatteryPercentage: '',
@@ -97,35 +93,7 @@ const Page = () => {
                         <Typography variant="h4">
                             Garage Puck Settings
                         </Typography>
-                        <Card>
-                            <CardHeader title="Buzzer" />
-                            <Divider />
-                            <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
-                                    <TextField
-                                        label="On-Time (ms)"
-                                        value={buzzerData.onTime}
-                                        onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
-                                    />
-                                    <TextField
-                                        label="Off-Time (ms)"
-                                        value={buzzerData.offTime}
-                                        onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
-                                    />
-                                    <TextField
-                                        label="Duration"
-                                        value={buzzerData.duration}
-                                        onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
-                                    />
-                                </Stack>
-                            </CardContent>
-                            <Divider />
-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('buzzer')}>
-                                    Save
-                                </Button>
-                            </CardActions>
-                        </Card>
+                        
                         <Card spacing={1}>
                             <CardHeader title="Charge Control" />
                             <Divider />

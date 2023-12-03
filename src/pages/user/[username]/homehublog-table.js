@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 export const data = [
     {
-        date: '16/11/2023',
+        date: '11-23-2023',
         time: '18:20',
         landline_pickup: 'Yes',
         setup_finish_time: '18:22:30',
@@ -16,7 +16,7 @@ export const data = [
       
     },
     {
-        date: '14/11/2023',
+        date: '08-13-2023',
         time: '11:24',
         landline_pickup: 'No',
         setup_finish_time: '10:55:10',

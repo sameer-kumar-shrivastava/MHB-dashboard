@@ -24,6 +24,12 @@ const Page = () => {
         duration: '',
     });
 
+    const [buzzerData, setBuzzerData] = useState({
+        onTime: '',
+        offTime: '',
+        duration: '',
+    });
+
     const handleColorChange = (color) => {
         setBeaconData((prevData) => ({
             ...prevData,
@@ -65,7 +71,7 @@ const Page = () => {
                 console.log('Saving Beacon Data:', beaconData);
                 break;
             case 'buzzer':
-                alert('Saving Buzzer Data: ' + "On-Time: " + buzzerData.onTime);
+                alert('Saving Buzzer Data: '  + buzzerData);
                 console.log('Saving Buzzer Data:', buzzerData);
                 break;
             case 'chargeControl':
@@ -132,6 +138,35 @@ const Page = () => {
                             <Divider />
                             <CardActions sx={{ justifyContent: 'flex-end' }}>
                                 <Button variant="contained" onClick={() => handleSave('beacon')}>
+                                    Save
+                                </Button>
+                            </CardActions>
+                        </Card>
+                        <Card>
+                            <CardHeader title="Buzzer" />
+                            <Divider />
+                            <CardContent>
+                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+                                    <TextField
+                                        label="On-Time (ms)"
+                                        value={buzzerData.onTime}
+                                        onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+                                    />
+                                    <TextField
+                                        label="Off-Time (ms)"
+                                        value={buzzerData.offTime}
+                                        onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+                                    />
+                                    <TextField
+                                        label="Duration"
+                                        value={buzzerData.duration}
+                                        onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+                                    />
+                                </Stack>
+                            </CardContent>
+                            <Divider />
+                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+                                <Button variant="contained" onClick={() => handleSave('buzzer')}>
                                     Save
                                 </Button>
                             </CardActions>

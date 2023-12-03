@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 export const data = [
     {
-        date: '16/11/2023',
+        date: '11-23-2023 08:30:00',
         time: '18:20',
         status: "Open",
         open_duration: 5,
@@ -18,7 +18,7 @@ export const data = [
       
     },
     {
-        date: '14/11/2023',
+        date: '10-13-2023 14:15:00',
         time: '11:24',
         status: "Open",
         open_duration: 10,
@@ -37,29 +37,33 @@ const Puckerrortable = () => {
         () => [
             {
                 accessorKey: 'date',
-                header: 'Date',
+                header: 'DateTime',
             },
             {
-                accessorKey: 'time',
-                header: 'Time',
-            },
-
-            {
-                accessorKey: 'status',
-                header: 'Status',
+                accessorKey: 'low_battery',
+                header: 'Low Battery',
             },
             {
-                accessorKey: 'open_duration',
-                header: 'Open Duration(min)',
+                accessorKey: 'battery_disconnected',
+                header: 'Battery Disconnected',
             },
             {
-                accessorKey: 'battery_level',
-                header: 'Battery Level',
+                accessorKey: 'battery_voltage',
+                header: 'Battery Voltage',
             },
             {
-                accessorKey: 'open_per',
-                header: 'Open %',
-            }
+                accessorKey: 'over_heat_shudown',
+                header: 'Remote Sync Status ',
+            },
+            {
+                accessorKey: 'bat_fully_discharged',
+                header: 'Calibration Status',
+            },
+            {
+                accessorKey: 'device_reset',
+                header: 'Device reset',
+            },
+            
         ],
         [],
         //end

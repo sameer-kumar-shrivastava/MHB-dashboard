@@ -28,14 +28,15 @@ export const data = [
         email: "dylan@email.com",
         firstName: 'Dylan',
         lastName: 'Murray',
-        birthdate: "1978-11-07",
-        phone_number: "9876543210",
+        birthdate: "11-07-1978",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
         city: 'East Daphne',
         state: 'Kentucky',
         current_time: "19:33:21",
+        os:"iOS",
         homehub: [{
             active: true,
 
@@ -53,7 +54,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -66,22 +67,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -91,14 +92,15 @@ export const data = [
         email: "raquel@email.com",
         firstName: 'Raquel',
         lastName: 'Kohler',
-        birthdate: "1978-11-07",
-        phone_number: "75433890864",
+        birthdate: "11-07-1978",
+        phone_number: "(123) 456-7890",
         address: '769 Dominic Grove',
         lon: "77.743729",
         lat: "13.173898",
         city: 'Columbus',
         state: 'Ohio',
         current_time: "19:33:21",
+        os : "Android",
         homehub: [{
             active: false,
             Hub_id: "102",
@@ -115,7 +117,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
         }],
 
         beacon: [{
@@ -127,18 +129,18 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
@@ -152,8 +154,8 @@ export const data = [
         email: "robert@email.com",
         firstName: "Robert",
         lastName: "Openheimer",
-        birthdate: "1919-02-01",
-        phone_number: "26210224522",
+        birthdate: "02-01-1919",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -173,7 +175,7 @@ export const data = [
 
             Wifi_Strength: "25Mbps",
 
-            Hub_logs: "2023-02-06"
+            Hub_logs: "02-06-2023"
 
 
         }],
@@ -187,22 +189,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -213,7 +215,8 @@ export const data = [
         email: "alice@example.com",
         firstName: "Alice",
         lastName: "Johnson",
-        birthdate: "1985-09-12",
+        birthdate: "09-12-1985",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -233,7 +236,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -246,22 +249,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -271,8 +274,8 @@ export const data = [
         email: "john.doe@example.com",
         firstName: "John",
         lastName: "Doe",
-        birthdate: "1990-03-25",
-        phone_number: "9876543210",
+        birthdate: "03-25-1990",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -292,7 +295,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -305,22 +308,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -330,8 +333,8 @@ export const data = [
         email: "mary.smith@example.com",
         firstName: "Mary",
         lastName: "Smith",
-        birthdate: "1978-11-07",
-        phone_number: "5551234567",
+        birthdate: "11-07-1978",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -351,7 +354,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -364,22 +367,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -389,8 +392,8 @@ export const data = [
         email: "sam.jones@example.com",
         firstName: "Sam",
         lastName: "Jones",
-        birthdate: "2000-06-25",
-        phone_number: "9998887777",
+        birthdate: "06-25-2000",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -410,7 +413,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -423,22 +426,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -448,8 +451,8 @@ export const data = [
         email: "alex.smith@example.com",
         firstName: "Alex",
         lastName: "Smith",
-        birthdate: "1993-04-15",
-        phone_number: "4445556666",
+        birthdate: "04-15-1993",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -469,7 +472,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -482,22 +485,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -507,8 +510,8 @@ export const data = [
         email: "kate.johnson@example.com",
         firstName: "Kate",
         lastName: "Johnson",
-        birthdate: "1982-12-22",
-        phone_number: "77788899909",
+        birthdate: "12-22-1982",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -528,7 +531,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -541,22 +544,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -566,8 +569,8 @@ export const data = [
         email: "james.wilson@example.com",
         firstName: "James",
         lastName: "Wilson",
-        birthdate: "1965-08-02",
-        phone_number: "2223334444",
+        birthdate: "08-02-1965",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -587,7 +590,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -600,22 +603,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -625,8 +628,8 @@ export const data = [
         email: "linda.taylor@example.com",
         firstName: "Linda",
         lastName: "Taylor",
-        birthdate: "1998-01-18",
-        phone_number: "6667778888",
+        birthdate: "01-18-1998",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -646,7 +649,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -659,22 +662,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -684,8 +687,8 @@ export const data = [
         email: "peter.miller@example.com",
         firstName: "Peter",
         lastName: "Miller",
-        birthdate: "1970-07-10",
-        phone_number: "1112223333",
+        birthdate: "07-10-1970",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -705,7 +708,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -718,22 +721,22 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
         puck: [{
             Puck_id: "251",
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -744,8 +747,8 @@ export const data = [
         firstName: "Susan",
         middleName: "e",
         lastName: "Brown",
-        birthdate: "1989-05-28",
-        phone_number: "3334445555",
+        birthdate: "05-28-1989",
+        phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
@@ -766,7 +769,7 @@ export const data = [
 
             Wifi_Strength: "28Mbps",
 
-            Hub_logs: "2023-02-07"
+            Hub_logs: "02-07-2023"
 
         }],
 
@@ -779,11 +782,11 @@ export const data = [
 
             Temp: "50°C",
 
-            RSSI: "20DBM",
+            RSSI: "20dBm",
 
             Firmware_version: "1.1",
 
-            Beacon_logs: "2023-02-05"
+            Beacon_logs: "02-05-2023"
         }],
 
         puck: [{
@@ -791,11 +794,11 @@ export const data = [
 
             Puck_Battery_Level: "97%",
 
-            RSSI_Signal: "40DBm",
+            RSSI_Signal: "40dBm",
 
             Puck_Firmware_Version: "1.1",
 
-            Puck_logs: "2023-05-02",
+            Puck_logs: "05-02-2023",
 
             Accelerometer: "15",
         }],
@@ -856,6 +859,10 @@ const Materialtable = () => {
                 filterVariant: 'range',
 
 
+            },
+            {
+                accessorKey: 'os',
+                header: 'Operating system',
             }
 
 
@@ -1129,10 +1136,10 @@ const Materialtable = () => {
                                     <TableCell>{row.original.puck[0].Puck_Battery_Level}</TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Accelermeter</TableCell>
                                     <TableCell>{row.original.puck[0].Accelerometer}</TableCell>
-                                </TableRow>
+                                </TableRow> */}
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>

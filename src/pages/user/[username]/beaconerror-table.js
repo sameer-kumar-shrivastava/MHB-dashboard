@@ -9,7 +9,7 @@ import DoneIcon from '@mui/icons-material/Done';
 
 export const data = [
     {
-        date: '16/11/2023',
+        date: '11-23-2023 08:30:00',
         time: '18:20',
         battery_start: 75,      
         battery_end: 50,
@@ -20,7 +20,7 @@ export const data = [
         home: "NO"
     },
     {
-        date: '14/11/2023',
+        date: '10-23-2023 14:15:00',
         time: '11:24',
         battery_start: 80,      
         battery_end: 55,
@@ -42,41 +42,33 @@ const Beaconerrortable = () => {
         () => [
             {
                 accessorKey: 'date',
-                header: 'Date',
+                header: 'DateTime',
             },
             {
-                accessorKey: 'time',
-                header: 'Time',
-            },
-
-            {
-                accessorKey: 'battery_start',
-                header: 'Battery Level at  Start',
+                accessorKey: 'low_battery',
+                header: 'Low Battery',
             },
             {
-                accessorKey: 'battery_end',
-                header: 'Battery Level at end',
+                accessorKey: 'battery_disconnected',
+                header: 'Battery Disconnected',
             },
             {
-                accessorKey: 'color',
-                header: 'Color',
+                accessorKey: 'battery_voltage',
+                header: 'Battery Voltage',
             },
             {
-                accessorKey: 'output_power',
-                header: 'Output Power',
+                accessorKey: 'over_heat_shudown',
+                header: 'Over heat shutdown',
             },
             {
-                accessorKey: 'temp_start',
-                header: 'Temperature at Start',
+                accessorKey: 'bat_fully_discharged',
+                header: 'battery fully discharged',
             },
             {
-                accessorKey: 'temp_end',
-                header: 'Temperature at End',
+                accessorKey: 'device_reset',
+                header: 'Device reset',
             },
-            {
-                accessorKey: 'home',
-                header: 'In Home',
-            }
+            
         ],
         [],
         //end

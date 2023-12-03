@@ -8,23 +8,25 @@ import { useRouter } from 'next/router';
 
 export const data = [
     {
-        date: '16/11/2023',
+        date: '11-23-2023',
         time: '18:20',
         status: "Open",
         open_duration: 5,
         battery_level: 56,
-        open_per: 100
-
+        open_per: 100,
+        accelerometer_end:50,
+        accelerometer_start:10
       
     },
     {
-        date: '14/11/2023',
+        date: '11-23-2023',
         time: '11:24',
         status: "Open",
         open_duration: 10,
         battery_level: 57,
-        open_per: 84   
-      
+        open_per: 84,
+        accelerometer_end:50,
+        accelerometer_start:10
     },
 ];
 
@@ -59,6 +61,14 @@ const Pucklogtable = () => {
             {
                 accessorKey: 'open_per',
                 header: 'Open %',
+            },
+            {
+                accessorKey: 'accelerometer_start',
+                header: 'Accelerometer_start',
+            },
+            {
+                accessorKey: 'accelerometer_end',
+                header: 'Accelerometer_start',
             }
         ],
         [],

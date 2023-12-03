@@ -45,7 +45,7 @@ const LogPage = () => {
 
 
             <Stack spacing={1}>
-              <Typography variant="h6">Beacon Errors</Typography>
+              {/* <Typography variant="h6">Beacon Errors</Typography> */}
               <Beaconerrortable />
             </Stack>
 

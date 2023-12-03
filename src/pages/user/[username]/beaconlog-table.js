@@ -9,7 +9,7 @@ import DoneIcon from '@mui/icons-material/Done';
 
 export const data = [
     {
-        date: '16/11/2023',
+        date: '11-04-2023',
         time: '18:20',
         battery_start: 75,      
         battery_end: 50,
@@ -20,7 +20,7 @@ export const data = [
         home: "NO"
     },
     {
-        date: '14/11/2023',
+        date: '02-14-2023',
         time: '11:24',
         battery_start: 80,      
         battery_end: 55,

@@ -11,14 +11,14 @@ export const data = [
         firstName: 'Dylan',
         lastName: 'Murray',
         email: 'dylan.murray@hotmail.com',
-        phone: '+1 622-488529',     
+        phone: '(123) 456-7890',     
       
     },
     {
         firstName: 'Raquel',
         lastName: 'Kohler',
         email: 'raquel.murray@gmail.com',
-        phone: '+1 112-533298'   
+        phone: '(123) 456-7890'   
     },
 ];
 
