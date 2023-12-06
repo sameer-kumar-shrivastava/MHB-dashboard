@@ -47,7 +47,7 @@ const Page = () => {
       
         try {
         // login API endpoint
-        const response = await axios.post('https://rwsbj9yl7b.execute-api.us-west-1.amazonaws.com/dev/api/v1/public/signin', {
+        const response = await axios.post('https://gbfgs2m6df.execute-api.us-west-1.amazonaws.com/dev/api/v1/public/signin', {
           email: values.email,
           password: values.password
         });
@@ -62,6 +62,7 @@ const Page = () => {
           
     
           // Store the idToken in local storage
+          console.log("sathwik")
           localStorage.setItem('idToken', idToken);
     
           // await auth.signIn(values.email, values.password);
