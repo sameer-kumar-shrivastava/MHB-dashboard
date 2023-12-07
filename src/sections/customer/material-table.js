@@ -37,6 +37,7 @@ export const data = [
         state: 'Kentucky',
         current_time: "19:33:21",
         os:"iOS",
+        offline: "8",
         homehub: [{
             active: true,
 
@@ -101,6 +102,7 @@ export const data = [
         state: 'Ohio',
         current_time: "19:33:21",
         os : "Android",
+        offline: "3",
         homehub: [{
             active: false,
             Hub_id: "102",
@@ -159,6 +161,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "6",
         homehub: [{
             active: true,
             Hub_id: "101",
@@ -220,6 +223,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "53",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -279,6 +283,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "72",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -338,6 +343,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "26",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -397,6 +403,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "93",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -456,6 +463,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "2",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -515,6 +523,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "13",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -574,6 +583,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "27",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -633,6 +643,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "4",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -692,6 +703,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "6",
         homehub: [{
             active: true,
             Hub_id: "102",
@@ -752,6 +764,7 @@ export const data = [
         address: '261 Erdman Ford',
         lon: "77.743729",
         lat: "13.173898",
+        offline: "8",
         homehub: [{
             active: true,
 
@@ -807,7 +820,7 @@ export const data = [
 function getSubByEmail(email) {
     for (const entry of data) {
         if (entry.email === email) {
-            return { sub: entry.sub, lat: entry.lat, lon: entry.lon };
+            return { sub: entry.sub, lat: entry.lat, lon: entry.lon, offline: entry.offline };
         }
     }
     return null;
@@ -815,6 +828,7 @@ function getSubByEmail(email) {
 
 export let latitude = '';
 export let longitude = '';
+export let offline = '';
 
 
 const Materialtable = () => {
@@ -881,6 +895,7 @@ const Materialtable = () => {
         console.log(email, body);
         latitude = body.lat;
         longitude = body.lon;
+        offline = body.offline;
         //Make a API call to get geo co-ordinates by sending sub
         // Navigate to a new page with the username in the URL
         router.push(`/user/${username}`);

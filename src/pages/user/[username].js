@@ -7,7 +7,7 @@ import Head from 'next/head';
 import Emergencytable from './emergency-table';
 import Householdtable from './household-table';
 import { items } from './user-config';
-import { latitude, longitude } from '../../sections/customer/material-table';
+import { latitude, longitude, offline } from '../../sections/customer/material-table';
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import { usePathname } from 'next/navigation';
@@ -109,7 +109,7 @@ const UserPage = () => {
     }, [geoCoordinates]);
 
     if (!currentTime) {
-      return <Typography variant="h6" textAlign='end'>Loading...</Typography>;
+      return <Typography variant="h6">Loading...</Typography>;
     }
 
     return (
@@ -184,6 +184,7 @@ const UserPage = () => {
             >
               {/* <TimeDisplay /> */}
             {/* </Box> */}
+            <div style={{display:"flex", justifyContent:"space-between"}}>
             <Stack direction="row" spacing={3}>
               <Button variant="contained" onClick={(event) => handleMenuClick(event, 'HomeHub')}>
                 HomeHub
@@ -231,6 +232,12 @@ const UserPage = () => {
                 </MenuItem>
               </Menu>
             </Stack>
+            <Stack>
+            <Button variant="contained" color='error'>
+                Offline Logs : {offline}
+              </Button>
+            </Stack>
+            </div>
 
             <TimeDisplay />
 
