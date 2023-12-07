@@ -41,10 +41,16 @@ export const SideNav = (props) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          height: '100%'
+          height: '100%',
         }}
       >
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3,
+        backgroundColor: 'white',
+        display:'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        color: 'black' }}>
           <Box
             component={NextLink}
             href="/customers"
@@ -71,7 +77,7 @@ export const SideNav = (props) => {
               cursor: 'pointer',
               display: 'flex',
               justifyContent: 'space-between',
-              mt: 2,
+              mt: 1,
               p: '12px'
             }}
           >
