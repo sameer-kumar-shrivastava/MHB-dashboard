@@ -94,31 +94,7 @@ const Page = () => {
                             Garage Puck Settings
                         </Typography>
                         
-                        <Card spacing={1}>
-                            <CardHeader title="Charge Control" />
-                            <Divider />
-                            <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
-                                    <TextField
-                                        label="Minimum battery percentage to start charge"
-                                        value={chargeControlData.minBatteryPercentage}
-                                        onChange={(e) =>
-                                            handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
-                                        }
-                                    />
-                                    {/* <Typography variant="h6">
-                  {chargeControlData.minBatteryPercentage}
-        </Typography> */}
-
-                                </Stack>
-                            </CardContent>
-                            <Divider />
-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('chargeControl')}>
-                                    Save
-                                </Button>
-                            </CardActions>
-                        </Card>
+                        
                     </Stack>
                 </Container>
             </Box>

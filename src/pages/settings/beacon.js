@@ -37,6 +37,12 @@ const Page = () => {
         }));
     };
 
+    const [chargeControlData, setChargeControlData] = useState({
+        minBatteryPercentage: '',
+    });
+
+    
+
     const handleInputChange = (event, section, field) => {
         const value = event.target.value;
         switch (section) {
@@ -167,6 +173,27 @@ const Page = () => {
                             <Divider />
                             <CardActions sx={{ justifyContent: 'flex-end' }}>
                                 <Button variant="contained" onClick={() => handleSave('buzzer')}>
+                                    Save
+                                </Button>
+                            </CardActions>
+                        </Card>
+                        <Card spacing={1}>
+                            <CardHeader title="Charge Control" />
+                            <Divider />
+                            <CardContent>
+                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+                                    <TextField
+                                        label="Minimum battery percentage to start charge"
+                                        value={chargeControlData.minBatteryPercentage}
+                                        onChange={(e) =>
+                                            handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+                                        }
+                                    />
+                                </Stack>
+                            </CardContent>
+                            <Divider />
+                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+                                <Button variant="contained" onClick={() => handleSave('chargeControl')}>
                                     Save
                                 </Button>
                             </CardActions>

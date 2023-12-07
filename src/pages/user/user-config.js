@@ -10,33 +10,33 @@ import { SvgIcon } from '@mui/material';
 
 export const items = [
  
+//   {
+//     title: 'Users',
+//     path: '/customers',
+//     icon: (
+//       <SvgIcon fontSize="small">
+//         <UsersIcon />
+//       </SvgIcon>
+//     )
+//   },
   {
-    title: 'Users',
-    path: '/customers',
+    title: 'Settings',
+    path: '/settings',
     icon: (
-      <SvgIcon fontSize="small">
-        <UsersIcon />
+      <SvgIcon fontSize="large">
+        <CogIcon color='black' />
       </SvgIcon>
     )
   },
-  // {
-  //   title: 'Settings',
-  //   path: '/settings',
-  //   icon: (
-  //     <SvgIcon fontSize="small">
-  //       <CogIcon />
-  //     </SvgIcon>
-  //   )
-  // },
-  {
-    title: 'Logout',
-    path: '/auth/login',
-    icon: (
-      <SvgIcon fontSize="small">
-        <LockClosedIcon />
-      </SvgIcon>
-    )
-  }
+//   {
+//     title: 'Logout',
+//     path: '/auth/login',
+//     icon: (
+//       <SvgIcon fontSize="small">
+//         <LockClosedIcon />
+//       </SvgIcon>
+//     )
+//   }
    // {
   //   title: 'Overview',
   //   path: '/',

@@ -6,13 +6,17 @@ import { Box, Button, Container, Stack, SvgIcon, Typography, Menu, MenuItem } fr
 import Head from 'next/head';
 import Emergencytable from './emergency-table';
 import Householdtable from './household-table';
+import { items } from './user-config';
 import { latitude, longitude } from '../../sections/customer/material-table';
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
+import { usePathname } from 'next/navigation';
+import { SideNavItem } from 'src/layouts/dashboard/side-nav-item';
 
 const UserPage = () => {
   const router = useRouter();
   const { username } = router.query;
+  const pathname = usePathname();
 
   const handleButtonClick = (logType) => {
     // Navigate to the corresponding URL based on the logType
@@ -22,6 +26,7 @@ const UserPage = () => {
   const [anchorElHomeHub, setAnchorElHomeHub] = useState(null);
   const [anchorElBeacon, setAnchorElBeacon] = useState(null);
   const [anchorElPuck, setAnchorElPuck] = useState(null);
+
 
   const handleMenuClick = (event, device) => {
     switch (device) {
@@ -108,14 +113,11 @@ const UserPage = () => {
     }
 
     return (
-      <Typography variant="h6" textAlign='end'>
+      <Typography variant="h6">
         Device Current Time: {currentTime.toLocaleTimeString()}
       </Typography>
     );
   };
-
-
-
 
 
   return (
@@ -146,9 +148,33 @@ const UserPage = () => {
                   User Page: {username}
                 </Typography>
               </Stack>
+              <Stack
+                component="ul"
+                spacing={0.5}
+                sx={{
+                  listStyle: 'none',
+                  p: 0,
+                  m: 0
+                }}
+              >
+                {items.map((item) => {
+                  const active = item.path ? (pathname === item.path) : false;
+
+                  return (
+                    <SideNavItem
+                      active={active}
+                      disabled={item.disabled}
+                      external={item.external}
+                      icon={item.icon}
+                      key={item.title}
+                      path={item.path}
+                    />
+                  );
+                })}
+              </Stack>
 
             </Stack>
-            <Box
+            {/* <Box
               component="main"
             // sx={{
             //   flexGrow: 1,
@@ -156,8 +182,8 @@ const UserPage = () => {
             //   textAlign: 'center',
             // }}
             >
-              <TimeDisplay />
-            </Box>
+              {/* <TimeDisplay /> */}
+            {/* </Box> */}
             <Stack direction="row" spacing={3}>
               <Button variant="contained" onClick={(event) => handleMenuClick(event, 'HomeHub')}>
                 HomeHub
@@ -206,12 +232,22 @@ const UserPage = () => {
               </Menu>
             </Stack>
 
+            <TimeDisplay />
+
+
+
 
             <Stack spacing={2}>
-
-              <Typography variant="h6">SET-UP Time : November 19, 2023 3:30 PM </Typography>
-              <Typography variant="h6" style={{ marginBottom: '20px' }}>SET-UP Requested: YES </Typography>
+              {/* <Container sx={{ backgroundColor: 'blanchedalmond', display:"flex",justifyContent:'space-between', alignItems:"center"}}> */}
+              <Stack>
+                <Typography variant="h6">SET-UP Time : November 19, 2023 3:30 PM </Typography>
+                <Typography variant="h6" style={{ marginBottom: '20px' }}>SET-UP Requested: YES </Typography>
+                
+              </Stack>
+                
+              {/* </Container> */}
               <Typography variant="h6">Emergency Contacts</Typography>
+
 
               <Emergencytable />
             </Stack>
