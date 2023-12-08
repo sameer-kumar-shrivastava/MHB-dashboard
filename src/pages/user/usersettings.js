@@ -23,15 +23,15 @@ const Page = () => {
   const router = useRouter();
 
   const handleBeconClick = () => {
-    router.push('/settings/beacon');
+    router.push('/usersettings/beacon');
   };
 
   const handleGaragePuckClick = () => {
-    router.push('/settings/garagepuck');
+    router.push('/usersettings/garagepuck');
   };
 
   const handleUserSettingsClick = () => {
-    router.push('/settings/usersetting');
+    router.push('/usersettings/usersetting');
   };
 
   const [beaconData, setBeaconData] = useState({
@@ -130,7 +130,7 @@ const Page = () => {
             <Typography variant="h4">
               Settings
             </Typography>
-            {/* <Stack spacing={4} direction="row" sx={{ width: '100%' }}> */}
+            <Stack spacing={4} direction="row" sx={{ width: '100%' }}>
               {/* Buttons to navigate */}
               {/* <Button variant="contained" color="primary" onClick={handleBeconClick}>
                 Beacon Settings
@@ -139,7 +139,7 @@ const Page = () => {
               {/* <Button variant="contained" color="primary" onClick={handleUserSettingsClick}>
                 User Settings
               </Button> */}
-            {/* </Stack> */}
+            </Stack>
             <Grid
               container
               spacing={3}
@@ -149,7 +149,7 @@ const Page = () => {
                 md={6}
                 lg={8}
               >
-                {/* <AccountProfileDetails /> */}
+                <AccountProfileDetails />
               </Grid>
               <Grid
                 xs={12}
