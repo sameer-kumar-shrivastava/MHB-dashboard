@@ -37,7 +37,6 @@
     "react": "18.2.0",
     "react-apexcharts": "1.4.0",
     "react-color": "^2.19.3",
-    "react-data-grid": "^7.0.0-beta.40",
     "react-data-table-component": "^7.5.4",
     "react-dom": "18.2.0",
     "react-table": "^7.8.0",
