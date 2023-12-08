@@ -902,8 +902,7 @@ const Materialtable = () => {
                 // filterVariant: 'date-range',
                 // Cell: ({ cell }) => cell.getValue().toLocaleDateString(), // convert back to string for display
                 filterVariant: 'range',
-
-
+                
             },
             {
                 accessorKey: 'os',
@@ -954,6 +953,7 @@ const Materialtable = () => {
             },
             sx: {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                backgroundColor: [2, 5, 7].includes(row.index) ? 'rgba(217, 30, 24,0.5)' : 'inherit',
                 color:'red',
             },
         }),
