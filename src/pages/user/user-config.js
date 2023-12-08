@@ -21,7 +21,7 @@ export const items = [
 //   },
   {
     title: 'Settings',
-    path: '/settings',
+    path: '/usersettings',
     icon: (
       <SvgIcon fontSize="large">
         <CogIcon color='black' />

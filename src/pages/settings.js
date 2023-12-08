@@ -149,7 +149,7 @@ const Page = () => {
                 md={6}
                 lg={8}
               >
-                {/* <AccountProfileDetails /> */}
+                <AccountProfileDetails />
               </Grid>
               <Grid
                 xs={12}
@@ -163,11 +163,11 @@ const Page = () => {
             {/* <SettingsNotifications /> */}
             {/* <SettingsPassword /> */}
           </Stack>
-          <Stack spacing={3} sx={{marginTop: '20px'}}>
+          {/* <Stack spacing={3} sx={{marginTop: '20px'}}> */}
             {/* <Typography variant="h4">
                             Beacon Settings
                         </Typography> */}
-            <Card>
+            {/* <Card>
               <CardHeader title="Beacon" />
               <Divider />
               <CardContent>
@@ -200,8 +200,8 @@ const Page = () => {
                   Save
                 </Button>
               </CardActions>
-            </Card>
-            <Card>
+            </Card> */}
+            {/* <Card>
               <CardHeader title="Buzzer" />
               <Divider />
               <CardContent>
@@ -229,8 +229,8 @@ const Page = () => {
                   Save
                 </Button>
               </CardActions>
-            </Card>
-            <Card spacing={1}>
+            </Card> */}
+            {/* <Card spacing={1}>
               <CardHeader title="Charge Control" />
               <Divider />
               <CardContent>
@@ -250,8 +250,8 @@ const Page = () => {
                   Save
                 </Button>
               </CardActions>
-            </Card>
-          </Stack>
+            </Card> */}
+          {/* </Stack> */}
         </Container>
 
       </Box>

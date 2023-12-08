@@ -128,9 +128,9 @@ const Page = () => {
         <Container maxWidth="lg">
           <Stack spacing={3} >
             <Typography variant="h4">
-              Settings
+              User Settings
             </Typography>
-            <Stack spacing={4} direction="row" sx={{ width: '100%' }}>
+            {/* <Stack spacing={4} direction="row" sx={{ width: '100%' }}> */}
               {/* Buttons to navigate */}
               {/* <Button variant="contained" color="primary" onClick={handleBeconClick}>
                 Beacon Settings
@@ -139,8 +139,8 @@ const Page = () => {
               {/* <Button variant="contained" color="primary" onClick={handleUserSettingsClick}>
                 User Settings
               </Button> */}
-            </Stack>
-            <Grid
+            {/* </Stack> */}
+            {/* <Grid
               container
               spacing={3}
             >
@@ -155,11 +155,11 @@ const Page = () => {
                 xs={12}
                 md={6}
                 lg={4}
-              >
+              > */}
                 {/* <AccountProfile /> */}
-              </Grid>
+              {/* </Grid>
 
-            </Grid>
+            </Grid> */}
             {/* <SettingsNotifications /> */}
             {/* <SettingsPassword /> */}
           </Stack>
