@@ -28,7 +28,7 @@ export const data = [
         email: "dylan@email.com",
         firstName: 'Dylan',
         lastName: 'Murray',
-        birthdate: "11-07-1978",
+        birthdate: "1978-07-11",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         lon: "77.743729",
@@ -94,7 +94,7 @@ export const data = [
         email: "raquel@email.com",
         firstName: 'Raquel',
         lastName: 'Kohler',
-        birthdate: "11-07-1978",
+        birthdate: "1978-07-11",
         phone_number: "(123) 456-7890",
         address: '769 Dominic Grove',
         lon: "77.743729",
@@ -158,7 +158,7 @@ export const data = [
         email: "robert@email.com",
         firstName: "Robert",
         lastName: "Openheimer",
-        birthdate: "02-01-1919",
+        birthdate: "1919-01-02",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -222,7 +222,7 @@ export const data = [
         email: "alice@example.com",
         firstName: "Alice",
         lastName: "Johnson",
-        birthdate: "09-12-1985",
+        birthdate: "1985-12-09",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -284,7 +284,7 @@ export const data = [
         email: "john.doe@example.com",
         firstName: "John",
         lastName: "Doe",
-        birthdate: "03-25-1990",
+        birthdate: "1990-25-03",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -346,7 +346,7 @@ export const data = [
         email: "mary.smith@example.com",
         firstName: "Mary",
         lastName: "Smith",
-        birthdate: "11-07-1978",
+        birthdate: "1978-07-11",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -408,7 +408,7 @@ export const data = [
         email: "sam.jones@example.com",
         firstName: "Sam",
         lastName: "Jones",
-        birthdate: "06-25-2000",
+        birthdate: "2000-25-06",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -470,7 +470,7 @@ export const data = [
         email: "alex.smith@example.com",
         firstName: "Alex",
         lastName: "Smith",
-        birthdate: "04-15-1993",
+        birthdate: "1993-15-04",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -532,7 +532,7 @@ export const data = [
         email: "kate.johnson@example.com",
         firstName: "Kate",
         lastName: "Johnson",
-        birthdate: "12-22-1982",
+        birthdate: "1982-22-12",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -594,7 +594,7 @@ export const data = [
         email: "james.wilson@example.com",
         firstName: "James",
         lastName: "Wilson",
-        birthdate: "08-02-1965",
+        birthdate: "1965-02-08",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -656,7 +656,7 @@ export const data = [
         email: "linda.taylor@example.com",
         firstName: "Linda",
         lastName: "Taylor",
-        birthdate: "01-18-1998",
+        birthdate: "1998-18-01",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -718,7 +718,7 @@ export const data = [
         email: "peter.miller@example.com",
         firstName: "Peter",
         lastName: "Miller",
-        birthdate: "07-10-1970",
+        birthdate: "1970-10-07",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         zip: "824872",
@@ -780,7 +780,7 @@ export const data = [
         firstName: "Susan",
         middleName: "e",
         lastName: "Brown",
-        birthdate: "05-28-1989",
+        birthdate: "1989-28-05",
         phone_number: "(123) 456-7890",
         address: '261 Erdman Ford',
         city: 'East Daphne',
@@ -902,7 +902,13 @@ const Materialtable = () => {
                 // filterVariant: 'date-range',
                 // Cell: ({ cell }) => cell.getValue().toLocaleDateString(), // convert back to string for display
                 filterVariant: 'range',
-                
+                filter: (rows, columnIds, filterValue) => {
+                    const [startYear, endYear] = filterValue || [undefined, undefined];
+                    return rows.filter(row => {
+                        const birthYear = parseInt(row.values.birthdate.split('-')[2], 10); // Assuming the birthdate is in the "mm-dd-yyyy" format
+                        return (!startYear || birthYear >= startYear) && (!endYear || birthYear <= endYear);
+                    });
+                },
             },
             {
                 accessorKey: 'os',
@@ -939,6 +945,12 @@ const Materialtable = () => {
     const table = useMaterialReactTable({
         columns,
         data,
+        initialState: {
+            filters: columns.map(column => ({
+                id: column.accessorKey,
+                value: undefined,
+            })),
+        },
         enableExpandAll: true, //hide expand all double arrow in column header
         enableExpanding: true,
         filterFromLeafRows: true, //apply filtering to all rows instead of just parent rows
