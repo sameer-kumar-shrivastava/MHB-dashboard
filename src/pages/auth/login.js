@@ -64,7 +64,7 @@ const Page = () => {
           // Store the idToken in local storage
           localStorage.setItem('idToken', idToken);
     
-          // await auth.signIn(values.email, values.password);
+          await auth.signIn(values.email, values.password);
           router.push('/');
         } else {
           // Handle unsuccessful login

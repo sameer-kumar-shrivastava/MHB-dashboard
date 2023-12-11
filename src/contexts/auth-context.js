@@ -1,16 +1,19 @@
+// auth-context.js
+
 import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
-  SIGN_OUT: 'SIGN_OUT'
+  SIGN_OUT: 'SIGN_OUT',
 };
 
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
-  user: null
+  user: null,
 };
 
 const handlers = {
@@ -19,18 +22,15 @@ const handlers = {
 
     return {
       ...state,
-      ...(
-        // if payload (user) is provided, then is authenticated
-        user
-          ? ({
+      ...(user
+        ? {
             isAuthenticated: true,
             isLoading: false,
-            user
-          })
-          : ({
-            isLoading: false
-          })
-      )
+            user,
+          }
+        : {
+            isLoading: false,
+          }),
     };
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
@@ -39,23 +39,19 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
   },
   [HANDLERS.SIGN_OUT]: (state) => {
     return {
       ...state,
       isAuthenticated: false,
-      user: null
+      user: null,
     };
-  }
+  },
 };
 
-const reducer = (state, action) => (
-  handlers[action.type] ? handlers[action.type](state, action) : state
-);
-
-// The role of this context is to propagate authentication state through the App tree.
+const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
 
 export const AuthContext = createContext({ undefined });
 
@@ -65,7 +61,6 @@ export const AuthProvider = (props) => {
   const initialized = useRef(false);
 
   const initialize = async () => {
-    // Prevent from calling twice in development mode with React.StrictMode enabled
     if (initialized.current) {
       return;
     }
@@ -76,36 +71,41 @@ export const AuthProvider = (props) => {
 
     try {
       isAuthenticated = window.sessionStorage.getItem('authenticated') === 'true';
+      console.log('Is Authenticated:', isAuthenticated);
     } catch (err) {
       console.error(err);
     }
 
     if (isAuthenticated) {
-      const user = {
-        id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
-      };
+      try {
+        const idToken = localStorage.getItem('idToken');
 
-      dispatch({
-        type: HANDLERS.INITIALIZE,
-        payload: user
-      });
+        const response = await axios.get('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/users/getUsers', {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        });
+
+        const user = response.data;
+
+        dispatch({
+          type: HANDLERS.SIGN_IN,
+          payload: user,
+        });
+      } catch (error) {
+        console.error('Error fetching user information:', error);
+        // Handle error fetching user information if needed
+      }
     } else {
       dispatch({
-        type: HANDLERS.INITIALIZE
+        type: HANDLERS.INITIALIZE,
       });
     }
   };
 
-  useEffect(
-    () => {
-      initialize();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  useEffect(() => {
+    initialize();
+  }, []);
 
   const skip = () => {
     try {
@@ -118,46 +118,54 @@ export const AuthProvider = (props) => {
       id: '5e86809283e28b96d2d38537',
       avatar: '/assets/avatars/avatar-anika-visser.png',
       name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
+      email: 'anika.visser@devias.io',
     };
 
     dispatch({
       type: HANDLERS.SIGN_IN,
-      payload: user
+      payload: user,
     });
   };
 
   const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
-      throw new Error('Please check your email and password');
-    }
-
+    console.log('Signing in...');
     try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
+      const response = await axios.post('https://gbfgs2m6df.execute-api.us-west-1.amazonaws.com/dev/api/v1/public/signin', {
+        email,
+        password,
+      });
+  
+      // Assuming your API response structure has a 'success' property
+      if (response.data.success) {
+        // You may need to adapt this based on the actual structure of your API response
+        const user = response.data.data.AuthenticationResult;
+  
+        dispatch({
+          type: HANDLERS.SIGN_IN,
+          payload: user,
+        });
+  
+        window.sessionStorage.setItem('authenticated', 'true');
+      } else {
+        // Handle unsuccessful login
+        console.error('Authentication failed:', response.data.error);
+        throw new Error('Authentication failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('An error occurred while processing the request:', error);
+      throw new Error('An error occurred while processing your request.');
     }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
   };
+  
 
   const signUp = async (email, name, password) => {
+    // Implementation for sign-up can be added here if needed
     throw new Error('Sign up is not implemented');
   };
 
   const signOut = () => {
     dispatch({
-      type: HANDLERS.SIGN_OUT
+      type: HANDLERS.SIGN_OUT,
     });
   };
 
@@ -168,7 +176,7 @@ export const AuthProvider = (props) => {
         skip,
         signIn,
         signUp,
-        signOut
+        signOut,
       }}
     >
       {children}
@@ -177,7 +185,7 @@ export const AuthProvider = (props) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export const AuthConsumer = AuthContext.Consumer;
