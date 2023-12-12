@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 
 import ExpandableRowGrid from './table';
 import ExpandTable from './table';
+import axios from 'axios';
 
 
 export const data = [
@@ -36,7 +37,7 @@ export const data = [
         city: 'East Daphne',
         state: 'Kentucky',
         current_time: "19:33:21",
-        os:"iOS",
+        os: "iOS",
         homehub: [{
             active: true,
 
@@ -100,7 +101,7 @@ export const data = [
         city: 'Columbus',
         state: 'Ohio',
         current_time: "19:33:21",
-        os : "Android",
+        os: "Android",
         homehub: [{
             active: false,
             Hub_id: "102",
@@ -804,6 +805,7 @@ export const data = [
         }],
     }
 ];
+
 function getSubByEmail(email) {
     for (const entry of data) {
         if (entry.email === email) {
@@ -819,17 +821,30 @@ export let longitude = '';
 
 const Materialtable = () => {
 
+    const fetchData = async () => {
+        try {
+            const idToken = localStorage.getItem('idToken');
+            const response = await axios.get('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/users/getUsers', {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            });
+
+            const data = response.data;
+            console.log('Data:', data);
+            // Set the API data as the new table data
+            // subtable.setData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error.message);
+        }
+    };
+    fetchData();
+
     const router = useRouter();
 
     const columns = useMemo(
         //column definitions...
         () => [
-            // {
-            //     accessorKey: 'sub',
-            //     header: 'ID',
-            // },
-
-
             {
                 accessorKey: 'firstName',
                 header: 'Firstname',
@@ -908,7 +923,7 @@ const Materialtable = () => {
             },
             sx: {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                color:'red',
+                color: 'red',
             },
         }),
         renderDetailPanel: ({ row }) => (
@@ -1124,7 +1139,7 @@ const Materialtable = () => {
                             <Typography sx={{ fontSize: "12px" }} >
                                 Puck
                             </Typography>
-                            <Table size="small">                    
+                            <Table size="small">
 
                                 <TableRow >
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
@@ -1157,7 +1172,7 @@ const Materialtable = () => {
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Puck Logs</TableCell>
                                     <TableCell>{row.original.puck[0].Puck_logs}</TableCell>
                                 </TableRow> */}
-                          
+
 
 
 
