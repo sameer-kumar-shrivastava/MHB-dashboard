@@ -115,14 +115,22 @@ const Materialtable = () => {
         console.log(email, body);
         latitude = body.lat;
         longitude = body.lon;
-        //Make a API call to get geo co-ordinates by sending sub
-        // Navigate to a new page with the username in the URL
         router.push(`/user/${username}`);
     };
 
     const subtable = useMaterialReactTable({
         columns,
-        data
+        data,
+        muiTableBodyRowProps: ({ row }) => ({
+            onClick: (event) => {
+                handleRowClick(row);
+            },
+            sx: {
+                cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                backgroundColor: [2, 5, 7].includes(row.index) ? 'rgba(217, 30, 24,0.5)' : 'inherit',
+                color: 'red',
+            },
+        }),
     });
 
     const table = useMaterialReactTable({
@@ -142,6 +150,7 @@ const Materialtable = () => {
             },
             sx: {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                backgroundColor: [2, 5, 7].includes(row.index) ? 'rgba(217, 30, 24,0.5)' : 'inherit',
                 color: 'red',
             },
         }),

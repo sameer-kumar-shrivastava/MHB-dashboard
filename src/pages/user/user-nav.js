@@ -17,10 +17,10 @@ import {
 // import { Logo } from 'src/components/logo';
 import Logo from '../../../public/favicon-16x16.png';
 import { Scrollbar } from 'src/components/scrollbar';
-import { items } from './config';
-import { SideNavItem } from './side-nav-item';
+import { items } from './user-config';
+import { UserNavItem } from './user-nav-item';
 
-export const SideNav = (props) => {
+export const UserNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
@@ -128,7 +128,7 @@ export const SideNav = (props) => {
               const active = item.path ? (pathname === item.path) : false;
 
               return (
-                <SideNavItem
+                <UserNavItem
                   active={active}
                   disabled={item.disabled}
                   external={item.external}
@@ -235,7 +235,7 @@ export const SideNav = (props) => {
   );
 };
 
-SideNav.propTypes = {
+UserNav.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool
 };
