@@ -66,11 +66,11 @@ const Materialtable = () => {
         //column definitions...
         () => [
             {
-                accessorKey: 'firstName',
+                accessorKey: 'given_name',
                 header: 'Firstname',
             },
             {
-                accessorKey: 'lastName',
+                accessorKey: 'family_name',
                 header: 'Lastname',
             },
             {
@@ -78,9 +78,9 @@ const Materialtable = () => {
                 header: 'Address'
             },
             {
-                // accessorKey: 'email',
+                accessorKey: 'email',
                 header: 'Email',
-                selector: row => row.email,
+                // selector: row => row.email,
             },
             {
                 accessorKey: 'phone_number',
