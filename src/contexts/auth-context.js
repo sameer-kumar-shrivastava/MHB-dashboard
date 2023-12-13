@@ -1,6 +1,6 @@
 // auth-context.js
 
-import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
+import { createContext, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -59,6 +59,11 @@ export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
+  const [user, setUser] = useState(null);
+
+  const isAuthenticated = () => {
+    return Boolean(user);
+  };
 
   const initialize = async () => {
     if (initialized.current) {
@@ -172,7 +177,8 @@ export const AuthProvider = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        ...state,
+        isAuthenticated,
+        user,
         skip,
         signIn,
         signUp,
