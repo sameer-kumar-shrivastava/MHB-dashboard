@@ -42,10 +42,11 @@ export const SideNav = (props) => {
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
+          
         }}
       >
         <Box sx={{ p: 3,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         display:'flex',
         borderRightWidth: '0.2px',
         borderRightColor: 'rgba(108, 115, 127, 0.4)',
@@ -53,46 +54,51 @@ export const SideNav = (props) => {
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        color: 'black' }}>
-          <Box
+        justifyContent: 'center',
+        color: 'black',
+        backgroundColor: "white" }}>
+          {/* <Box
             component={NextLink}
             href="/customers"
             sx={{
               display: 'inline-flex',
               height: 100,
-              width: 100
+              width: 100,
+              backgroundColor: "orange",
             }}
-          >
+          > */}
             {/* <img src={<Logo />} /> */}
             <Image
-              src="/logo.png" // Provide the path to your image in the public directory
+              src="/logo1.png" // Provide the path to your image in the public directory
               alt="Description of the image"
-              width={100} // Set the width of the image
-              height={100} // Set the height of the image
+              width={150} // Set the width of the image
+              height={100}// Set the height of the image
             />
 
-          </Box>
-          <Box
+          {/* </Box> */}
+          {/* <Box
             sx={{
               alignItems: 'center',
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
               borderRadius: 1,
               cursor: 'pointer',
               display: 'flex',
-              justifyContent: 'space-between',
+              // justifyContent: 'space-between',
               mt: 1,
-              p: '12px'
+              p: '12px',
+              backgroundColor: "gray",
             }}
-          >
+          > */}
             <div>
               <Typography
-                color="inherit"
+                color="red"
                 variant="subtitle1"
+                fontWeight='bold'
               >
-                MyHomeBeacon
+                MyHomeBeacon<sup>TM</sup>
               </Typography>
               <Typography
-                color="neutral.400"
+                color="black.400"
                 variant="body2"
               >
                 Dashboard
@@ -104,7 +110,7 @@ export const SideNav = (props) => {
             >
               <ChevronUpDownIcon />
             </SvgIcon> */}
-          </Box>
+          {/* </Box> */}
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
         <Box
