@@ -8,8 +8,6 @@ import { SettingsPassword } from 'src/sections/settings/settings-password';
 
 
 const Page = () => {
-
-
     return (
         <>
             <Head>

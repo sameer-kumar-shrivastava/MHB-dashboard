@@ -38,19 +38,14 @@ const LogPage = () => {
                 <Typography variant="h4">
                   Homehub Errors : {username}
                 </Typography>
-
               </Stack>
-            </Stack>
-    
+            </Stack>  
 
 
             <Stack spacing={1}>
               <Typography variant="h6">Homehub Errors</Typography>
               <Homehuberrortable />
-            </Stack>
-
-
-      
+            </Stack>     
 
 
           </Stack>

@@ -23,14 +23,14 @@ import ExpandTable from './table';
 import axios from 'axios';
 
 
-function getSubByEmail(email) {
-    for (const entry of data) {
-        if (entry.email === email) {
-            return { sub: entry.sub, lat: entry.lat, lon: entry.lon };
-        }
-    }
-    return null;
-}
+// function getSubByEmail(email) {
+//     for (const entry of data) {
+//         if (entry.email === email) {
+//             return { sub: entry.sub, lat: entry.lat, lon: entry.lon };
+//         }
+//     }
+//     return null;
+// }
 
 export let latitude = '';
 export let longitude = '';
@@ -105,11 +105,18 @@ const Materialtable = () => {
         //end
     );
 
-
+    function getSubByEmail(email) {
+        for (const entry of data) {
+            if (entry.email === email) {
+                return { sub: entry.sub, lat: entry['custom:latitude'], lon: entry['custom:longitude'] };
+            }
+        }
+        return null;
+    }
 
     const handleRowClick = (row) => {
         // Extract the username from the clicked row data
-        const username = row.original.lastName.toLowerCase(); // Assuming 'lastName' contains the username
+        const username = row.original.family_name; // Assuming 'lastName' contains the username
         const email = row.original.email;
         const body = getSubByEmail(email);
         console.log(email, body);
