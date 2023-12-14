@@ -76,7 +76,7 @@ const UserPage = () => {
 
   const tabWidth = '10vw';
 
-  const warningIconColor = username === 'Kumar' || username === 'C M' ? 'red' : 'yellow';
+  const warningIconColor = username === 'Kumar' || username === 'C M' ? 'red' : 'rgb(255, 195, 0 )';
 
   const handleClose = () => {
     setAnchorElHomeHub(null);
@@ -296,7 +296,7 @@ const UserPage = () => {
           {/* <Stack> */}
           <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
           <Stack sx={{ flex:0.2,border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
-            <Typography fontWeight="bold">Device Time</Typography>
+            {/* <Typography fontWeight="bold">Device Time</Typography> */}
             <Typography fontWeight="medium">Alive From</Typography>
             <Typography >November 19, 2023</Typography>
             <Typography >3:30 PM</Typography>
