@@ -182,13 +182,21 @@ const UserPage = () => {
     }, [geoCoordinates]);
 
     if (!currentTime) {
-      return <Typography variant="h6">Loading...</Typography>;
+      return (
+        <div>
+          <Stack sx={{display:"flex", alignItems:"center",justifyContent:"center"}}>
+            <Typography fontWeight="bold">Loading...</Typography>
+          </Stack>
+        </div>
+      );
     }
 
     return (
-      <Typography variant="h6">
-        Device Current Time: {currentTime.toLocaleTimeString()}
-      </Typography>
+      <div>
+        <Stack sx={{display:"flex", alignItems:"center",justifyContent:"center"}}>
+          <Typography>Device Current Time</Typography><Typography fontWeight="bold">{currentTime.toLocaleTimeString()}</Typography>
+        </Stack>
+      </div>
     );
   };
 
@@ -210,25 +218,37 @@ const UserPage = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Stack>
-            {/* <Stack spacing={1}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+          {/* <Stack spacing={1}>
                 <Typography variant="h4">
                   User Page: {username}
                 </Typography>
               </Stack> */}
-            <Button variant="contained">
-              Offline Count : {offline}
-              <WarningIcon sx={{ color: "yellow" }} />
-            </Button>
+          <Stack sx={{ border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "rgba(0,0,128,0.6)", color:"aliceblue" }}>
+            <Typography fontWeight="medium">SET-UP </Typography>
+            <Typography>Requested: YES </Typography>
           </Stack>
+          <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
+            Offline Count : 6
+            {/* {offline} */}
+            <WarningIcon sx={{ color: "yellow" }} />
+          </Typography>
         </div>
-        <TimeDisplay />
+        
         <Stack spacing={2}>
-          <Stack>
-            <Typography variant="h6">SET-UP Time : November 19, 2023 3:30 PM </Typography>
-            <Typography variant="h6" style={{ marginBottom: '20px' }}>SET-UP Requested: YES </Typography>
+          {/* <Stack> */}
+          <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+          <Stack sx={{ border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+            <Typography fontWeight="bold">Device Time</Typography>
+            <Typography fontWeight="medium">Alive From</Typography>
+            <Typography >November 19, 2023</Typography>
+            <Typography >3:30 PM</Typography>
           </Stack>
+          <Stack sx={{ flex: 0.2,height:"10vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+          <TimeDisplay />
+          </Stack>
+          </div>
+          {/* </Stack> */}
           <Typography variant="h6">Emergency Contacts</Typography>
           <Emergencytable />
         </Stack>
@@ -277,9 +297,9 @@ const UserPage = () => {
           <Stack spacing={1} >
             <Container sx={{ display: "-webkit-flex" }}>
               <Card>
-                <CardHeader title="Beacon" sx={{paddingTop:2, paddingRight:3, paddingBottom:2 }}/>
+                <CardHeader title="Beacon" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
                 {/* <Divider /> */}
-                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0}}>
+                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
                   <ChromePicker color={beaconData.color} onChange={handleColorChange} />
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
                     <Box sx={{ width: 400 }}>
@@ -333,9 +353,9 @@ const UserPage = () => {
             </Container>
             <Container>
               <Card>
-                <CardHeader title="Charge Control" sx={{paddingTop:2, paddingRight:3, paddingBottom:2 }} />
+                <CardHeader title="Charge Control" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
                 {/* <Divider /> */}
-                <CardContent sx={{ paddingBottom: 0, paddingTop: 0}}>
+                <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                   <Stack spacing={1} sx={{ maxWidth: 700 }}>
                     <TextField
                       label="Minimum battery percentage to start charge"
