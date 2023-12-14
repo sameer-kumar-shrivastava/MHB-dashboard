@@ -125,6 +125,13 @@ const Materialtable = () => {
         router.push(`/user/${username}`);
     };
 
+    const getBackgroundColor = (family_name) => {
+        if (family_name === 'Kumar' || family_name === 'C M') {
+          return 'rgba(217, 30, 24, 0.5)';
+        }
+        return 'inherit';
+      };
+
     const subtable = useMaterialReactTable({
         columns,
         data,
@@ -134,8 +141,9 @@ const Materialtable = () => {
             },
             sx: {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                backgroundColor: [2, 5, 7].includes(row.index) ? 'rgba(217, 30, 24,0.5)' : 'inherit',
+                backgroundColor: getBackgroundColor(row.original.family_name),
                 color: 'red',
+                
             },
         }),
     });

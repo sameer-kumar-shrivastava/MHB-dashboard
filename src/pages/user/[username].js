@@ -74,6 +74,8 @@ const UserPage = () => {
     setValue(newValue);
   };
 
+  const warningIconColor = username === 'Kumar' || username === 'C M' ? 'red' : 'yellow';
+
   const handleClose = () => {
     setAnchorElHomeHub(null);
     setAnchorElBeacon(null);
@@ -224,27 +226,29 @@ const UserPage = () => {
                   User Page: {username}
                 </Typography>
               </Stack> */}
-          <Stack sx={{ border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "rgba(0,0,128,0.6)", color:"aliceblue" }}>
+          <Stack sx={{ flex:0.24,border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "rgba(17, 25, 39,0.8)", color:"aliceblue" }}>
             <Typography fontWeight="medium">SET-UP </Typography>
             <Typography>Requested: YES </Typography>
           </Stack>
           <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
             Offline Count : 6
             {/* {offline} */}
-            <WarningIcon sx={{ color: "yellow" }} />
+            <WarningIcon sx={{ color: warningIconColor, padding:"2px" }} />
+            <WarningIcon sx={{ color: warningIconColor, padding:"2px" }} />
+            <WarningIcon sx={{ color: warningIconColor, padding:"2px" }} />
           </Typography>
         </div>
         
         <Stack spacing={2}>
           {/* <Stack> */}
           <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-          <Stack sx={{ border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+          <Stack sx={{ flex:0.2,border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
             <Typography fontWeight="bold">Device Time</Typography>
             <Typography fontWeight="medium">Alive From</Typography>
             <Typography >November 19, 2023</Typography>
             <Typography >3:30 PM</Typography>
           </Stack>
-          <Stack sx={{ flex: 0.2,height:"10vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+          <Stack sx={{ flex: 0.2,height:"10vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center",justifyContent:"center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
           <TimeDisplay />
           </Stack>
           </div>
