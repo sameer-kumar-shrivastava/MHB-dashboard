@@ -158,9 +158,27 @@ const Page = () => {
 
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Profile Settings" {...a11yProps(0)} />
-            <Tab label="Global Device Settings" {...a11yProps(1)} />
+          <Tabs value={value} onChange={handleChange} indicatorColor="none" aria-label="basic tabs example">
+            <Tab label="Profile Settings" {...a11yProps(0)} 
+            sx={{
+              backgroundColor:value === 0 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+              width:"15vw",
+              padding:"5px",
+              border:value === 0 ? '1px solid rgb(169, 169, 169)': 'transparent',
+              borderTopLeftRadius:value === 0 ? '10px': '0',
+              borderTopRightRadius:value === 0 ? '10px': '0',
+              borderBottom:value === 0 ? '0': '1px solid rgb(169, 169, 169)',
+              }} />
+            <Tab label="Global Device Settings" {...a11yProps(1)} 
+            sx={{
+              backgroundColor:value === 1 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+              width:"15vw",
+              padding:"5px",
+              border:value === 1 ? '1px solid rgb(169, 169, 169)': 'transparent',
+              borderTopLeftRadius:value === 1 ? '10px': '0',
+              borderTopRightRadius:value === 1 ? '10px': '0',
+              borderBottom:value === 1 ? '0': '1px solid rgb(169, 169, 169)',
+              }} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>

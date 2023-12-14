@@ -30,15 +30,15 @@ import Beaconerrortable from './[username]/beaconerror-table';
 import Pucklogtable from './[username]/pucklog-table';
 import Puckerrortable from './[username]/puckerror-table';
 
-function CustomTabPanel(props) {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -50,7 +50,7 @@ function CustomTabPanel(props) {
   );
 }
 
-CustomTabPanel.propTypes = {
+TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
@@ -58,8 +58,8 @@ CustomTabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
   };
 }
 
@@ -73,6 +73,8 @@ const UserPage = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const tabWidth = '10vw';
 
   const warningIconColor = username === 'Kumar' || username === 'C M' ? 'red' : 'yellow';
 
@@ -203,6 +205,7 @@ const UserPage = () => {
   };
 
 
+
   return (
     <div>
       <Head>
@@ -210,16 +213,67 @@ const UserPage = () => {
           Customers | MyHomeBeacon
         </title>
       </Head>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label={`User Page: ${username}`} {...a11yProps(0)} />
-          <Tab label="HomeHub" {...a11yProps(1)} />
-          <Tab label="Beacon" {...a11yProps(2)} />
-          <Tab label="Puck" {...a11yProps(3)} />
-          <Tab label="Device Settings" {...a11yProps(4)} />
+      <Box sx={{borderBottom: 1, borderColor: 'divider' }}>
+      <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="none"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab label={`User Page: ${username}`} {...a11yProps(0)} 
+          sx={{
+            backgroundColor:value === 0 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+            width: tabWidth,
+            border:value === 0 ? '1px solid rgb(169, 169, 169)': 'transparent',
+            borderTopLeftRadius:value === 0 ? '10px': '0',
+            borderTopRightRadius:value === 0 ? '10px': '0',
+            borderBottom:value === 0 ? '0': '1px solid rgb(169, 169, 169)',
+            margin:0
+            }} />
+          <Tab label="HomeHub" {...a11yProps(1)} 
+          sx={{
+            backgroundColor:value === 1 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+            width: tabWidth,
+            border:value === 1 ? '1px solid rgb(169, 169, 169)': 'transparent',
+            borderTopLeftRadius:value === 1 ? '10px': '0',
+            borderTopRightRadius:value === 1 ? '10px': '0',
+            borderBottom:value === 1 ? '0': '1px solid rgb(169, 169, 169)',
+            }} />
+          <Tab label="Beacon" {...a11yProps(2)} 
+          sx={{
+            backgroundColor:value === 2 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+            width: tabWidth,
+            border:value === 2 ? '1px solid rgb(169, 169, 169)': 'transparent',
+            borderTopLeftRadius:value === 2 ? '10px': '0',
+            borderTopRightRadius:value === 2 ? '10px': '0',
+            borderBottom:value === 2 ? '0': '1px solid rgb(169, 169, 169)',
+            margin:0
+            }} />
+          <Tab label="Puck" {...a11yProps(3)} 
+          sx={{
+            backgroundColor:value === 3 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+            width: tabWidth,
+            border:value === 3 ? '1px solid rgb(169, 169, 169)': 'transparent',
+            borderTopLeftRadius:value === 3 ? '10px': '0',
+            borderTopRightRadius:value === 3 ? '10px': '0',
+            borderBottom:value === 3 ? '0': '1px solid rgb(169, 169, 169)',
+            }} />
+          <Tab label="Device Settings" {...a11yProps(4)} 
+          sx={{
+            backgroundColor:value === 4 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+            width: tabWidth,
+            border:value === 4 ? '1px solid rgb(169, 169, 169)': 'transparent',
+            borderTopLeftRadius:value === 4 ? '10px': '0',
+            borderTopRightRadius:value === 4 ? '10px': '0',
+            borderBottom:value === 4 ? '0': '1px solid rgb(169, 169, 169)',
+            margin:0
+            }} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <TabPanel value={value} index={0}>
+        <Stack spacing={2}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between"}}>
           {/* <Stack spacing={1}>
                 <Typography variant="h4">
@@ -237,8 +291,7 @@ const UserPage = () => {
             <WarningIcon sx={{ color: warningIconColor, padding:"2px" }} />
             <WarningIcon sx={{ color: warningIconColor, padding:"2px" }} />
           </Typography>
-        </div>
-        
+        </div>        
         <Stack spacing={2}>
           {/* <Stack> */}
           <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
@@ -260,32 +313,33 @@ const UserPage = () => {
           <Typography variant="h6">Household Members</Typography>
           <Householdtable />
         </Stack>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Stack>
+        </Stack>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+      <Stack spacing={2}>
           <Typography variant="h6">HomeHub Logs</Typography>
           <Homehublogtable />
           <Typography variant="h6">HomeHub Errors</Typography>
           <Homehuberrortable />
         </Stack>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <Stack>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      <Stack spacing={2}>
           <Typography variant="h6">Beacon Logs</Typography>
           <Beaconlogtable />
           <Typography variant="h6">Beacon Errors</Typography>
           <Beaconerrortable />
         </Stack>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <Stack>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+      <Stack spacing={2}>
           <Typography variant="h6">Puck Logs</Typography>
           <Pucklogtable />
           <Typography variant="h6">Puck Errors</Typography>
           <Puckerrortable />
         </Stack>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
+      </TabPanel>
+      <TabPanel value={value} index={4}>
         <Box
           component="main"
           sx={{
@@ -382,7 +436,7 @@ const UserPage = () => {
 
 
         </Box>
-      </CustomTabPanel>
+      </TabPanel>
     </div>
   );
 };
