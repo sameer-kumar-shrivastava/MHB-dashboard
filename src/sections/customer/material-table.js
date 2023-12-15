@@ -190,8 +190,9 @@ const Materialtable = () => {
             },
             sx: {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                backgroundColor: [2, 5, 7].includes(row.index) ? 'rgba(217, 30, 24,0.5)' : 'inherit',
+                backgroundColor: getBackgroundColor(row.original.family_name),
                 color: 'red',
+
             },
         }),
         renderDetailPanel: ({ row }) => (
@@ -214,19 +215,19 @@ const Materialtable = () => {
                         <Table size="small">
                             <TableRow >
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                <TableCell>{row.original.homehub[0].Hub_id}</TableCell>
+                                {/* <TableCell>{row.original.homehub[0].Hub_id}</TableCell> */}
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
-                                <TableCell>{row.original.homehub[0].Slaves_Connected}</TableCell>
+                                {/* <TableCell>{row.original.homehub[0].Slaves_Connected}</TableCell> */}
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                <TableCell >{row.original.homehub[0].Hub_Firmware_version}</TableCell>
+                                {/* <TableCell >{row.original.homehub[0].Hub_Firmware_version}</TableCell> */}
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
-                                <TableCell >{row.original.homehub[0].Landline}</TableCell>
+                                {/* <TableCell >{row.original.homehub[0].Landline}</TableCell> */}
                             </TableRow>
                         </Table>
                     </Stack>
@@ -244,31 +245,31 @@ const Materialtable = () => {
 
                                 <TableRow >
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                    <TableCell>   {row.original.beacon[0].Beacon_id}</TableCell>
+                                    {/* <TableCell>   {row.original.beacon[0].Beacon_id}</TableCell> */}
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                                    <TableCell> {row.original.beacon[0].Battery_Level}</TableCell>
+                                    {/* <TableCell> {row.original.beacon[0].Battery_Level}</TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
-                                    <TableCell>{row.original.beacon[0].Solar_Level}</TableCell>
+                                    {/* <TableCell>{row.original.beacon[0].Solar_Level}</TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
-                                    <TableCell> {row.original.beacon[0].Temp}</TableCell>
+                                    {/* <TableCell> {row.original.beacon[0].Temp}</TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                                    <TableCell> {row.original.beacon[0].RSSI}</TableCell>
+                                    {/* <TableCell> {row.original.beacon[0].RSSI}</TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                    <TableCell> {row.original.beacon[0].Firmware_version}</TableCell>
+                                    {/* <TableCell> {row.original.beacon[0].Firmware_version}</TableCell> */}
 
                                 </TableRow>
                             </Table>
@@ -287,12 +288,12 @@ const Materialtable = () => {
 
                                 <TableRow >
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                    <TableCell>{row.original.puck[0].Puck_id}</TableCell>
+                                    {/* <TableCell>{row.original.puck[0].Puck_id}</TableCell> */}
 
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                                    <TableCell>{row.original.puck[0].Puck_Battery_Level}</TableCell>
+                                    {/* <TableCell>{row.original.puck[0].Puck_Battery_Level}</TableCell> */}
                                 </TableRow>
 
                                 {/* <TableRow>
@@ -302,13 +303,13 @@ const Materialtable = () => {
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                                    <TableCell>{row.original.puck[0].RSSI_Signal}</TableCell>
+                                    {/* <TableCell>{row.original.puck[0].RSSI_Signal}</TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
                                     <TableCell >
-                                        {row.original.puck[0].Puck_Firmware_Version}
+                                        {/* {row.original.puck[0].Puck_Firmware_Version} */}
                                     </TableCell>
                                 </TableRow>
                             </Table>
@@ -321,7 +322,7 @@ const Materialtable = () => {
 
     });
 
-    return <MaterialReactTable table={subtable} />;
+    return <MaterialReactTable table={table} />;
 };
 
 export default Materialtable;

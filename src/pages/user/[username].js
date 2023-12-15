@@ -401,16 +401,7 @@ const UserPage = () => {
                     />
                   </Stack>
                 </CardContent>
-                {/* <Divider /> */}
-                <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Button variant="contained" onClick={() => handleSave('beacon')}>
-                    Save
-                  </Button>
-                </CardActions>
-              </Card>
-            </Container>
-            <Container>
-              <Card>
+                <Card>
                 <CardHeader title="Charge Control" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
                 {/* <Divider /> */}
                 <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
@@ -424,13 +415,23 @@ const UserPage = () => {
                     />
                   </Stack>
                 </CardContent>
-                {/* <Divider /> */}
+                {/* <Divider />
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
                   <Button variant="contained" onClick={() => handleSave('chargeControl')}>
                     Save
                   </Button>
+                </CardActions> */}
+              </Card>
+                <Divider />
+                <CardActions sx={{ justifyContent: 'flex-end' }}>
+                  <Button variant="contained" onClick={() => handleSave('beacon')}>
+                    Save
+                  </Button>
                 </CardActions>
               </Card>
+            </Container>
+            <Container>
+              
             </Container>
           </Stack>
 
