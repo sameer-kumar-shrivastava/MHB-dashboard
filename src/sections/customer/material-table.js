@@ -50,8 +50,19 @@ const Materialtable = () => {
 
             const data = response.data;
             console.log('Data:', data);
-            // Set the API data as the new table data
             setData(data['AWS-result']);
+            data['AWS-result'].forEach(user => {
+                if (user.address) {
+                    const address = user.address;
+                    const pinCodePattern = /\b\d{6}\b/;
+                    const match = address.match(pinCodePattern);
+                    const pinCode = match ? match[0] : null;
+                    const addressWithoutPinCode = address.replace(pinCodePattern, '').trim();
+                    console.log(`Pin Code for ${user.first_name} ${user.last_name}:`, pinCode);
+                    user.pinCode = pinCode;
+                    user.address = addressWithoutPinCode;
+                }
+            });
         } catch (error) {
             console.error('Error fetching data:', error.message);
         }
@@ -78,6 +89,10 @@ const Materialtable = () => {
                 header: 'Address'
             },
             {
+                accessorKey: 'pinCode',
+                header: 'Pin Code',
+            },
+            {
                 accessorKey: 'email',
                 header: 'Email',
                 // selector: row => row.email,
@@ -97,7 +112,8 @@ const Materialtable = () => {
             {
                 accessorKey: 'os',
                 header: 'Operating system',
-            }
+            },
+            
 
 
         ],
@@ -127,10 +143,10 @@ const Materialtable = () => {
 
     const getBackgroundColor = (family_name) => {
         if (family_name === 'Kumar' || family_name === 'C M') {
-          return 'rgba(217, 30, 24, 0.5)';
+            return 'rgba(217, 30, 24, 0.5)';
         }
         return 'inherit';
-      };
+    };
 
     const subtable = useMaterialReactTable({
         columns,
@@ -143,7 +159,7 @@ const Materialtable = () => {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
                 backgroundColor: getBackgroundColor(row.original.family_name),
                 color: 'red',
-                
+
             },
         }),
     });
