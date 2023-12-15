@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
 } from 'material-react-table';
+import axios from 'axios';
 
 import { useRouter } from 'next/router';
 
@@ -23,6 +24,52 @@ export const data = [
 ];
 
 const Householdtable = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const idToken = localStorage.getItem('idToken');
+                const { username } = router.query;
+
+                if (!username) {
+                    console.error('Username not provided in the URL.');
+                    return;
+                }
+                const response = await axios.get('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/users/getUsers', {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                });
+
+                const user = response.data['AWS-result'].find(user => user.family_name === username);
+
+                if (!user) {
+                    console.error(`User with username ${username} not found.`);
+                    return;
+                }
+
+                const userId = user.sub;
+
+                const secondApiResponse = await axios.post('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/hhmembers/getHHM', {
+                    user_id: userId,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = secondApiResponse.data.data;
+                console.log('Data:', data);
+                setData(data['AWS-result']);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const router = useRouter();
 
@@ -30,11 +77,11 @@ const Householdtable = () => {
         //column definitions...
         () => [
             {
-                accessorKey: 'firstName',
+                accessorKey: 'first_name',
                 header: 'First Name',
             },
             {
-                accessorKey: 'lastName',
+                accessorKey: 'last_name',
                 header: 'Last Name',
             },
 
@@ -43,7 +90,7 @@ const Householdtable = () => {
                 header: 'Email',
             },
             {
-                accessorKey: 'phone',
+                accessorKey: 'phone_number',
                 header: 'Phone',
             }
         ],
@@ -53,7 +100,7 @@ const Householdtable = () => {
 
     const handleRowClick = (row) => {
         // Extract the username from the clicked row data
-        const username = row.original.lastName.toLowerCase(); // Assuming 'lastName' contains the username
+        const username = row.original.last_name.toLowerCase(); // Assuming 'lastName' contains the username
     
         // Navigate to a new page with the username in the URL
         router.push(`/user/${username}`);
