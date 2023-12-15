@@ -61,6 +61,11 @@ const Materialtable = () => {
                     console.log(`Pin Code for ${user.first_name} ${user.last_name}:`, pinCode);
                     user.pinCode = pinCode;
                     user.address = addressWithoutPinCode;
+
+                    const cityPattern = /(?:[^,]+,\s*){3}([^,]+)(?=(,|$))/;
+                    const matchcity = address.match(cityPattern);
+                    const city = matchcity ? matchcity[1].trim() : null;
+                    user.city = city;
                 }
             });
         } catch (error) {
@@ -87,6 +92,10 @@ const Materialtable = () => {
             {
                 accessorKey: 'address',
                 header: 'Address'
+            },
+            {
+                accessorKey: 'city',
+                header: 'City'
             },
             {
                 accessorKey: 'pinCode',
