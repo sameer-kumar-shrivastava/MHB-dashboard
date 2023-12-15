@@ -90,7 +90,7 @@ const Materialtable = () => {
             },
             {
                 accessorKey: 'pinCode',
-                header: 'Pin Code',
+                header: 'ZipCode',
             },
             {
                 accessorKey: 'email',
