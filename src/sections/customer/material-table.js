@@ -22,16 +22,6 @@ import ExpandableRowGrid from './table';
 import ExpandTable from './table';
 import axios from 'axios';
 
-
-// function getSubByEmail(email) {
-//     for (const entry of data) {
-//         if (entry.email === email) {
-//             return { sub: entry.sub, lat: entry.lat, lon: entry.lon };
-//         }
-//     }
-//     return null;
-// }
-
 export let latitude = '';
 export let longitude = '';
 
@@ -52,13 +42,18 @@ const Materialtable = () => {
             console.log('Data:', data);
             setData(data['AWS-result']);
             data['AWS-result'].forEach(user => {
+                if (user.sub) {
+                    const userId = user.sub;
+                }}
+            )
+            data['AWS-result'].forEach(user => {
                 if (user.address) {
                     const address = user.address;
                     const pinCodePattern = /\b\d{6}\b/;
                     const match = address.match(pinCodePattern);
                     const pinCode = match ? match[0] : null;
                     const addressWithoutPinCode = address.replace(pinCodePattern, '').trim();
-                    console.log(`Pin Code for ${user.first_name} ${user.last_name}:`, pinCode);
+                    // console.log(`Pin Code for ${user.first_name} ${user.last_name}:`, pinCode);
                     user.pinCode = pinCode;
                     user.address = addressWithoutPinCode;
 
@@ -75,6 +70,30 @@ const Materialtable = () => {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const fetchDropdownData = async (userId) => {
+        try {
+            const idToken = localStorage.getItem('idToken');
+            const secondApiResponse = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getAllProp/${userId}`, {
+                    user_id: userId,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                        'Content-Type': 'application/json', // Add content type if needed
+                    },
+                });
+
+                const Dropdowndata = secondApiResponse.data.data;
+                console.log('Data:', Dropdowndata);
+        } catch (error) {
+            console.error('Error fetching data:', error.message);
+        }
+    };
+    useEffect(() => {
+        fetchDropdownData();
+    }, []);
+
+
 
     const router = useRouter();
 
