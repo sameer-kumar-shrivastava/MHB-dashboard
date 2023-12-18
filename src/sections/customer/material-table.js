@@ -41,11 +41,10 @@ const Materialtable = () => {
             const data = response.data;
             console.log('Data:', data);
             setData(data['AWS-result']);
+            let userId;
             data['AWS-result'].forEach(user => {
-                if (user.sub) {
-                    const userId = user.sub;
-                }}
-            )
+                    userId = user.sub;
+            })
             data['AWS-result'].forEach(user => {
                 if (user.address) {
                     const address = user.address;
@@ -74,25 +73,28 @@ const Materialtable = () => {
     const fetchDropdownData = async (userId) => {
         try {
             const idToken = localStorage.getItem('idToken');
-            const secondApiResponse = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getAllProp/${userId}`, {
-                    user_id: userId,
-                }, {
+            const secondApiResponse = await axios.post(
+                `https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getAllProp/${userId}`,
+                { user_id: userId },
+                {
                     headers: {
                         Authorization: `Bearer ${idToken}`,
-                        'Content-Type': 'application/json', // Add content type if needed
+                        'Content-Type': 'application/json',
                     },
-                });
+                }
+            );
 
-                const Dropdowndata = secondApiResponse.data.data;
-                console.log('Data:', Dropdowndata);
+            const dropdownData = secondApiResponse.data;
+            console.log('Data:', dropdownData);
+            return dropdownData.tuya_data;
         } catch (error) {
-            console.error('Error fetching data:', error.message);
+            console.error('Error fetching dropdown data:', error.message);
+            return null;
         }
     };
     useEffect(() => {
         fetchDropdownData();
     }, []);
-
 
 
     const router = useRouter();
@@ -141,7 +143,7 @@ const Materialtable = () => {
                 accessorKey: 'os',
                 header: 'Operating system',
             },
-            
+
 
 
         ],
@@ -175,22 +177,6 @@ const Materialtable = () => {
         }
         return 'inherit';
     };
-
-    const subtable = useMaterialReactTable({
-        columns,
-        data,
-        muiTableBodyRowProps: ({ row }) => ({
-            onClick: (event) => {
-                handleRowClick(row);
-            },
-            sx: {
-                cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                backgroundColor: getBackgroundColor(row.original.family_name),
-                color: 'red',
-
-            },
-        }),
-    });
 
     const table = useMaterialReactTable({
         columns,
