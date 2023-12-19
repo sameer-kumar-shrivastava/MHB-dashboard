@@ -29,6 +29,8 @@ export let longitude = '';
 const Materialtable = () => {
     const [data, setData] = useState([]);
     const [dropdownData, setDropdownData] = useState(null);
+    const [dropdownDataMap, setDropdownDataMap] = useState({});
+    const [loadingMap, setLoadingMap] = useState({});
 
     const fetchData = async () => {
         try {
@@ -84,10 +86,18 @@ const Materialtable = () => {
 
             const dropdownData = secondApiResponse.data;
             console.log('Data:', dropdownData);
-            return dropdownData.tuya_data;
+            // setDropdownData(dropdownData.tuya_data);
+            // return dropdownData.tuya_data;
+            setDropdownDataMap((prevDataMap) => ({
+                ...prevDataMap,
+                [userId]: dropdownData.tuya_data || null,
+            }));
         } catch (error) {
             console.error('Error fetching dropdown data:', error.message);
-            return null;
+            setDropdownDataMap((prevDataMap) => ({
+                ...prevDataMap,
+                [userId]: null,
+            }));
         }
     };
     useEffect(() => {
@@ -177,17 +187,21 @@ const Materialtable = () => {
     };
 
     const renderDetailPanel = ({ row }) => {
-        const userId = row.original.sub;
         useEffect(() => {
-            fetchDropdownData(userId);
-        }, [userId]);
+            if (row.original.sub) {
+                fetchDropdownData(row.original.sub);
+            }
+        }, [row.original.sub]);
+
+        const dropdownData = dropdownDataMap[row.original.sub];
+
         return (
             <Box
                 sx={{
                     width: '100%',
                 }}
             >
-                {dropdownData && (
+                {dropdownData ? (
                     <Stack direction="row" spacing={5}>
 
                         <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
@@ -202,7 +216,7 @@ const Materialtable = () => {
                             <Table size="small">
                                 <TableRow >
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                    <TableCell>{dropdownData.hh_id}</TableCell>
+                                    <TableCell>{dropdownData.hh_id || "N/A"}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
@@ -303,6 +317,10 @@ const Materialtable = () => {
                             </Box>
                         </Stack>
                     </Stack>
+                ): (
+                    <Typography variant="body2" color="textSecondary">
+                        No data available.
+                    </Typography>
                 )}
             </Box >
         );
