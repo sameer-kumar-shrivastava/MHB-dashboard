@@ -169,8 +169,7 @@ const Materialtable = () => {
     }
 
     const handleRowClick = (row) => {
-        // Extract the username from the clicked row data
-        const username = row.original.family_name; // Assuming 'lastName' contains the username
+        const username = row.original.family_name;
         const email = row.original.email;
         const body = getSubByEmail(email);
         console.log(email, body);
@@ -220,15 +219,15 @@ const Materialtable = () => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
-                                    {/* <TableCell>{row.original.homehub[0].Slaves_Connected}</TableCell> */}
+                                    <TableCell>{dropdownData.slaves_connected || "N/A"}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                    {/* <TableCell >{row.original.homehub[0].Hub_Firmware_version}</TableCell> */}
+                                    <TableCell >{dropdownData.hh_fw_ver}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
-                                    {/* <TableCell >{row.original.homehub[0].Landline}</TableCell> */}
+                                    <TableCell >{dropdownData.landline}</TableCell>
                                 </TableRow>
                             </Table>
                         </Stack>
@@ -246,31 +245,31 @@ const Materialtable = () => {
 
                                     <TableRow >
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                        {/* <TableCell>   {row.original.beacon[0].Beacon_id}</TableCell> */}
+                                        <TableCell>   {dropdownData.b_id}</TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                                        {/* <TableCell> {row.original.beacon[0].Battery_Level}</TableCell> */}
+                                        <TableCell> {dropdownData.b_batt_lvl}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
-                                        {/* <TableCell>{row.original.beacon[0].Solar_Level}</TableCell> */}
+                                        <TableCell>{dropdownData.b_solar_lvl}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
-                                        {/* <TableCell> {row.original.beacon[0].Temp}</TableCell> */}
+                                        <TableCell> {dropdownData.b_temp}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                                        {/* <TableCell> {row.original.beacon[0].RSSI}</TableCell> */}
+                                        <TableCell> {dropdownData.b_rssi}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                        {/* <TableCell> {row.original.beacon[0].Firmware_version}</TableCell> */}
+                                        <TableCell> {dropdownData.b_fw_ver}</TableCell>
 
                                     </TableRow>
                                 </Table>
@@ -289,12 +288,12 @@ const Materialtable = () => {
 
                                     <TableRow >
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                        {/* <TableCell>{row.original.puck[0].Puck_id}</TableCell> */}
+                                        <TableCell>{dropdownData.gp_id}</TableCell>
 
                                     </TableRow>
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                                        {/* <TableCell>{row.original.puck[0].Puck_Battery_Level}</TableCell> */}
+                                        <TableCell>{dropdownData.g_batt_lvl}</TableCell>
                                     </TableRow>
 
                                     {/* <TableRow>
@@ -304,13 +303,13 @@ const Materialtable = () => {
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                                        {/* <TableCell>{row.original.puck[0].RSSI_Signal}</TableCell> */}
+                                        <TableCell>{dropdownData.g_rssi}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
                                         <TableCell >
-                                            {/* {row.original.puck[0].Puck_Firmware_Version} */}
+                                            {dropdownData.g_fw_ver}
                                         </TableCell>
                                     </TableRow>
                                 </Table>
