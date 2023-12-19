@@ -28,6 +28,7 @@ export let longitude = '';
 
 const Materialtable = () => {
     const [data, setData] = useState([]);
+    const [dropdownData, setDropdownData] = useState(null);
 
     const fetchData = async () => {
         try {
@@ -43,7 +44,7 @@ const Materialtable = () => {
             setData(data['AWS-result']);
             let userId;
             data['AWS-result'].forEach(user => {
-                    userId = user.sub;
+                userId = user.sub;
             })
             data['AWS-result'].forEach(user => {
                 if (user.address) {
@@ -66,9 +67,6 @@ const Materialtable = () => {
             console.error('Error fetching data:', error.message);
         }
     };
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     const fetchDropdownData = async (userId) => {
         try {
@@ -93,7 +91,7 @@ const Materialtable = () => {
         }
     };
     useEffect(() => {
-        fetchDropdownData();
+        fetchData();
     }, []);
 
 
@@ -178,6 +176,138 @@ const Materialtable = () => {
         return 'inherit';
     };
 
+    const renderDetailPanel = ({ row }) => {
+        const userId = row.original.sub;
+        useEffect(() => {
+            fetchDropdownData(userId);
+        }, [userId]);
+        return (
+            <Box
+                sx={{
+                    width: '100%',
+                }}
+            >
+                {dropdownData && (
+                    <Stack direction="row" spacing={5}>
+
+                        <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
+                            <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
+                                {"User Provided Name"}
+                            </Typography>
+                            <Divider />
+                            <Typography sx={{ fontSize: "12px" }} >
+                                Home Hub
+                            </Typography>
+
+                            <Table size="small">
+                                <TableRow >
+                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                    <TableCell>{dropdownData.hh_id}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
+                                    {/* <TableCell>{row.original.homehub[0].Slaves_Connected}</TableCell> */}
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                    {/* <TableCell >{row.original.homehub[0].Hub_Firmware_version}</TableCell> */}
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
+                                    {/* <TableCell >{row.original.homehub[0].Landline}</TableCell> */}
+                                </TableRow>
+                            </Table>
+                        </Stack>
+                        <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
+                            <Box sx={{}}>
+                                <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
+                                    {"User Provided Name"}
+                                </Typography>
+                                <Divider />
+                                <Typography sx={{ fontSize: "12px" }} >
+                                    Beacon
+                                </Typography>
+
+                                <Table size="small" align="center">
+
+                                    <TableRow >
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                        {/* <TableCell>   {row.original.beacon[0].Beacon_id}</TableCell> */}
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                                        {/* <TableCell> {row.original.beacon[0].Battery_Level}</TableCell> */}
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
+                                        {/* <TableCell>{row.original.beacon[0].Solar_Level}</TableCell> */}
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
+                                        {/* <TableCell> {row.original.beacon[0].Temp}</TableCell> */}
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                                        {/* <TableCell> {row.original.beacon[0].RSSI}</TableCell> */}
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                        {/* <TableCell> {row.original.beacon[0].Firmware_version}</TableCell> */}
+
+                                    </TableRow>
+                                </Table>
+                            </Box>
+                        </Stack>
+                        <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
+                            <Box sx={{}}>
+                                <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
+                                    {"User Provided Name"}
+                                </Typography>
+                                <Divider />
+                                <Typography sx={{ fontSize: "12px" }} >
+                                    Puck
+                                </Typography>
+                                <Table size="small">
+
+                                    <TableRow >
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                        {/* <TableCell>{row.original.puck[0].Puck_id}</TableCell> */}
+
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                                        {/* <TableCell>{row.original.puck[0].Puck_Battery_Level}</TableCell> */}
+                                    </TableRow>
+
+                                    {/* <TableRow>
+                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Accelermeter</TableCell>
+                                <TableCell>{row.original.puck[0].Accelerometer}</TableCell>
+                            </TableRow> */}
+
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                                        {/* <TableCell>{row.original.puck[0].RSSI_Signal}</TableCell> */}
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                        <TableCell >
+                                            {/* {row.original.puck[0].Puck_Firmware_Version} */}
+                                        </TableCell>
+                                    </TableRow>
+                                </Table>
+                            </Box>
+                        </Stack>
+                    </Stack>
+                )}
+            </Box >
+        );
+    }
+
     const table = useMaterialReactTable({
         columns,
         data,
@@ -200,130 +330,7 @@ const Materialtable = () => {
 
             },
         }),
-        renderDetailPanel: ({ row }) => (
-            <Box
-                sx={{
-                    width: '100%',
-                }}
-            >
-                <Stack direction="row" spacing={5}>
-
-                    <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
-                        <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
-                            {"User Provided Name"}
-                        </Typography>
-                        <Divider />
-                        <Typography sx={{ fontSize: "12px" }} >
-                            Home Hub
-                        </Typography>
-
-                        <Table size="small">
-                            <TableRow >
-                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                {/* <TableCell>{row.original.homehub[0].Hub_id}</TableCell> */}
-                            </TableRow>
-                            <TableRow>
-                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
-                                {/* <TableCell>{row.original.homehub[0].Slaves_Connected}</TableCell> */}
-                            </TableRow>
-                            <TableRow>
-                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                {/* <TableCell >{row.original.homehub[0].Hub_Firmware_version}</TableCell> */}
-                            </TableRow>
-                            <TableRow>
-                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
-                                {/* <TableCell >{row.original.homehub[0].Landline}</TableCell> */}
-                            </TableRow>
-                        </Table>
-                    </Stack>
-                    <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
-                        <Box sx={{}}>
-                            <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
-                                {"User Provided Name"}
-                            </Typography>
-                            <Divider />
-                            <Typography sx={{ fontSize: "12px" }} >
-                                Beacon
-                            </Typography>
-
-                            <Table size="small" align="center">
-
-                                <TableRow >
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                    {/* <TableCell>   {row.original.beacon[0].Beacon_id}</TableCell> */}
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                                    {/* <TableCell> {row.original.beacon[0].Battery_Level}</TableCell> */}
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
-                                    {/* <TableCell>{row.original.beacon[0].Solar_Level}</TableCell> */}
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
-                                    {/* <TableCell> {row.original.beacon[0].Temp}</TableCell> */}
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                                    {/* <TableCell> {row.original.beacon[0].RSSI}</TableCell> */}
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                    {/* <TableCell> {row.original.beacon[0].Firmware_version}</TableCell> */}
-
-                                </TableRow>
-                            </Table>
-                        </Box>
-                    </Stack>
-                    <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
-                        <Box sx={{}}>
-                            <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
-                                {"User Provided Name"}
-                            </Typography>
-                            <Divider />
-                            <Typography sx={{ fontSize: "12px" }} >
-                                Puck
-                            </Typography>
-                            <Table size="small">
-
-                                <TableRow >
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                                    {/* <TableCell>{row.original.puck[0].Puck_id}</TableCell> */}
-
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                                    {/* <TableCell>{row.original.puck[0].Puck_Battery_Level}</TableCell> */}
-                                </TableRow>
-
-                                {/* <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Accelermeter</TableCell>
-                                    <TableCell>{row.original.puck[0].Accelerometer}</TableCell>
-                                </TableRow> */}
-
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                                    {/* <TableCell>{row.original.puck[0].RSSI_Signal}</TableCell> */}
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                                    <TableCell >
-                                        {/* {row.original.puck[0].Puck_Firmware_Version} */}
-                                    </TableCell>
-                                </TableRow>
-                            </Table>
-                        </Box>
-                    </Stack>
-                </Stack>
-
-            </Box >
-        ),
+        renderDetailPanel,
 
     });
 
