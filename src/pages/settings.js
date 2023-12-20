@@ -18,6 +18,7 @@ import Slider from '@mui/material/Slider';
 import { AccountProfile } from 'src/sections/account/account-profile';
 import { AccountProfileDetails } from 'src/sections/account/account-profile-details';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,11 +54,14 @@ function a11yProps(index) {
 }
 
 const Page = () => {
+  const [userId, setUserId] = useState(null);
+  const [brightness, setBrightness] = useState(50);
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const router = useRouter();
+  const { username } = router.query;
 
   const handleBeconClick = () => {
     router.push('/settings/beacon');
@@ -89,6 +93,10 @@ const Page = () => {
       ...prevData,
       color: color.rgb,
     }));
+  };
+
+  const handleBrightnessChange = (event, newValue) => {
+    setBrightness(newValue);
   };
 
   const [chargeControlData, setChargeControlData] = useState({
@@ -143,10 +151,79 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const idToken = localStorage.getItem('idToken');
+        const { username } = router.query;
 
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault();
-  }, []);
+        if (!username) {
+          console.error('Username not provided in the URL.');
+          return;
+        }
+        const response = await axios.get('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/users/getUsers', {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        });
+
+        const user = response.data['AWS-result'].find(user => user.family_name === username);
+
+        if (!user) {
+          console.error(`User with username ${username} not found.`);
+          return;
+        }
+
+        const obtainedUserId = user.sub;
+        setUserId(obtainedUserId);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [username]);
+
+
+  // const handleSubmit = async () => {
+  //   try {
+  //     const idToken = localStorage.getItem('idToken');
+  //     const apiUrl = 'https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/storeDeviceProps/';
+
+  //     const dataToSend = {
+  //       user_id: userId,
+  //       R: beaconData.color.r,
+  //       G: beaconData.color.g,
+  //       B: beaconData.color.b,
+  //       brightness: brightness,
+  //       led_ON_TIME: beaconData.onTime,
+  //       led_OFF_TIME: beaconData.offTime,
+  //       led_DURATION: beaconData.duration,
+  //       buzz_ON_TIME: buzzerData.onTime,
+  //       buzz_OFF_TIME: buzzerData.offTime,
+  //       buzz_DURATION: buzzerData.duration,
+  //       charge_control: chargeControlData.minBatteryPercentage,
+  //     };
+
+  //     console.log('Data to send:', dataToSend);
+
+  //     const response = await axios.post(apiUrl, dataToSend,
+  //       {
+  //         headers: {
+  //             Authorization: `Bearer ${idToken}`,
+  //             'Content-Type': 'application/json',
+  //         },
+  //     });
+  //     console.log('API Response:', response);
+
+  //     if (response.status !== 200) {
+  //       throw new Error('Failed to save data');
+  //     }
+  //     console.log('Data saved successfully');
+  //   } catch (error) {
+  //     console.error('Error saving data:', error);
+  //   }
+  // };
 
   return (
     <>
@@ -232,7 +309,11 @@ const Page = () => {
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
                     <Box sx={{ width: 400 }}>
                       <Typography >Brightness:</Typography>
-                      <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+                      <Slider
+                        value={brightness}
+                        onChange={handleBrightnessChange}
+                        aria-label="Default"
+                        valueLabelDisplay="auto" />
                     </Box>
                     <TextField
                       label="Pattern On-Time (ms)"
@@ -294,7 +375,10 @@ const Page = () => {
               </Card>
                 {/* <Divider /> */}
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Button variant="contained" onClick={() => handleSave('beacon')}>
+                <Button variant="contained" onClick={() => {
+                    handleSave('beacon');
+                    handleSubmit();
+                  }}>
                     Save
                   </Button>
                 </CardActions>

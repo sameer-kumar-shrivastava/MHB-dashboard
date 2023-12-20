@@ -36,11 +36,11 @@ const Emergencytable = () => {
                 const userId = user.sub;
 
                 const secondApiResponse = await axios.post('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/contact/getEC', {
-                    user_id: userId, // Place the user_id directly in the request body
+                    user_id: userId,
                 }, {
                     headers: {
                         Authorization: `Bearer ${idToken}`,
-                        'Content-Type': 'application/json', // Add content type if needed
+                        'Content-Type': 'application/json',
                     },
                 });
 
@@ -83,10 +83,8 @@ const Emergencytable = () => {
     );
 
     const handleRowClick = (row) => {
-        // Extract the username from the clicked row data
-        const username = row.original.last_name.toLowerCase(); // Assuming 'lastName' contains the username
+        const username = row.original.last_name.toLowerCase();
 
-        // Navigate to a new page with the username in the URL
         router.push(`/user/${username}`);
     };
 

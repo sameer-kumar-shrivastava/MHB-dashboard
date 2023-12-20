@@ -1,39 +1,125 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
 } from 'material-react-table';
-
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import DoneIcon from '@mui/icons-material/Done';
 
-export const data = [
-    {
-        date: '11-04-2023',
-        time: '18:20',
-        battery_start: 75,      
-        battery_end: 50,
-        color: "Red",
-        output_power: "5W",
-        temp_start: "25°C",
-        temp_end: "28°C",
-        home: "NO"
-    },
-    {
-        date: '02-14-2023',
-        time: '11:24',
-        battery_start: 80,      
-        battery_end: 55,
-        color: "Green",
-        output_power: "5W",
-        temp_start: "25°C",
-        temp_end: "28°C",
-        home: "YES"
-      
-    },
-];
+// export const data = [
+//     {
+//         date: '11-04-2023',
+//         time: '18:20',
+//         battery_start: 75,      
+//         battery_end: 50,
+//         color: "Red",
+//         output_power: "5W",
+//         temp_start: "25°C",
+//         temp_end: "28°C",
+//         home: "NO"
+//     },
+//     {
+//         date: '02-14-2023',
+//         time: '11:24',
+//         battery_start: 80,      
+//         battery_end: 55,
+//         color: "Green",
+//         output_power: "5W",
+//         temp_start: "25°C",
+//         temp_end: "28°C",
+//         home: "YES"
+
+//     },
+// ];
 
 const Beaconlogtable = () => {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const idToken = localStorage.getItem('idToken');
+                const { username } = router.query;
+
+                if (!username) {
+                    console.error('Username not provided in the URL.');
+                    return;
+                }
+                const response = await axios.get('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/users/getUsers', {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                });
+
+                const user = response.data['AWS-result'].find(user => user.family_name === username);
+
+                if (!user) {
+                    console.error(`User with username ${username} not found.`);
+                    return;
+                }
+
+                const userId = user.sub;
+
+                const secondApiResponse = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getBeaconLogs/${userId}`,
+                    {
+                        user_id: userId
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`
+                        },
+                    });
+
+                const data = secondApiResponse.data;
+                console.log('Beacon logs:', data);
+                setData(data['logs']);
+                data['logs'].forEach(log => {
+                    const onoff = log.ON_OFF_Time;
+                    const onPattern = /ON#(\d+)/;
+                    const onMatch = onoff.match(onPattern);
+                    const onTime = onMatch ? onMatch[1] : null;
+                    log.onTime = onTime;
+
+                    const offPattern = /OFF#(\d+)/;
+                    const offmatch = onoff.match(offPattern);
+                    const offTime = onMatch ? offmatch[1] : null;
+                    log.offTime = offTime;
+                })
+                data['logs'].forEach(log => {
+                    const rgbstring = log.RGBValues;
+                    const rgbPattern = /([RGB])#(\d+)/g;
+                    let match;
+                    log.rgbValues = {
+                        R: 0,
+                        G: 0,
+                        B: 0,
+                    };
+
+                    while ((match = rgbPattern.exec(rgbstring)) !== null) {
+                        const [, color, value] = match;
+                        log.rgbValues[color] = parseInt(value, 10);
+                    }
+
+                    const rgbString = `rgb(${log.rgbValues.R},${log.rgbValues.G},${log.rgbValues.B})`;
+                    log.rgbString = rgbString;
+                });
+                data['logs'].forEach(log => {
+                    const dateTime = new Date(log.date_time);
+                    const formattedDate = dateTime.toLocaleDateString();
+                    const formattedTime = dateTime.toLocaleTimeString();
+                    log.formattedDate = formattedDate;
+                    log.formattedTime = formattedTime;
+                });
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const router = useRouter();
 
@@ -41,41 +127,65 @@ const Beaconlogtable = () => {
         //column definitions...
         () => [
             {
-                accessorKey: 'date',
+                accessorKey: 'formattedDate',
                 header: 'Date',
             },
             {
-                accessorKey: 'time',
+                accessorKey: 'formattedTime',
                 header: 'Time',
+            },
+            {
+                accessorKey: 'device_id',
+                header: 'Device Id',
+            },
+            {
+                accessorKey: 'Device_name',
+                header: 'Device Name',
+            },
+            {
+                accessorKey: 'Operated_by',
+                header: 'Operated By',
             },
 
             {
-                accessorKey: 'battery_start',
-                header: 'Battery Level at  Start',
+                accessorKey: 'Beacon',
+                header: 'Beacon',
             },
             {
-                accessorKey: 'battery_end',
-                header: 'Battery Level at end',
+                accessorKey: 'Operation',
+                header: 'Operation',
             },
             {
-                accessorKey: 'color',
-                header: 'Color',
+                accessorKey: 'Remarks',
+                header: 'Remarks',
             },
             {
-                accessorKey: 'output_power',
-                header: 'Output Power',
+                accessorKey: 'LED_Brightness',
+                header: 'LED Brightness',
             },
             {
-                accessorKey: 'temp_start',
-                header: 'Temperature at Start',
+                accessorKey: 'Charge_Control',
+                header: 'Charge Control',
             },
             {
-                accessorKey: 'temp_end',
-                header: 'Temperature at End',
+                accessorKey: "rgbString",
+                header: "RGB Values"
             },
             {
-                accessorKey: 'home',
-                header: 'In Home',
+                accessorKey: 'onTime',
+                header: 'On Time',
+            },
+            {
+                accessorKey: 'offTime',
+                header: 'Off Time',
+            },
+            {
+                accessorKey: 'Active_Duration',
+                header: 'Active Duartion',
+            },
+            {
+                accessorKey: 'Beacon_battery',
+                header: 'Beacon Battery',
             }
         ],
         [],
