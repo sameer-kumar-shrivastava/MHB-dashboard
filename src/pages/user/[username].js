@@ -15,7 +15,7 @@ import Head from 'next/head';
 import Emergencytable from './emergency-table';
 import Householdtable from './household-table';
 import { items } from './user-config';
-import { latitude, longitude, offline } from '../../sections/customer/material-table';
+import { latitude, longitude} from '../../sections/customer/material-table';
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import Slider from '@mui/material/Slider';
@@ -71,6 +71,9 @@ const UserPage = () => {
   const router = useRouter();
   const { username } = router.query;
   const pathname = usePathname();
+  const { isBeaconAlive, isGarageAlive } = router.query;
+const booleanIsBeaconAlive = isBeaconAlive === 'true';
+const booleanIsGarageAlive = isGarageAlive === 'true';
 
   const [value, setValue] = React.useState(0);
 
@@ -80,7 +83,7 @@ const UserPage = () => {
 
   const tabWidth = '10vw';
 
-  const warningIconColor = username === 'Kumar' || username === 'C M' ? 'red' : 'rgb(255, 195, 0 )';
+  const warningIconColor = (booleanIsGarageAlive || booleanIsBeaconAlive) ? 'red' : 'rgb(255, 195, 0)';
 
   const handleBrightnessChange = (event, newValue) => {
     setBeaconData((prevData) => ({

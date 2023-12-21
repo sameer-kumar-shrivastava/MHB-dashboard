@@ -25,14 +25,18 @@ import axios from 'axios';
 export let latitude = '';
 export let longitude = '';
 
+export const garageAliveMap = {};
+export const beaconAliveMap = {};
+
 
 const Materialtable = () => {
     const [data, setData] = useState([]);
-    const [dropdownData, setDropdownData] = useState(null);
     const [dropdownDataMap, setDropdownDataMap] = useState({});
     const [loadingMap, setLoadingMap] = useState({});
     const [firstName, setfirstName] = useState('');
     const [rowBackgroundColors, setRowBackgroundColors] = useState({});
+    const [userData, setUserData] = useState([]);
+
 
 
     const fetchData = async () => {
@@ -45,6 +49,23 @@ const Materialtable = () => {
             });
     
             const usersData = response.data['AWS-result'];
+            usersData.forEach(user => {
+                if (user.address) {
+                    const address = user.address;
+                    const pinCodePattern = /\b\d{6}\b/;
+                    const match = address.match(pinCodePattern);
+                    const pinCode = match ? match[0] : null;
+                    const addressWithoutPinCode = address.replace(pinCodePattern, '').trim();
+                    // console.log(`Pin Code for ${user.first_name} ${user.last_name}:`, pinCode);
+                    user.pinCode = pinCode;
+                    user.address = addressWithoutPinCode;
+
+                    const cityPattern = /(?:[^,]+,\s*){3}([^,]+)(?=(,|$))/;
+                    const matchcity = address.match(cityPattern);
+                    const city = matchcity ? matchcity[1].trim() : null;
+                    user.city = city;
+                }
+            });
             setData((prevData) => [...prevData, ...usersData]);
     
             const promises = usersData.map(async (user) => {
@@ -76,27 +97,12 @@ const Materialtable = () => {
                         ...prevColors,
                         [user.sub]: 'inherit',
                     }));
+                
                 }
             });
     
             await Promise.all(promises);
-            data['AWS-result'].forEach(user => {
-                if (user.address) {
-                    const address = user.address;
-                    const pinCodePattern = /\b\d{6}\b/;
-                    const match = address.match(pinCodePattern);
-                    const pinCode = match ? match[0] : null;
-                    const addressWithoutPinCode = address.replace(pinCodePattern, '').trim();
-                    // console.log(`Pin Code for ${user.first_name} ${user.last_name}:`, pinCode);
-                    user.pinCode = pinCode;
-                    user.address = addressWithoutPinCode;
-
-                    const cityPattern = /(?:[^,]+,\s*){3}([^,]+)(?=(,|$))/;
-                    const matchcity = address.match(cityPattern);
-                    const city = matchcity ? matchcity[1].trim() : null;
-                    user.city = city;
-                }
-            });
+            
         } catch (error) {
             console.error('Error fetching data:', error.message);
         }
@@ -208,8 +214,36 @@ const Materialtable = () => {
         console.log(email, body);
         latitude = body.lat;
         longitude = body.lon;
-        router.push(`/user/${username}`);
+    
+        const idToken = localStorage.getItem('idToken');
+        const userId = row.original.sub;
+        axios
+            .post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getDeviceStatus/${userId}`, {
+                user_id: userId,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            })
+            .then((response) => {
+                const apiData = response.data;
+                const isBeaconAlive = apiData && apiData.device_data && apiData.device_data.get_beacon_alive_status === false;
+                const isGarageAlive = apiData && apiData.device_data && apiData.device_data.get_garage_alive_status === false;
+    
+                router.push({
+                    pathname: `/user/${username}`,
+                    query: { isBeaconAlive, isGarageAlive},
+                });
+            })
+            .catch((error) => {
+                console.error(`Error fetching data for user ${row.original.sub}:`, error.message);
+                router.push({
+                    pathname: `/user/${username}`,
+                    query: { isBeaconAlive: false, isGarageAlive: false},
+                });
+            });
     };
+    
 
     const getBackgroundColor = (user) => {
         const backgroundColor = rowBackgroundColors[user.sub];
@@ -373,10 +407,11 @@ const Materialtable = () => {
                 handleRowClick(row);
             },
             sx: {
-                cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                cursor: 'pointer',
                 backgroundColor: getBackgroundColor(row.original),
-                color: 'red',
-
+                '&:hover': {
+                    backgroundColor: 'initial',  // Set hover color to default
+                },
             },
         }),
         renderDetailPanel,
