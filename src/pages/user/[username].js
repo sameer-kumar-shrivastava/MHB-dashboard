@@ -82,7 +82,10 @@ const UserPage = () => {
   const warningIconColor = username === 'Kumar' || username === 'C M' ? 'red' : 'rgb(255, 195, 0 )';
 
   const handleBrightnessChange = (event, newValue) => {
-    setBrightness(newValue);
+    setBeaconData((prevData) => ({
+      ...prevData,
+      brightness: newValue,
+    }));
   };
 
   const handleClose = () => {
@@ -93,6 +96,7 @@ const UserPage = () => {
 
   const [beaconData, setBeaconData] = useState({
     color: { r: 0, g: 0, b: 0, a: 1 },
+    brightness: 50,
     onTime: '',
     offTime: '',
     duration: '',
@@ -159,7 +163,7 @@ const UserPage = () => {
         R: beaconData.color.r,
         G: beaconData.color.g,
         B: beaconData.color.b,
-        brightness: brightness,
+        brightness: beaconData.brightness,
         led_ON_TIME: beaconData.onTime,
         led_OFF_TIME: beaconData.offTime,
         led_DURATION: beaconData.duration,
@@ -443,7 +447,7 @@ const UserPage = () => {
                     <Box sx={{ width: 400 }}>
                       <Typography >Brightness:</Typography>
                       <Slider
-                        value={brightness}
+                        value={beaconData.brightness}
                         onChange={handleBrightnessChange}
                         aria-label="Default"
                         valueLabelDisplay="auto" />
@@ -466,20 +470,20 @@ const UserPage = () => {
                   </Stack>
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
                     <Box sx={{ width: 400, paddingBottom: 4.5 }}>
-                      <Typography >Buzzer:</Typography>
+                      <Typography >LED:</Typography>
                     </Box>
                     <TextField
-                      label="On-Time (ms)"
+                      label="Pattern On-Time (ms)"
                       value={buzzerData.onTime}
                       onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
                     />
                     <TextField
-                      label="Off-Time (ms)"
+                      label="Pattern Off-Time (ms)"
                       value={buzzerData.offTime}
                       onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
                     />
                     <TextField
-                      label="Duration"
+                      label="Active Duration (sec)"
                       value={buzzerData.duration}
                       onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
                     />
@@ -509,7 +513,6 @@ const UserPage = () => {
                 <Divider />
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
                   <Button variant="contained" onClick={() => {
-                    handleSave('beacon');
                     handleSubmit();
                   }}>
                     Save
