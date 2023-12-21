@@ -31,6 +31,7 @@ const Materialtable = () => {
     const [dropdownData, setDropdownData] = useState(null);
     const [dropdownDataMap, setDropdownDataMap] = useState({});
     const [loadingMap, setLoadingMap] = useState({});
+    const [firstName, setfirstName] = useState('');
 
     const fetchData = async () => {
         try {
@@ -47,6 +48,8 @@ const Materialtable = () => {
             let userId;
             data['AWS-result'].forEach(user => {
                 userId = user.sub;
+                const firstName = user.given_name;
+                setfirstName(firstName || "N/A");
             })
             data['AWS-result'].forEach(user => {
                 if (user.address) {
@@ -70,7 +73,7 @@ const Materialtable = () => {
         }
     };
 
-    const fetchDropdownData = async (userId) => {
+    const fetchDropdownData = async (userId, firstName) => {
         try {
             const idToken = localStorage.getItem('idToken');
             const secondApiResponse = await axios.post(
@@ -88,6 +91,7 @@ const Materialtable = () => {
             console.log('Data:', dropdownData);
             // setDropdownData(dropdownData.tuya_data);
             // return dropdownData.tuya_data;
+            
             setDropdownDataMap((prevDataMap) => ({
                 ...prevDataMap,
                 [userId]: dropdownData.tuya_data || null,
@@ -203,14 +207,14 @@ const Materialtable = () => {
                 {dropdownData ? (
                     <Stack direction="row" spacing={5}>
 
-                        <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
-                            <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
-                                {"User Provided Name"}
+                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
+                            <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+                            {`${row.original.given_name}'s Hub` || "N/A"}
                             </Typography>
                             <Divider />
-                            <Typography sx={{ fontSize: "12px" }} >
+                            {/* <Typography sx={{ fontSize: "12px" }} >
                                 Home Hub
-                            </Typography>
+                            </Typography> */}
 
                             <Table size="small">
                                 <TableRow >
@@ -231,15 +235,15 @@ const Materialtable = () => {
                                 </TableRow>
                             </Table>
                         </Stack>
-                        <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
+                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
                             <Box sx={{}}>
-                                <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
-                                    {"User Provided Name"}
+                                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+                                {`${row.original.given_name}'s Beacon` || "N/A"}
                                 </Typography>
                                 <Divider />
-                                <Typography sx={{ fontSize: "12px" }} >
+                                {/* <Typography sx={{ fontSize: "12px" }} >
                                     Beacon
-                                </Typography>
+                                </Typography> */}
 
                                 <Table size="small" align="center">
 
@@ -275,15 +279,15 @@ const Materialtable = () => {
                                 </Table>
                             </Box>
                         </Stack>
-                        <Stack sx={{ width: "25%", overflowX: "scroll" }} textAlign='center'>
+                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
                             <Box sx={{}}>
-                                <Typography variant="h6" sx={{ fontSize: "14px" }} gutterBottom component="div">
-                                    {"User Provided Name"}
+                                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+                                    {`${row.original.given_name}'s Puck` || "N/A"}
                                 </Typography>
                                 <Divider />
-                                <Typography sx={{ fontSize: "12px" }} >
+                                {/* <Typography sx={{ fontSize: "12px" }} >
                                     Puck
-                                </Typography>
+                                </Typography> */}
                                 <Table size="small">
 
                                     <TableRow >

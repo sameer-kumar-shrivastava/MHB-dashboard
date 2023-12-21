@@ -29,6 +29,7 @@ import Beaconlogtable from './[username]/beaconlog-table';
 import Beaconerrortable from './[username]/beaconerror-table';
 import Pucklogtable from './[username]/pucklog-table';
 import Puckerrortable from './[username]/puckerror-table';
+import Devicetable from './[username]/device-table';
 import axios from 'axios';
 
 function TabPanel(props) {
@@ -96,7 +97,7 @@ const UserPage = () => {
 
   const [beaconData, setBeaconData] = useState({
     color: { r: 0, g: 0, b: 0, a: 1 },
-    brightness: 50,
+    brightness: '50',
     onTime: '',
     offTime: '',
     duration: '',
@@ -163,7 +164,7 @@ const UserPage = () => {
         R: beaconData.color.r,
         G: beaconData.color.g,
         B: beaconData.color.b,
-        brightness: beaconData.brightness,
+        brightness: String(beaconData.brightness),
         led_ON_TIME: beaconData.onTime,
         led_OFF_TIME: beaconData.offTime,
         led_DURATION: beaconData.duration,
@@ -178,10 +179,10 @@ const UserPage = () => {
       const response = await axios.post(apiUrl, dataToSend,
         {
           headers: {
-              Authorization: `Bearer ${idToken}`,
-              'Content-Type': 'application/json',
+            Authorization: `Bearer ${idToken}`,
+            'Content-Type': 'application/json',
           },
-      });
+        });
       console.log('API Response:', response);
 
       if (response.status !== 200) {
@@ -389,7 +390,12 @@ const UserPage = () => {
                 <TimeDisplay />
               </Stack>
             </div>
-            {/* </Stack> */}
+          </Stack>
+          <Stack spacing={1}>
+            <Typography variant="h6">Devices</Typography>
+            <Devicetable />
+          </Stack>
+          <Stack spacing={1}>
             <Typography variant="h6">Emergency Contacts</Typography>
             <Emergencytable />
           </Stack>

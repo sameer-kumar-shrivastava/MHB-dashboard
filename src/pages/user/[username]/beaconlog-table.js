@@ -7,31 +7,6 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import DoneIcon from '@mui/icons-material/Done';
 
-// export const data = [
-//     {
-//         date: '11-04-2023',
-//         time: '18:20',
-//         battery_start: 75,      
-//         battery_end: 50,
-//         color: "Red",
-//         output_power: "5W",
-//         temp_start: "25°C",
-//         temp_end: "28°C",
-//         home: "NO"
-//     },
-//     {
-//         date: '02-14-2023',
-//         time: '11:24',
-//         battery_start: 80,      
-//         battery_end: 55,
-//         color: "Green",
-//         output_power: "5W",
-//         temp_start: "25°C",
-//         temp_end: "28°C",
-//         home: "YES"
-
-//     },
-// ];
 
 const Beaconlogtable = () => {
 
