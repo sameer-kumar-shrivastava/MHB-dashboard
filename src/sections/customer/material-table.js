@@ -32,6 +32,8 @@ const Materialtable = () => {
     const [dropdownDataMap, setDropdownDataMap] = useState({});
     const [loadingMap, setLoadingMap] = useState({});
     const [firstName, setfirstName] = useState('');
+    const [rowBackgroundColors, setRowBackgroundColors] = useState({});
+
 
     const fetchData = async () => {
         try {
@@ -41,16 +43,43 @@ const Materialtable = () => {
                     Authorization: `Bearer ${idToken}`,
                 },
             });
-
-            const data = response.data;
-            console.log('Data:', data);
-            setData(data['AWS-result']);
-            let userId;
-            data['AWS-result'].forEach(user => {
-                userId = user.sub;
+    
+            const usersData = response.data['AWS-result'];
+            setData((prevData) => [...prevData, ...usersData]);
+    
+            const promises = usersData.map(async (user) => {
+                const userId = user.sub;
                 const firstName = user.given_name;
                 setfirstName(firstName || "N/A");
-            })
+    
+                try {
+                    const secondresponse = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getDeviceStatus/${userId}`, {
+                        user_id: userId,
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`,
+                        },
+                    });
+    
+                    const apiData = secondresponse.data;
+                    const isBeaconAlive = apiData && apiData.device_data && apiData.device_data.get_beacon_alive_status === false;
+                    const isGarageAlive = apiData && apiData.device_data && apiData.device_data.get_garage_alive_status === false;
+                    const backgroundColor = (isGarageAlive || isBeaconAlive) ? 'red' : 'inherit';
+    
+                    setRowBackgroundColors((prevColors) => ({
+                        ...prevColors,
+                        [userId]: backgroundColor,
+                    }));
+                } catch (error) {
+                    console.error(`Error fetching data for user ${user.sub}:`, error.message);
+                    setRowBackgroundColors((prevColors) => ({
+                        ...prevColors,
+                        [user.sub]: 'inherit',
+                    }));
+                }
+            });
+    
+            await Promise.all(promises);
             data['AWS-result'].forEach(user => {
                 if (user.address) {
                     const address = user.address;
@@ -182,11 +211,10 @@ const Materialtable = () => {
         router.push(`/user/${username}`);
     };
 
-    const getBackgroundColor = (family_name) => {
-        if (family_name === 'Kumar' || family_name === 'C M') {
-            return 'rgba(217, 30, 24, 0.5)';
-        }
-        return 'inherit';
+    const getBackgroundColor = (user) => {
+        const backgroundColor = rowBackgroundColors[user.sub];
+    
+        return backgroundColor !== undefined ? backgroundColor : 'inherit';
     };
 
     const renderDetailPanel = ({ row }) => {
@@ -346,7 +374,7 @@ const Materialtable = () => {
             },
             sx: {
                 cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                backgroundColor: getBackgroundColor(row.original.family_name),
+                backgroundColor: getBackgroundColor(row.original),
                 color: 'red',
 
             },
