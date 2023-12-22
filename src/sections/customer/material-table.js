@@ -14,6 +14,7 @@ import {
     Divider,
     Stack
 } from '@mui/material';
+import { darken, lighten, useTheme } from '@mui/material';
 
 
 import { useRouter } from 'next/router';
@@ -36,6 +37,17 @@ const Materialtable = () => {
     const [firstName, setfirstName] = useState('');
     const [rowBackgroundColors, setRowBackgroundColors] = useState({});
     const [userData, setUserData] = useState([]);
+    const [hoveredRow, setHoveredRow] = useState(null);
+
+    const theme = useTheme();
+
+    const handleMouseEnter = (row) => {
+        setHoveredRow(row);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredRow(null);
+    };
 
 
 
@@ -47,7 +59,7 @@ const Materialtable = () => {
                     Authorization: `Bearer ${idToken}`,
                 },
             });
-    
+
             const usersData = response.data['AWS-result'];
             usersData.forEach(user => {
                 if (user.address) {
@@ -67,12 +79,12 @@ const Materialtable = () => {
                 }
             });
             setData((prevData) => [...prevData, ...usersData]);
-    
+
             const promises = usersData.map(async (user) => {
                 const userId = user.sub;
                 const firstName = user.given_name;
                 setfirstName(firstName || "N/A");
-    
+
                 try {
                     const secondresponse = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getDeviceStatus/${userId}`, {
                         user_id: userId,
@@ -81,12 +93,12 @@ const Materialtable = () => {
                             Authorization: `Bearer ${idToken}`,
                         },
                     });
-    
+
                     const apiData = secondresponse.data;
                     const isBeaconAlive = apiData && apiData.device_data && apiData.device_data.get_beacon_alive_status === false;
                     const isGarageAlive = apiData && apiData.device_data && apiData.device_data.get_garage_alive_status === false;
                     const backgroundColor = (isGarageAlive || isBeaconAlive) ? 'red' : 'inherit';
-    
+
                     setRowBackgroundColors((prevColors) => ({
                         ...prevColors,
                         [userId]: backgroundColor,
@@ -97,12 +109,12 @@ const Materialtable = () => {
                         ...prevColors,
                         [user.sub]: 'inherit',
                     }));
-                
+
                 }
             });
-    
+
             await Promise.all(promises);
-            
+
         } catch (error) {
             console.error('Error fetching data:', error.message);
         }
@@ -126,7 +138,7 @@ const Materialtable = () => {
             console.log('Data:', dropdownData);
             // setDropdownData(dropdownData.tuya_data);
             // return dropdownData.tuya_data;
-            
+
             setDropdownDataMap((prevDataMap) => ({
                 ...prevDataMap,
                 [userId]: dropdownData.tuya_data || null,
@@ -214,7 +226,7 @@ const Materialtable = () => {
         console.log(email, body);
         latitude = body.lat;
         longitude = body.lon;
-    
+
         const idToken = localStorage.getItem('idToken');
         const userId = row.original.sub;
         axios
@@ -229,25 +241,25 @@ const Materialtable = () => {
                 const apiData = response.data;
                 const isBeaconAlive = apiData && apiData.device_data && apiData.device_data.get_beacon_alive_status === false;
                 const isGarageAlive = apiData && apiData.device_data && apiData.device_data.get_garage_alive_status === false;
-    
+
                 router.push({
                     pathname: `/user/${username}`,
-                    query: { isBeaconAlive, isGarageAlive},
+                    query: { isBeaconAlive, isGarageAlive },
                 });
             })
             .catch((error) => {
                 console.error(`Error fetching data for user ${row.original.sub}:`, error.message);
                 router.push({
                     pathname: `/user/${username}`,
-                    query: { isBeaconAlive: false, isGarageAlive: false},
+                    query: { isBeaconAlive: false, isGarageAlive: false },
                 });
             });
     };
-    
 
-    const getBackgroundColor = (user) => {
+
+    const getBackgroundColor = (user,isHovered) => {
         const backgroundColor = rowBackgroundColors[user.sub];
-    
+
         return backgroundColor !== undefined ? backgroundColor : 'inherit';
     };
 
@@ -271,7 +283,7 @@ const Materialtable = () => {
 
                         <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
                             <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
-                            {`${row.original.given_name}'s Hub` || "N/A"}
+                                {`${row.original.given_name}'s Hub` || "N/A"}
                             </Typography>
                             <Divider />
                             {/* <Typography sx={{ fontSize: "12px" }} >
@@ -300,7 +312,7 @@ const Materialtable = () => {
                         <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
                             <Box sx={{}}>
                                 <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
-                                {`${row.original.given_name}'s Beacon` || "N/A"}
+                                    {`${row.original.given_name}'s Beacon` || "N/A"}
                                 </Typography>
                                 <Divider />
                                 {/* <Typography sx={{ fontSize: "12px" }} >
@@ -382,7 +394,7 @@ const Materialtable = () => {
                             </Box>
                         </Stack>
                     </Stack>
-                ): (
+                ) : (
                     <Typography variant="body2" color="textSecondary">
                         No data available.
                     </Typography>
@@ -406,14 +418,12 @@ const Materialtable = () => {
             onClick: (event) => {
                 handleRowClick(row);
             },
+            onMouseEnter: () => handleMouseEnter(row),
+            onMouseLeave: handleMouseLeave,
             sx: {
                 cursor: 'pointer',
                 backgroundColor: getBackgroundColor(row.original),
-                '&:hover': {
-                    backgroundColor: 'initial',  // Set hover color to default
-                },
-            },
-        }),
+            }}),
         renderDetailPanel,
 
     });

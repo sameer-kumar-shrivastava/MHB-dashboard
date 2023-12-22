@@ -452,8 +452,8 @@ const booleanIsGarageAlive = isGarageAlive === 'true';
                 {/* <Divider /> */}
                 <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
                   <ChromePicker color={beaconData.color} onChange={handleColorChange} />
-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
-                    <Box sx={{ width: 400 }}>
+                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
+                    <Box sx={{ width: 300 }}>
                       <Typography >Brightness:</Typography>
                       <Slider
                         value={beaconData.brightness}
@@ -477,7 +477,7 @@ const booleanIsGarageAlive = isGarageAlive === 'true';
                       onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
                     />
                   </Stack>
-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
+                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
                     <Box sx={{ width: 400, paddingBottom: 4.5 }}>
                       <Typography >LED:</Typography>
                     </Box>
