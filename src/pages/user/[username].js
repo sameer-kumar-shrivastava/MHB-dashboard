@@ -15,7 +15,7 @@ import Head from 'next/head';
 import Emergencytable from './emergency-table';
 import Householdtable from './household-table';
 import { items } from './user-config';
-import { latitude, longitude} from '../../sections/customer/material-table';
+import { latitude, longitude } from '../../sections/customer/material-table';
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import Slider from '@mui/material/Slider';
@@ -72,8 +72,8 @@ const UserPage = () => {
   const { username } = router.query;
   const pathname = usePathname();
   const { isBeaconAlive, isGarageAlive } = router.query;
-const booleanIsBeaconAlive = isBeaconAlive === 'true';
-const booleanIsGarageAlive = isGarageAlive === 'true';
+  const booleanIsBeaconAlive = isBeaconAlive === 'true';
+  const booleanIsGarageAlive = isGarageAlive === 'true';
 
   const [value, setValue] = React.useState(0);
 
@@ -167,7 +167,7 @@ const booleanIsGarageAlive = isGarageAlive === 'true';
         R: beaconData.color.r,
         G: beaconData.color.g,
         B: beaconData.color.b,
-        brightness: String(beaconData.brightness),
+        brightness: (beaconData.brightness),
         led_ON_TIME: beaconData.onTime,
         led_OFF_TIME: beaconData.offTime,
         led_DURATION: beaconData.duration,
@@ -200,23 +200,24 @@ const booleanIsGarageAlive = isGarageAlive === 'true';
 
   const handleInputChange = (event, section, field) => {
     const value = event.target.value;
+    const numericValue = value === '' ? '' : parseFloat(value);
     switch (section) {
       case 'beacon':
         setBeaconData((prevData) => ({
           ...prevData,
-          [field]: value,
+          [field]: numericValue,
         }));
         break;
       case 'buzzer':
         setBuzzerData((prevData) => ({
           ...prevData,
-          [field]: value,
+          [field]: numericValue,
         }));
         break;
       case 'chargeControl':
         setChargeControlData((prevData) => ({
           ...prevData,
-          [field]: value,
+          [field]: numericValue,
         }));
         break;
       default:
