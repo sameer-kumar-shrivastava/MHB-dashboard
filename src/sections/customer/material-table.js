@@ -332,7 +332,7 @@ const Materialtable = () => {
 
                                     <TableRow>
                                         <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
-                                        <TableCell>{dropdownData.b_solar_lvl}</TableCell>
+                                        <TableCell>{dropdownData.b_solar_lvl !== undefined ? dropdownData.b_solar_lvl.toString() : "N/A"}</TableCell>
                                     </TableRow>
 
                                     <TableRow>

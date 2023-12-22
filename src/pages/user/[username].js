@@ -67,13 +67,12 @@ function a11yProps(index) {
 
 const UserPage = () => {
   const [userId, setUserId] = useState(null);
-  const [brightness, setBrightness] = useState(50);
   const router = useRouter();
   const { username } = router.query;
-  const pathname = usePathname();
   const { isBeaconAlive, isGarageAlive } = router.query;
   const booleanIsBeaconAlive = isBeaconAlive === 'true';
   const booleanIsGarageAlive = isGarageAlive === 'true';
+  const [defaultSettings, setDefaultSettings] = useState(null);
 
   const [value, setValue] = React.useState(0);
 
@@ -148,6 +147,24 @@ const UserPage = () => {
 
         const obtainedUserId = user.sub;
         setUserId(obtainedUserId);
+
+
+        const responseSettings = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getCurrentSettings/${obtainedUserId}`,
+        {
+          user_id : obtainedUserId
+        },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          }
+        );
+
+        if (responseSettings.data && responseSettings.data.success) {
+          setDefaultSettings(responseSettings.data.current_settings);
+        } else {
+          console.error('Failed to fetch default settings.');
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -155,6 +172,46 @@ const UserPage = () => {
 
     fetchData();
   }, [username]);
+
+  useEffect(() => {
+    if (defaultSettings) {
+      const beaconDefaultSettings = defaultSettings.find(
+        (setting) => setting.Beacon === 'LED'
+      );
+
+      const buzzerDefaultSettings = defaultSettings.find(
+        (setting) => setting.Beacon === 'Buzzer'
+      );
+
+      const chargeControlDefaultSettings = defaultSettings.find(
+        (setting) => setting.Beacon === 'Buzzer'
+      );
+
+      if (beaconDefaultSettings) {
+        setBeaconData({
+          color: { r: beaconDefaultSettings.R, g: beaconDefaultSettings.G, b: beaconDefaultSettings.B, a: 1 },
+          brightness: beaconDefaultSettings.BRIGHTNESS,
+          onTime: beaconDefaultSettings.ON_TIME,
+          offTime: beaconDefaultSettings.OFF_TIME,
+          duration: beaconDefaultSettings.DURATION,
+        });
+      }
+
+      if (buzzerDefaultSettings) {
+        setBuzzerData({
+          onTime: buzzerDefaultSettings.ON_TIME,
+          offTime: buzzerDefaultSettings.OFF_TIME,
+          duration: buzzerDefaultSettings.DURATION,
+        });
+      }
+
+      if (chargeControlDefaultSettings) {
+        setChargeControlData({
+          minBatteryPercentage: chargeControlDefaultSettings.charge_control,
+        });
+      }
+    }
+  }, [defaultSettings]);
 
 
   const handleSubmit = async () => {
@@ -167,7 +224,7 @@ const UserPage = () => {
         R: beaconData.color.r,
         G: beaconData.color.g,
         B: beaconData.color.b,
-        brightness: (beaconData.brightness),
+        led_BRIGHTNESS: (beaconData.brightness),
         led_ON_TIME: beaconData.onTime,
         led_OFF_TIME: beaconData.offTime,
         led_DURATION: beaconData.duration,

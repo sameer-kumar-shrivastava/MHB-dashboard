@@ -1,36 +1,102 @@
-import { useMemo } from 'react';
+import { useMemo,useState, useEffect } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
 } from 'material-react-table';
-
+import axios from 'axios';
 import { useRouter } from 'next/router';
 
-export const data = [
-    {
-        date: '11-23-2023',
-        time: '18:20',
-        status: "Open",
-        open_duration: 5,
-        battery_level: 56,
-        open_per: 100,
-        accelerometer_end:50,
-        accelerometer_start:10
-      
-    },
-    {
-        date: '11-23-2023',
-        time: '11:24',
-        status: "Open",
-        open_duration: 10,
-        battery_level: 57,
-        open_per: 84,
-        accelerometer_end:50,
-        accelerometer_start:10
-    },
-];
 
 const Pucklogtable = () => {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const idToken = localStorage.getItem('idToken');
+                const { username } = router.query;
+
+                if (!username) {
+                    console.error('Username not provided in the URL.');
+                    return;
+                }
+                const response = await axios.get('https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/users/getUsers', {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                });
+
+                const user = response.data['AWS-result'].find(user => user.family_name === username);
+
+                if (!user) {
+                    console.error(`User with username ${username} not found.`);
+                    return;
+                }
+
+                const userId = user.sub;
+
+                const secondApiResponse = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getPuckLogs/${userId}`,
+                    {
+                        user_id: userId
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`
+                        },
+                    });
+
+                const data = secondApiResponse.data;
+                console.log('Puck logs:', data);
+                setData(data['logs']);
+                // data['logs'].forEach(log => {
+                //     const onoff = log.ON_OFF_Time;
+                //     const onPattern = /ON#(\d+)/;
+                //     const onMatch = onoff.match(onPattern);
+                //     const onTime = onMatch ? onMatch[1] : null;
+                //     log.onTime = onTime;
+
+                //     const offPattern = /OFF#(\d+)/;
+                //     const offmatch = onoff.match(offPattern);
+                //     const offTime = onMatch ? offmatch[1] : null;
+                //     log.offTime = offTime;
+                // })
+                // data['logs'].forEach(log => {
+                //     const rgbstring = log.RGBValues;
+                //     const rgbPattern = /([RGB])#(\d+)/g;
+                //     let match;
+                //     log.rgbValues = {
+                //         R: 0,
+                //         G: 0,
+                //         B: 0,
+                //     };
+
+                //     while ((match = rgbPattern.exec(rgbstring)) !== null) {
+                //         const [, color, value] = match;
+                //         log.rgbValues[color] = parseInt(value, 10);
+                //     }
+
+                //     const rgbString = `rgb(${log.rgbValues.R},${log.rgbValues.G},${log.rgbValues.B})`;
+                //     log.rgbString = rgbString;
+                // });
+                data['logs'].forEach(log => {
+                    const dateTime = new Date(log.date_time);
+                    const formattedDate = dateTime.toLocaleDateString();
+                    const formattedTime = dateTime.toLocaleTimeString();
+                    log.formattedDate = formattedDate;
+                    log.formattedTime = formattedTime;
+
+                    const open_close_string = String(log.Open_Close);
+                    log.open_close_string = open_close_string;
+                });
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const router = useRouter();
 
@@ -38,43 +104,37 @@ const Pucklogtable = () => {
         //column definitions...
         () => [
             {
-                accessorKey: 'date',
+                accessorKey: 'formattedDate',
                 header: 'Date',
             },
             {
-                accessorKey: 'time',
+                accessorKey: 'formattedTime',
                 header: 'Time',
             },
-
             {
-                accessorKey: 'status',
-                header: 'Status',
+                accessorKey: 'device_id',
+                header: 'Device Id',
             },
             {
-                accessorKey: 'open_duration',
-                header: 'Open Duration(min)',
+                accessorKey: 'Operated_by',
+                header: 'Operated By',
             },
             {
-                accessorKey: 'battery_level',
-                header: 'Battery Level',
+                accessorKey: 'Operation',
+                header: 'Operation',
             },
             {
-                accessorKey: 'open_per',
-                header: 'Open %',
+                accessorKey: 'open_close_string',
+                header: 'Open or Close',
             },
             {
-                accessorKey: 'accelerometer_start',
-                header: 'Accelerometer_start',
-            },
-            {
-                accessorKey: 'accelerometer_end',
-                header: 'Accelerometer_start',
+                accessorKey: 'Battery_Percentage',
+                header: 'Puck Battery',
             }
         ],
         [],
         //end
     );
-
 
 
     const table = useMaterialReactTable({
