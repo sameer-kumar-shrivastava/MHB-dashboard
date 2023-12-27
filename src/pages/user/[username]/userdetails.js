@@ -41,13 +41,12 @@ const UserDetails = () => {
             });
 
             const user = response.data['AWS-result'].find(user => user.family_name === username);
-            const address = user.address;
+            const address1 = user.address;
             const pinCodePattern = /\b\d{6}\b/;
-            const match = address.match(pinCodePattern);
+            const match = address1.match(pinCodePattern);
             const pinCode = match ? match[0] : null;
-            const addressWithoutPinCode = address.replace(pinCodePattern, '').trim();
+            const address = address1.replace(pinCodePattern, '').trim();
             user.pinCode = pinCode;
-            user.address = addressWithoutPinCode;
             const cityPattern = /(?:[^,]+,\s*){3}([^,]+)(?=(,|$))/;
             const matchcity = address.match(cityPattern);
             const city = matchcity ? matchcity[1].trim() : null;
