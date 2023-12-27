@@ -30,6 +30,7 @@ import Beaconerrortable from './[username]/beaconerror-table';
 import Pucklogtable from './[username]/pucklog-table';
 import Puckerrortable from './[username]/puckerror-table';
 import Devicetable from './[username]/device-table';
+import UserDetails from './[username]/userdetails';
 import axios from 'axios';
 
 function TabPanel(props) {
@@ -451,6 +452,7 @@ const UserPage = () => {
                 <TimeDisplay />
               </Stack>
             </div>
+            <UserDetails />
           </Stack>
           <Stack spacing={1}>
             <Typography variant="h6">Devices</Typography>
