@@ -77,6 +77,16 @@ const Materialtable = () => {
                     const city = matchcity ? matchcity[1].trim() : null;
                     user.city = city;
                 }
+                if (user.phone_number) {
+                            const phone_number = user.phone_number;
+                            const cleanedNumber = phone_number.replace(/\D/g, '');
+                            const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
+                            // Use regular expressions to extract the country code, area code, and local number
+                            const phonematch = cleanedNumber.match(phonePattern);
+                            const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
+                            user.phone_number = formattedNumber;
+                            console.log(formattedNumber)
+                        }
             });
             setData(usersData);
 
@@ -257,7 +267,7 @@ const Materialtable = () => {
     };
 
 
-    const getBackgroundColor = (user,isHovered) => {
+    const getBackgroundColor = (user, isHovered) => {
         const backgroundColor = rowBackgroundColors[user.sub];
 
         return backgroundColor !== undefined ? backgroundColor : 'inherit';
@@ -423,7 +433,8 @@ const Materialtable = () => {
             sx: {
                 cursor: 'pointer',
                 backgroundColor: getBackgroundColor(row.original),
-            }}),
+            }
+        }),
         renderDetailPanel,
 
     });
