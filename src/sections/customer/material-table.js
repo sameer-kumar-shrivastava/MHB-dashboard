@@ -64,7 +64,7 @@ const Materialtable = () => {
             usersData.forEach(user => {
                 if (user.address) {
                     const address = user.address;
-                    const pinCodePattern = /\b\d{6}\b/;
+                    const pinCodePattern = /\b\d{6}\b|\b\d{5}\b/;
                     const match = address.match(pinCodePattern);
                     const pinCode = match ? match[0] : null;
                     const addressWithoutPinCode = address.replace(pinCodePattern, '').trim();
@@ -72,13 +72,13 @@ const Materialtable = () => {
                     user.pinCode = pinCode;
                     user.address = addressWithoutPinCode;
 
-                    const cityPattern = /(?:[^,]+,\s*){3}([^,]+)(?=(,|$))/;
+                    const cityPattern = /(?:[^,]+,\s*){1}([^,]+)(?=(,|$))/;
                     const matchcity = address.match(cityPattern);
                     const city = matchcity ? matchcity[1].trim() : null;
                     user.city = city;
                 }
             });
-            setData((prevData) => [...prevData, ...usersData]);
+            setData(usersData);
 
             const promises = usersData.map(async (user) => {
                 const userId = user.sub;
