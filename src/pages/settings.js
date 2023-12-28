@@ -307,6 +307,9 @@ const Page = () => {
                 <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0}}>
                   <ChromePicker color={beaconData.color} onChange={handleColorChange} />
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
+                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+                      <Typography fontSize={20} fontWeight="bold" >LED :</Typography>
+                    </Box>
                     <Box sx={{ width: 400 }}>
                       <Typography >Brightness:</Typography>
                       <Slider
@@ -332,8 +335,8 @@ const Page = () => {
                     />
                   </Stack>
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
-                    <Box sx={{ width: 400, paddingBottom: 4.5 }}>
-                      <Typography >Buzzer:</Typography>
+                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
                     </Box>
                     <TextField
                       label="On-Time (ms)"

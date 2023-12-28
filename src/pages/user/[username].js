@@ -32,6 +32,7 @@ import Puckerrortable from './[username]/puckerror-table';
 import Devicetable from './[username]/device-table';
 import UserDetails from './[username]/userdetails';
 import axios from 'axios';
+import { FormatBold } from '@mui/icons-material';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -151,9 +152,9 @@ const UserPage = () => {
 
 
         const responseSettings = await axios.post(`https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/getCurrentSettings/${obtainedUserId}`,
-        {
-          user_id : obtainedUserId
-        },
+          {
+            user_id: obtainedUserId
+          },
           {
             headers: {
               Authorization: `Bearer ${idToken}`,
@@ -513,6 +514,9 @@ const UserPage = () => {
                 <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
                   <ChromePicker color={beaconData.color} onChange={handleColorChange} />
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
+                    <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+                      <Typography fontSize={20} fontWeight="bold" >LED:</Typography>
+                    </Box>
                     <Box sx={{ width: 300 }}>
                       <Typography >Brightness:</Typography>
                       <Slider
@@ -538,8 +542,8 @@ const UserPage = () => {
                     />
                   </Stack>
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
-                    <Box sx={{ width: 400, paddingBottom: 4.5 }}>
-                      <Typography >LED:</Typography>
+                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
                     </Box>
                     <TextField
                       label="Pattern On-Time (ms)"
