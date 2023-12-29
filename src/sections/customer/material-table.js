@@ -85,7 +85,6 @@ const Materialtable = () => {
                             const phonematch = cleanedNumber.match(phonePattern);
                             const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
                             user.phone_number = formattedNumber;
-                            console.log(formattedNumber)
                         }
             });
             setData(usersData);
@@ -145,7 +144,7 @@ const Materialtable = () => {
             );
 
             const dropdownData = secondApiResponse.data;
-            console.log('Data:', dropdownData);
+            // console.log('Data:', dropdownData);
             // setDropdownData(dropdownData.tuya_data);
             // return dropdownData.tuya_data;
 
