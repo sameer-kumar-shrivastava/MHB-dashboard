@@ -306,19 +306,22 @@ const UserPage = () => {
 
   const TimeDisplay = () => {
     const [currentTime, setCurrentTime] = useState(null);
+    const [timeZone, setTimeZone] = useState(null);
     const [geoCoordinates, setGeoCoordinates] = useState({ latitude: latitude, longitude: longitude });
 
     useEffect(() => {
       const getTimeForCoordinates = async () => {
         try {
-          const response = await fetch(`https://www.timeapi.io/api/Time/current/coordinate?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`);
+          // const response = await fetch(`https://www.timeapi.io/api/Time/current/coordinate?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`);
+          const response = await fetch(`https://www.timeapi.io/api/TimeZone/coordinate?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`)
 
           if (!response.ok) {
             throw new Error('Failed to fetch time data');
           }
 
           const data = await response.json();
-          setCurrentTime(new Date(data.dateTime));
+          setCurrentTime(new Date(data.currentLocalTime));
+          setTimeZone(data.timeZone);
         } catch (error) {
           console.error('Error fetching time data:', error);
         }
@@ -347,6 +350,7 @@ const UserPage = () => {
       <div>
         <Stack sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Typography>Device Current Time</Typography><Typography fontWeight="bold">{currentTime.toLocaleTimeString()}</Typography>
+          <Typography>Time Zone: <span style={{fontWeight:"bold"}}>{timeZone}</span></Typography>
         </Stack>
       </div>
     );
@@ -449,7 +453,7 @@ const UserPage = () => {
                 <Typography >November 19, 2023</Typography>
                 <Typography >3:30 PM</Typography>
               </Stack>
-              <Stack sx={{ flex: 0.2, height: "10vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+              <Stack sx={{ flex: 0.2, minHeight: "12vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
                 <TimeDisplay />
               </Stack>
             </div>
