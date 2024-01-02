@@ -33,11 +33,10 @@ export const beaconAliveMap = {};
 const Materialtable = () => {
     const [data, setData] = useState([]);
     const [dropdownDataMap, setDropdownDataMap] = useState({});
-    const [loadingMap, setLoadingMap] = useState({});
     const [firstName, setfirstName] = useState('');
     const [rowBackgroundColors, setRowBackgroundColors] = useState({});
-    const [userData, setUserData] = useState([]);
     const [hoveredRow, setHoveredRow] = useState(null);
+    const [checkedRow, setCheckedRow] = useState([]);
 
     const theme = useTheme();
 
@@ -122,6 +121,13 @@ const Materialtable = () => {
                 }
             });
 
+
+            const updatedData = usersData.map((user) => ({
+                checked: false,
+            }));
+    
+            setCheckedRow(updatedData);
+
             await Promise.all(promises);
 
         } catch (error) {
@@ -162,14 +168,26 @@ const Materialtable = () => {
     };
     useEffect(() => {
         fetchData();
+        setCheckedRow([]);
     }, []);
 
 
     const router = useRouter();
 
     const columns = useMemo(
-        //column definitions...
         () => [
+            {
+                accessorKey: 'checkbox',
+                header: 'Select',
+                Cell: ({ row }) => (
+                    <input
+                        type="checkbox"
+                        checked={row.original.checked}
+                        onChange={(event) => handleCheckboxClick(event, row)}
+                        onClick={(event) => event.stopPropagation()}
+                    />
+                ),
+            },
             {
                 accessorKey: 'given_name',
                 header: 'Firstname',
@@ -227,6 +245,29 @@ const Materialtable = () => {
         }
         return null;
     }
+
+    const handleCheckboxClick = (event, row) => {
+        event.stopPropagation();
+        const userId = row.original.sub;
+    
+        setCheckedRow((prevCheckedRows) => {
+            const updatedRows = [...prevCheckedRows];
+            const rowIndex = updatedRows.findIndex((item) => item.sub === userId);    
+            if (rowIndex !== -1) {
+                updatedRows.splice(rowIndex, 1);
+            } else {
+                updatedRows.push(row.original);
+            }
+            showCheckedDetails(updatedRows);
+    
+            return updatedRows;
+        });
+    };
+    
+    const showCheckedDetails = (checkedRows) => {
+        console.log("Checked Rows:", checkedRows);
+    };
+    
 
     const handleRowClick = (row) => {
         const username = row.original.family_name;
