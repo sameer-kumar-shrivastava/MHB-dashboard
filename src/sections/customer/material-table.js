@@ -30,7 +30,7 @@ export const garageAliveMap = {};
 export const beaconAliveMap = {};
 
 
-const Materialtable = ({ handleSubmit }) => {
+const Materialtable = ({ onSelectedSubValuesChange }) => {
     const [data, setData] = useState([]);
     const [dropdownDataMap, setDropdownDataMap] = useState({});
     const [firstName, setfirstName] = useState('');
@@ -263,7 +263,7 @@ const Materialtable = ({ handleSubmit }) => {
             }
 
             showCheckedDetails(updatedRows.map((item) => item.sub));
-    
+            onSelectedSubValuesChange(updatedRows);
             return updatedRows;
         });
     };
