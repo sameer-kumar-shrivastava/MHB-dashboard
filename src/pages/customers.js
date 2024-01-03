@@ -177,13 +177,15 @@ const Page = () => {
   }, [defaultSettings]);
 
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (subValues) => {
     try {
+      console.log('Handling submit for userId:', subValues);
       const idToken = localStorage.getItem('idToken');
       const apiUrl = 'https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/storeDeviceProps/';
+      for (const sub of subValues) {
 
       const dataToSend = {
-        user_id: userId,
+        user_id: sub,
         R: beaconData.color.r,
         G: beaconData.color.g,
         B: beaconData.color.b,
@@ -212,6 +214,7 @@ const Page = () => {
         throw new Error('Failed to save data');
       }
       console.log('Data saved successfully');
+    }
     } catch (error) {
       console.error('Error saving data:', error);
     }
@@ -447,7 +450,7 @@ const Page = () => {
             </Stack>
 
 
-            <Materialtable />
+            <Materialtable handleSubmit={handleSubmit} />
 
           </Stack>
         </Container>

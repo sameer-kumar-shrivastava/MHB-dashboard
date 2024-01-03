@@ -30,7 +30,7 @@ export const garageAliveMap = {};
 export const beaconAliveMap = {};
 
 
-const Materialtable = () => {
+const Materialtable = ({ handleSubmit }) => {
     const [data, setData] = useState([]);
     const [dropdownDataMap, setDropdownDataMap] = useState({});
     const [firstName, setfirstName] = useState('');
@@ -266,6 +266,10 @@ const Materialtable = () => {
     
     const showCheckedDetails = (checkedRows) => {
         console.log("Checked Rows:", checkedRows);
+        const subValues = checkedRows.map((row) => row.sub);
+        subValues.forEach((sub) => {
+            handleSubmit(sub);
+        });
     };
     
 
