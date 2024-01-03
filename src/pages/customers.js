@@ -221,11 +221,12 @@ const Page = () => {
   };
 
   const handleSaveButtonClick = () => {
-    // Iterate over selectedSubValues and call handleSubmit for each sub value
-    selectedSubValues.forEach((sub) => {
-        handleSubmit(sub.sub);
+    const validSubValues = selectedSubValues.filter((sub) => sub.sub !== undefined && sub.sub !== null);
+
+    validSubValues.forEach((sub) => {
+      handleSubmit(sub.sub);
     });
-};
+  };
 
 
   const handleInputChange = (event, section, field) => {

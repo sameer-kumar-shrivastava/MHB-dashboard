@@ -251,22 +251,27 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
         const userId = row.original.sub;
     
         setCheckedRow((prevCheckedRows) => {
-            const updatedRows = prevCheckedRows.filter((item) => item.sub !== undefined && item.sub !== null);
-            const rowIndex = updatedRows.findIndex((item) => item.sub === userId);    
-            if (rowIndex !== -1) {
-                showCheckedDetails(updatedRows.map((item) => item.sub));
-                return updatedRows;
+            const updatedRows = [...prevCheckedRows]; // Create a new array to avoid mutating the original state
+    
+            const isChecked = updatedRows.some((item) => item.sub === userId);
+    
+            if (isChecked) {
+                // User is already checked, uncheck them
+                const filteredRows = updatedRows.filter((item) => item.sub !== userId);
+                showCheckedDetails(filteredRows);
+                onSelectedSubValuesChange(filteredRows.filter((item) => item.sub !== undefined && item.sub !== null));
+                return filteredRows;
             } else {
-                if (userId !== undefined && userId !== null) {
-                    updatedRows.push({ sub: userId });
-                }
+                // User is not checked, check them
+                updatedRows.push({ sub: userId });
+                showCheckedDetails(updatedRows);
+                onSelectedSubValuesChange(updatedRows.filter((item) => item.sub !== undefined && item.sub !== null));
+                return updatedRows;
             }
-
-            showCheckedDetails(updatedRows.map((item) => item.sub));
-            onSelectedSubValuesChange(updatedRows);
-            return updatedRows;
         });
-    };
+    };   
+    
+    
     
     const showCheckedDetails = (checkedRows) => {
         console.log("Checked Rows:", checkedRows);
