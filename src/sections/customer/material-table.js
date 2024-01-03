@@ -486,6 +486,11 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
         filterFromLeafRows: true,
         enableFullScreenToggle: false,
         columnFilterDisplayMode: 'popover',
+        muiSearchTextFieldProps: {
+            placeholder: 'Provide at least four characters',
+            sx: { minWidth: '300px' },
+            variant: 'outlined',
+          },
         muiTableBodyRowProps: ({ row }) => ({
             onClick: (event) => {
                 handleRowClick(row);

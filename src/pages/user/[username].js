@@ -350,7 +350,8 @@ const UserPage = () => {
       <div>
         <Stack sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Typography>Device Current Time</Typography><Typography fontWeight="bold">{currentTime.toLocaleTimeString()}</Typography>
-          <Typography>Time Zone: <span style={{fontWeight:"bold"}}>{timeZone}</span></Typography>
+          <Typography>Time Zone:</Typography>
+          <Typography fontWeight="bold">{timeZone}</Typography>
         </Stack>
       </div>
     );
@@ -504,12 +505,6 @@ const UserPage = () => {
             flexGrow: 1
           }}
         >
-
-          {/* <Stack spacing={3} >
-                <Typography variant="h4">
-                  User Settings
-                </Typography>
-              </Stack> */}
           <Stack spacing={1} >
             <Container sx={{ display: "-webkit-flex" }}>
               <Card>
