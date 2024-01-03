@@ -251,14 +251,18 @@ const Materialtable = ({ handleSubmit }) => {
         const userId = row.original.sub;
     
         setCheckedRow((prevCheckedRows) => {
-            const updatedRows = [...prevCheckedRows];
+            const updatedRows = prevCheckedRows.filter((item) => item.sub !== undefined && item.sub !== null);
             const rowIndex = updatedRows.findIndex((item) => item.sub === userId);    
             if (rowIndex !== -1) {
-                updatedRows.splice(rowIndex, 1);
+                showCheckedDetails(updatedRows.map((item) => item.sub));
+                return updatedRows;
             } else {
-                updatedRows.push(row.original);
+                if (userId !== undefined && userId !== null) {
+                    updatedRows.push({ sub: userId });
+                }
             }
-            showCheckedDetails(updatedRows);
+
+            showCheckedDetails(updatedRows.map((item) => item.sub));
     
             return updatedRows;
         });
@@ -266,11 +270,15 @@ const Materialtable = ({ handleSubmit }) => {
     
     const showCheckedDetails = (checkedRows) => {
         console.log("Checked Rows:", checkedRows);
-        const subValues = checkedRows.map((row) => row.sub);
-        subValues.forEach((sub) => {
-            handleSubmit(sub);
+        
+        // Assuming handleSubmit can handle individual sub values
+        checkedRows.forEach((sub) => {
+            console.log('Handling submit for userId:', sub);
+            // Uncomment the line below when you want to use handleSubmit
+            // handleSubmit(sub);
         });
-    };
+    };   
+    
     
 
     const handleRowClick = (row) => {

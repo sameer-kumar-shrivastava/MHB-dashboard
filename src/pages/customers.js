@@ -42,7 +42,7 @@ const Page = () => {
   const [maxWidth, setMaxWidth] = React.useState('lg');
   const router = useRouter();
   const { username } = router.query;
-
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const [defaultSettings, setDefaultSettings] = useState(null);
 
@@ -177,48 +177,48 @@ const Page = () => {
   }, [defaultSettings]);
 
 
-  const handleSubmit = async (subValues) => {
+  const handleSubmit = async (selectedRows) => {
     try {
-      console.log('Handling submit for userId:', subValues);
+      console.log('Handling submit for userId:', selectedRows);
       const idToken = localStorage.getItem('idToken');
       const apiUrl = 'https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/storeDeviceProps/';
-      for (const sub of subValues) {
-
-      const dataToSend = {
-        user_id: sub,
-        R: beaconData.color.r,
-        G: beaconData.color.g,
-        B: beaconData.color.b,
-        led_BRIGHTNESS: (beaconData.brightness),
-        led_ON_TIME: beaconData.onTime,
-        led_OFF_TIME: beaconData.offTime,
-        led_DURATION: beaconData.duration,
-        buzz_ON_TIME: buzzerData.onTime,
-        buzz_OFF_TIME: buzzerData.offTime,
-        buzz_DURATION: buzzerData.duration,
-        charge_control: chargeControlData.minBatteryPercentage,
-      };
-
-      console.log('Data to send:', dataToSend);
-
-      const response = await axios.post(apiUrl, dataToSend,
-        {
+  
+      for (const row of selectedRows) {
+        const { userId} = row;
+        const dataToSend = {
+          user_id: userId,
+          R: color.r,
+          G: color.g,
+          B: color.b,
+          led_BRIGHTNESS: brightness,
+          led_ON_TIME: onTime,
+          led_OFF_TIME: offTime,
+          led_DURATION: duration,
+          charge_control: minBatteryPercentage,
+        };
+  
+        console.log('Data to send:', dataToSend);
+  
+        const response = await axios.post(apiUrl, dataToSend, {
           headers: {
             Authorization: `Bearer ${idToken}`,
             'Content-Type': 'application/json',
           },
         });
-      console.log('API Response:', response);
-
-      if (response.status !== 200) {
-        throw new Error('Failed to save data');
+  
+        console.log('API Response:', response);
+  
+        if (response.status !== 200) {
+          throw new Error('Failed to save data');
+        }
+  
+        console.log('Data saved successfully');
       }
-      console.log('Data saved successfully');
-    }
     } catch (error) {
       console.error('Error saving data:', error);
     }
   };
+  
 
 
   const handleInputChange = (event, section, field) => {
@@ -273,6 +273,7 @@ const Page = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setSelectedRows(selectedRows);
   };
 
   const handleClose = () => {
