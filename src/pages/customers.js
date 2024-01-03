@@ -184,7 +184,6 @@ const Page = () => {
     try {
       const idToken = localStorage.getItem('idToken');
       const apiUrl = 'https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/storeDeviceProps/';
-
       const dataToSend = {
         user_id: sub,
         R: beaconData.color.r,

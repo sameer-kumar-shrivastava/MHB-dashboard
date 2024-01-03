@@ -37,6 +37,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
     const [rowBackgroundColors, setRowBackgroundColors] = useState({});
     const [hoveredRow, setHoveredRow] = useState(null);
     const [checkedRow, setCheckedRow] = useState([]);
+    const [selectAll, setSelectAll] = useState(false);
 
     const theme = useTheme();
 
@@ -174,15 +175,25 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
 
     const router = useRouter();
 
+    const handleSelectAllClick = () => {
+        setSelectAll(!selectAll);
+    };
+
     const columns = useMemo(
         () => [
             {
                 accessorKey: 'checkbox',
-                header: 'Select',
+                header: (
+                    <input
+                        type="checkbox"
+                        checked={selectAll}
+                        onChange={handleSelectAllClick}
+        />
+                ),
                 Cell: ({ row }) => (
                     <input
                         type="checkbox"
-                        checked={row.original.checked}
+                        checked={selectAll || row.original.checked}
                         onChange={(event) => handleCheckboxClick(event, row)}
                         onClick={(event) => event.stopPropagation()}
                     />
@@ -230,10 +241,8 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                 header: 'Operating system',
             },
 
-
-
         ],
-        [],
+        [selectAll],
         //end
     );
 
@@ -251,18 +260,16 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
         const userId = row.original.sub;
     
         setCheckedRow((prevCheckedRows) => {
-            const updatedRows = [...prevCheckedRows]; // Create a new array to avoid mutating the original state
+            const updatedRows = [...prevCheckedRows];
     
             const isChecked = updatedRows.some((item) => item.sub === userId);
     
             if (isChecked) {
-                // User is already checked, uncheck them
                 const filteredRows = updatedRows.filter((item) => item.sub !== userId);
                 showCheckedDetails(filteredRows);
                 onSelectedSubValuesChange(filteredRows.filter((item) => item.sub !== undefined && item.sub !== null));
                 return filteredRows;
             } else {
-                // User is not checked, check them
                 updatedRows.push({ sub: userId });
                 showCheckedDetails(updatedRows);
                 onSelectedSubValuesChange(updatedRows.filter((item) => item.sub !== undefined && item.sub !== null));
@@ -275,8 +282,6 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
     
     const showCheckedDetails = (checkedRows) => {
         console.log("Checked Rows:", checkedRows);
-        
-        // Assuming handleSubmit can handle individual sub values
         checkedRows.forEach((sub) => {
             console.log('Handling submit for userId:', sub);
             // Uncomment the line below when you want to use handleSubmit
