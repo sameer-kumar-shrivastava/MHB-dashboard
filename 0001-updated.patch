@@ -1,0 +1,252 @@
+From 43aa78550a813121497f40fc02af130c24191861 Mon Sep 17 00:00:00 2001
+From: shardakumari505 <shardakumari505@gmail.com>
+Date: Thu, 4 Jan 2024 20:48:16 +0530
+Subject: [PATCH] updated
+
+---
+ .../user/[username]/beaconerror-table.js      |  8 +--
+ src/pages/user/[username]/beaconerror.js      |  1 +
+ src/pages/user/user-config.js                 |  4 +-
+ src/pages/user/user-nav-items.js              |  4 +-
+ src/pages/user/user-nav.js                    |  4 +-
+ src/sections/customer/material-table.js       | 53 ++++++++++---------
+ 6 files changed, 41 insertions(+), 33 deletions(-)
+
+diff --git a/src/pages/user/[username]/beaconerror-table.js b/src/pages/user/[username]/beaconerror-table.js
+index b4e65d2..9805c2d 100644
+--- a/src/pages/user/[username]/beaconerror-table.js
++++ b/src/pages/user/[username]/beaconerror-table.js
+@@ -11,7 +11,7 @@ export const data = [
+     {
+         date: '11-23-2023 08:30:00',
+         time: '18:20',
+-        battery_start: 75,      
++        battery_start: 75,
+         battery_end: 50,
+         color: "Red",
+         output_power: "5W",
+@@ -22,14 +22,14 @@ export const data = [
+     {
+         date: '10-23-2023 14:15:00',
+         time: '11:24',
+-        battery_start: 80,      
++        battery_start: 80,
+         battery_end: 55,
+         color: "Green",
+         output_power: "5W",
+         temp_start: "25°C",
+         temp_end: "28°C",
+         home: "YES"
+-      
++
+     },
+ ];
+ 
+@@ -68,7 +68,7 @@ const Beaconerrortable = () => {
+                 accessorKey: 'device_reset',
+                 header: 'Device reset',
+             },
+-            
++
+         ],
+         [],
+         //end
+diff --git a/src/pages/user/[username]/beaconerror.js b/src/pages/user/[username]/beaconerror.js
+index 7fdeb4b..f1fab4b 100644
+--- a/src/pages/user/[username]/beaconerror.js
++++ b/src/pages/user/[username]/beaconerror.js
+@@ -65,5 +65,6 @@ LogPage.getLayout = (page) => (
+     {page}
+   </DashboardLayout>
+ );
++
+ export default LogPage;
+ 
+diff --git a/src/pages/user/user-config.js b/src/pages/user/user-config.js
+index b461e33..d801fba 100644
+--- a/src/pages/user/user-config.js
++++ b/src/pages/user/user-config.js
+@@ -8,7 +8,7 @@ import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
+ import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
+ import { SvgIcon } from '@mui/material';
+ 
+-export const items = [
++const Items = [
+  
+ //   {
+ //     title: 'Users',
+@@ -84,3 +84,5 @@ export const items = [
+   //   )
+   // }
+ ];
++
++export default Items;
+\ No newline at end of file
+diff --git a/src/pages/user/user-nav-items.js b/src/pages/user/user-nav-items.js
+index 1de385a..dad4705 100644
+--- a/src/pages/user/user-nav-items.js
++++ b/src/pages/user/user-nav-items.js
+@@ -2,7 +2,7 @@ import NextLink from 'next/link';
+ import PropTypes from 'prop-types';
+ import { Box, ButtonBase } from '@mui/material';
+ 
+-export const UserNavItem = (props) => {
++const UserNavItem = (props) => {
+   const { active = false, disabled, external, icon, path, title } = props;
+ 
+   const linkProps = path
+@@ -90,3 +90,5 @@ UserNavItem.propTypes = {
+   path: PropTypes.string,
+   title: PropTypes.string.isRequired
+ };
++
++export default UserNavItem;
+\ No newline at end of file
+diff --git a/src/pages/user/user-nav.js b/src/pages/user/user-nav.js
+index 388a8b5..ea4b5eb 100644
+--- a/src/pages/user/user-nav.js
++++ b/src/pages/user/user-nav.js
+@@ -20,7 +20,7 @@ import { Scrollbar } from 'src/components/scrollbar';
+ import { items } from './user-config';
+ import { UserNavItem } from './user-nav-item';
+ 
+-export const UserNav = (props) => {
++const UserNav = (props) => {
+   const { open, onClose } = props;
+   const pathname = usePathname();
+   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+@@ -239,3 +239,5 @@ UserNav.propTypes = {
+   onClose: PropTypes.func,
+   open: PropTypes.bool
+ };
++
++export default UserNav;
+diff --git a/src/sections/customer/material-table.js b/src/sections/customer/material-table.js
+index fdac2c7..032bbb4 100644
+--- a/src/sections/customer/material-table.js
++++ b/src/sections/customer/material-table.js
+@@ -78,14 +78,14 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                     user.city = city;
+                 }
+                 if (user.phone_number) {
+-                            const phone_number = user.phone_number;
+-                            const cleanedNumber = phone_number.replace(/\D/g, '');
+-                            const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
+-                            // Use regular expressions to extract the country code, area code, and local number
+-                            const phonematch = cleanedNumber.match(phonePattern);
+-                            const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
+-                            user.phone_number = formattedNumber;
+-                        }
++                    const phone_number = user.phone_number;
++                    const cleanedNumber = phone_number.replace(/\D/g, '');
++                    const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
++                    // Use regular expressions to extract the country code, area code, and local number
++                    const phonematch = cleanedNumber.match(phonePattern);
++                    const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
++                    user.phone_number = formattedNumber;
++                }
+             });
+             setData(usersData);
+ 
+@@ -126,7 +126,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             const updatedData = usersData.map((user) => ({
+                 checked: false,
+             }));
+-    
++
+             setCheckedRow(updatedData);
+ 
+             await Promise.all(promises);
+@@ -177,15 +177,16 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+ 
+     const handleSelectAllClick = () => {
+         setSelectAll(!selectAll);
+-    
++
+         const updatedRows = selectAll
+             ? []
+-            : data.map((user) => ({ sub: user.sub }));
+-    
++            : table.visibleData.map((row) => ({ sub: row.original.sub }));
++
+         setCheckedRow(updatedRows);
+         onSelectedSubValuesChange(updatedRows);
+     };
+-    
++
++
+ 
+     const columns = useMemo(
+         () => [
+@@ -196,7 +197,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                         type="checkbox"
+                         checked={selectAll}
+                         onChange={handleSelectAllClick}
+-        />
++                    />
+                 ),
+                 Cell: ({ row }) => (
+                     <input
+@@ -263,29 +264,29 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+         return null;
+     }
+ 
+-   
++
+ 
+     const handleCheckboxClick = (event, row) => {
+         event.stopPropagation();
+         const userId = row.original.sub;
+-    
++
+         setCheckedRow((prevCheckedRows) => {
+             const isChecked = prevCheckedRows.some((item) => item.sub === userId);
+             let updatedRows;
+-    
++
+             if (isChecked) {
+                 updatedRows = prevCheckedRows.filter((item) => item.sub !== userId);
+             } else {
+                 updatedRows = [...prevCheckedRows, { sub: userId }];
+             }
+-    
++
+             onSelectedSubValuesChange(updatedRows);
+             return updatedRows;
+         });
+-    };  
+-    
+-    
+-    
++    };
++
++
++
+     const showCheckedDetails = (checkedRows) => {
+         console.log("Checked Rows:", checkedRows);
+         checkedRows.forEach((sub) => {
+@@ -293,9 +294,9 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             // Uncomment the line below when you want to use handleSubmit
+             // handleSubmit(sub);
+         });
+-    };   
+-    
+-    
++    };
++
++
+ 
+     const handleRowClick = (row) => {
+         const username = row.original.family_name;
+@@ -496,7 +497,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             placeholder: 'Provide at least four characters',
+             sx: { minWidth: '300px' },
+             variant: 'outlined',
+-          },
++        },
+         muiTableBodyRowProps: ({ row }) => ({
+             onClick: (event) => {
+                 handleRowClick(row);
+-- 
+2.42.0.windows.2
+
