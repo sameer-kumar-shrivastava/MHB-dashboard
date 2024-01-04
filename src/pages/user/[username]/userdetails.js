@@ -61,7 +61,13 @@ const UserDetails = () => {
             const firstName = user.given_name;
             const lastName = user.family_name;
             const email = user.email;
-            const phoneNumber = user.phone_number;
+
+            const phone_number = user.phone_number;
+            const cleanedNumber = phone_number.replace(/\D/g, '');
+            const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
+            const phonematch = cleanedNumber.match(phonePattern);
+            const phoneNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
+
             const birthDate = user.birthdate;
             const os = user.os;
             setuserId(userId || "N/A");
@@ -88,49 +94,49 @@ const UserDetails = () => {
 
     return (
         <div style={{ display: "flex" }}>
-            <Stack textAlign='center' sx={{width:"50%"}}>
+            <Stack textAlign='center' sx={{ width: "50%" }}>
                 <Table>
                     <TableRow >
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7', width:"40%"}}>First Name</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7', width: "40%" }}>First Name</TableCell>
                         <TableCell>{firstName || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>Last Name</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Last Name</TableCell>
                         <TableCell>{lastName || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>Address</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Address</TableCell>
                         <TableCell >{address || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>City</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>City</TableCell>
                         <TableCell >{city || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>ZipCode</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>ZipCode</TableCell>
                         <TableCell >{pinCode || "N/A"}</TableCell>
                     </TableRow>
-                    </Table>
+                </Table>
             </Stack>
-            <Stack textAlign='center' sx={{width:"50%"}}>  
-            <Table>                
+            <Stack textAlign='center' sx={{ width: "50%" }}>
+                <Table>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>Email</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Email</TableCell>
                         <TableCell >{email || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>Phone Number</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Phone Number</TableCell>
                         <TableCell >{phoneNumber || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>Birthdate</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Birthdate</TableCell>
                         <TableCell >{birthDate || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7'}}>OS</TableCell>
+                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>OS</TableCell>
                         <TableCell >{os || "N/A"}</TableCell>
                     </TableRow>
-                    </Table>  
+                </Table>
             </Stack>
         </div>
     );
