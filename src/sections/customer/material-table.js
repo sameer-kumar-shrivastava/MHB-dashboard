@@ -178,15 +178,12 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
     const handleSelectAllClick = () => {
         setSelectAll(!selectAll);
     
-        // Update the checkedRow state based on the selectAll state
         const updatedRows = selectAll
-            ? [] // Uncheck all rows
-            : data.map((user) => ({ sub: user.sub })); // Check all rows
+            ? []
+            : data.map((user) => ({ sub: user.sub }));
     
         setCheckedRow(updatedRows);
-        onSelectedSubValuesChange(updatedRows); // Notify the parent component
-    
-        // Rest of your code...
+        onSelectedSubValuesChange(updatedRows);
     };
     
 
@@ -266,28 +263,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
         return null;
     }
 
-    // const handleCheckboxClick = (event, row) => {
-    //     event.stopPropagation();
-    //     const userId = row.original.sub;
-    
-    //     setCheckedRow((prevCheckedRows) => {
-    //         const updatedRows = [...prevCheckedRows];
-    
-    //         const isChecked = updatedRows.some((item) => item.sub === userId);
-    
-    //         if (isChecked) {
-    //             const filteredRows = updatedRows.filter((item) => item.sub !== userId);
-    //             showCheckedDetails(filteredRows);
-    //             onSelectedSubValuesChange(filteredRows.filter((item) => item.sub !== undefined && item.sub !== null));
-    //             return filteredRows;
-    //         } else {
-    //             updatedRows.push({ sub: userId });
-    //             showCheckedDetails(updatedRows);
-    //             onSelectedSubValuesChange(updatedRows.filter((item) => item.sub !== undefined && item.sub !== null));
-    //             return updatedRows;
-    //         }
-    //     });
-    // };   
+   
 
     const handleCheckboxClick = (event, row) => {
         event.stopPropagation();
