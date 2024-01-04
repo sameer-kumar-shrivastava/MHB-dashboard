@@ -32,6 +32,8 @@ import Puckerrortable from './[username]/puckerror-table';
 import Devicetable from './[username]/device-table';
 import UserDetails from './[username]/userdetails';
 import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { FormatBold } from '@mui/icons-material';
 
 function TabPanel(props) {
@@ -75,7 +77,8 @@ const UserPage = () => {
   const booleanIsBeaconAlive = isBeaconAlive === 'true';
   const booleanIsGarageAlive = isGarageAlive === 'true';
   const [defaultSettings, setDefaultSettings] = useState(null);
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -214,7 +217,9 @@ const UserPage = () => {
       }
     }
   }, [defaultSettings]);
-
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   const handleSubmit = async () => {
     try {
@@ -237,7 +242,6 @@ const UserPage = () => {
       };
 
       console.log('Data to send:', dataToSend);
-
       const response = await axios.post(apiUrl, dataToSend,
         {
           headers: {
@@ -246,12 +250,15 @@ const UserPage = () => {
           },
         });
       console.log('API Response:', response);
-
       if (response.status !== 200) {
         throw new Error('Failed to save data');
       }
+      setSnackbarMessage('Device settings updated successfully');
+      setSnackbarOpen(true);
       console.log('Data saved successfully');
     } catch (error) {
+      setSnackbarMessage('Error saving data');
+    setSnackbarOpen(true);
       console.error('Error saving data:', error);
     }
   };
@@ -595,6 +602,20 @@ const UserPage = () => {
                   }}>
                     Save
                   </Button>
+                  <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={6000} // Adjust the duration as needed
+                    onClose={handleSnackbarClose}
+                  >
+                    <MuiAlert
+                      elevation={6}
+                      variant="filled"
+                      onClose={handleSnackbarClose}
+                      severity={snackbarMessage.includes('Error') ? 'error' : 'success'}
+                    >
+                      {snackbarMessage}
+                    </MuiAlert>
+                  </Snackbar>
                 </CardActions>
               </Card>
             </Container>

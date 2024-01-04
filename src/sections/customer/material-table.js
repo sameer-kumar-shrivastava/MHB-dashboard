@@ -177,7 +177,18 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
 
     const handleSelectAllClick = () => {
         setSelectAll(!selectAll);
+    
+        // Update the checkedRow state based on the selectAll state
+        const updatedRows = selectAll
+            ? [] // Uncheck all rows
+            : data.map((user) => ({ sub: user.sub })); // Check all rows
+    
+        setCheckedRow(updatedRows);
+        onSelectedSubValuesChange(updatedRows); // Notify the parent component
+    
+        // Rest of your code...
     };
+    
 
     const columns = useMemo(
         () => [
@@ -193,7 +204,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                 Cell: ({ row }) => (
                     <input
                         type="checkbox"
-                        checked={selectAll || row.original.checked}
+                        checked={checkedRow.some((item) => item.sub === row.original.sub)}
                         onChange={(event) => handleCheckboxClick(event, row)}
                         onClick={(event) => event.stopPropagation()}
                     />
@@ -242,7 +253,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
             },
 
         ],
-        [selectAll],
+        [selectAll, checkedRow]
         //end
     );
 
@@ -255,28 +266,47 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
         return null;
     }
 
+    // const handleCheckboxClick = (event, row) => {
+    //     event.stopPropagation();
+    //     const userId = row.original.sub;
+    
+    //     setCheckedRow((prevCheckedRows) => {
+    //         const updatedRows = [...prevCheckedRows];
+    
+    //         const isChecked = updatedRows.some((item) => item.sub === userId);
+    
+    //         if (isChecked) {
+    //             const filteredRows = updatedRows.filter((item) => item.sub !== userId);
+    //             showCheckedDetails(filteredRows);
+    //             onSelectedSubValuesChange(filteredRows.filter((item) => item.sub !== undefined && item.sub !== null));
+    //             return filteredRows;
+    //         } else {
+    //             updatedRows.push({ sub: userId });
+    //             showCheckedDetails(updatedRows);
+    //             onSelectedSubValuesChange(updatedRows.filter((item) => item.sub !== undefined && item.sub !== null));
+    //             return updatedRows;
+    //         }
+    //     });
+    // };   
+
     const handleCheckboxClick = (event, row) => {
         event.stopPropagation();
         const userId = row.original.sub;
     
         setCheckedRow((prevCheckedRows) => {
-            const updatedRows = [...prevCheckedRows];
-    
-            const isChecked = updatedRows.some((item) => item.sub === userId);
+            const isChecked = prevCheckedRows.some((item) => item.sub === userId);
+            let updatedRows;
     
             if (isChecked) {
-                const filteredRows = updatedRows.filter((item) => item.sub !== userId);
-                showCheckedDetails(filteredRows);
-                onSelectedSubValuesChange(filteredRows.filter((item) => item.sub !== undefined && item.sub !== null));
-                return filteredRows;
+                updatedRows = prevCheckedRows.filter((item) => item.sub !== userId);
             } else {
-                updatedRows.push({ sub: userId });
-                showCheckedDetails(updatedRows);
-                onSelectedSubValuesChange(updatedRows.filter((item) => item.sub !== undefined && item.sub !== null));
-                return updatedRows;
+                updatedRows = [...prevCheckedRows, { sub: userId }];
             }
+    
+            onSelectedSubValuesChange(updatedRows);
+            return updatedRows;
         });
-    };   
+    };  
     
     
     
