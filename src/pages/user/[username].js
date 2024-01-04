@@ -508,22 +508,20 @@ const UserPage = () => {
           <Stack spacing={1} >
             <Container sx={{ display: "-webkit-flex" }}>
               <Card>
-                <CardHeader title="Beacon" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
+                {/* <CardHeader title="Beacon" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} /> */}
                 {/* <Divider /> */}
                 <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
-                  <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+                  <Stack spacing={1} sx={{ maxWidth: 500 }}>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                      <Typography fontSize={20} fontWeight="bold" >Beacon</Typography>
+                    </Box>
+                    <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+                  </Stack>
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
-                    <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <Typography fontSize={20} fontWeight="bold" >LED:</Typography>
                     </Box>
-                    <Box sx={{ width: 300 }}>
-                      <Typography >Brightness:</Typography>
-                      <Slider
-                        value={beaconData.brightness}
-                        onChange={handleBrightnessChange}
-                        aria-label="Default"
-                        valueLabelDisplay="auto" />
-                    </Box>
+
                     <TextField
                       label="Pattern On-Time (ms)"
                       value={beaconData.onTime}
@@ -539,9 +537,17 @@ const UserPage = () => {
                       value={beaconData.duration}
                       onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
                     />
+                    <Box sx={{ width: 300 }}>
+                      <Typography >Brightness:</Typography>
+                      <Slider
+                        value={beaconData.brightness}
+                        onChange={handleBrightnessChange}
+                        aria-label="Default"
+                        valueLabelDisplay="auto" />
+                    </Box>
                   </Stack>
                   <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
-                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
                     </Box>
                     <TextField
