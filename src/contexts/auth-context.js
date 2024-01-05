@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -60,6 +61,7 @@ export const AuthProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   const isAuthenticated = () => {
     return Boolean(user);
@@ -91,11 +93,11 @@ export const AuthProvider = (props) => {
           },
         });
 
-        const user = response.data;
+        const users = response.data['AWS-result'];
 
         dispatch({
           type: HANDLERS.SIGN_IN,
-          payload: user,
+          payload: users,
         });
       } catch (error) {
         console.error('Error fetching user information:', error);
@@ -172,6 +174,7 @@ export const AuthProvider = (props) => {
     dispatch({
       type: HANDLERS.SIGN_OUT,
     });
+    router.push('/auth/login')
   };
 
   return (

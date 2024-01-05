@@ -30,7 +30,7 @@ export const items = [
   },
   {
     title: 'Logout',
-    path: '/auth/login',
+    // path: '/auth/login',
     icon: (
       <SvgIcon fontSize="small">
         <LockClosedIcon />

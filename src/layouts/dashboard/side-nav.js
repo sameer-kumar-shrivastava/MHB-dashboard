@@ -19,11 +19,17 @@ import Logo from '../../../public/favicon-16x16.png';
 import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const auth = useAuth();
+
+  const handleLogout = () => {
+    auth.signOut();
+  };
 
   const content = (
     <Scrollbar
@@ -57,17 +63,6 @@ export const SideNav = (props) => {
         justifyContent: 'center',
         color: 'black',
         backgroundColor: "white" }}>
-          {/* <Box
-            component={NextLink}
-            href="/customers"
-            sx={{
-              display: 'inline-flex',
-              height: 100,
-              width: 100,
-              backgroundColor: "orange",
-            }}
-          > */}
-            {/* <img src={<Logo />} /> */}
             <Image
               src="/logo1.png" // Provide the path to your image in the public directory
               alt="Description of the image"
@@ -110,6 +105,21 @@ export const SideNav = (props) => {
           >
             {items.map((item) => {
               const active = item.path ? (pathname === item.path) : false;
+
+              if (item.title === 'Logout') {
+                return (
+                  <SideNavItem
+                  active={active}
+                  disabled={item.disabled}
+                  external={item.external}
+                  icon={item.icon}
+                  key={item.title}
+                  path={item.path}
+                  title={item.title}
+                  onClick={handleLogout}
+                />
+                );
+              }
 
               return (
                 <SideNavItem

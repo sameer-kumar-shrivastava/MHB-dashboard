@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, ButtonBase } from '@mui/material';
 
 export const SideNavItem = (props) => {
-  const { active = false, disabled, external, icon, path, title } = props;
+  const { active = false, disabled, external, icon, path, title, onClick } = props;
 
   const linkProps = path
     ? external
@@ -17,6 +17,12 @@ export const SideNavItem = (props) => {
         href: path
       }
     : {};
+
+    const handleClick = () => {
+      if (title === 'Logout' && onClick) {
+        onClick();
+      }
+    };
 
   return (
     <li>
@@ -39,6 +45,7 @@ export const SideNavItem = (props) => {
           }
         }}
         {...linkProps}
+        onClick={handleClick}
       >
         {icon && (
           <Box
@@ -88,5 +95,6 @@ SideNavItem.propTypes = {
   external: PropTypes.bool,
   icon: PropTypes.node,
   path: PropTypes.string,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
