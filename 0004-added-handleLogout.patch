@@ -1,0 +1,189 @@
+From 48ca5233a880145dde45e69f2c48d8a42b3fd8f3 Mon Sep 17 00:00:00 2001
+From: shardakumari505 <shardakumari505@gmail.com>
+Date: Fri, 5 Jan 2024 17:30:10 +0530
+Subject: [PATCH 4/5] added handleLogout
+
+---
+ src/contexts/auth-context.js           |  7 ++++--
+ src/guards/auth-guard.js               |  3 ---
+ src/layouts/dashboard/config.js        |  2 +-
+ src/layouts/dashboard/side-nav-item.js | 12 ++++++++--
+ src/layouts/dashboard/side-nav.js      | 32 +++++++++++++++++---------
+ 5 files changed, 37 insertions(+), 19 deletions(-)
+
+diff --git a/src/contexts/auth-context.js b/src/contexts/auth-context.js
+index 294001c..8d78e17 100644
+--- a/src/contexts/auth-context.js
++++ b/src/contexts/auth-context.js
+@@ -3,6 +3,7 @@
+ import { createContext, useContext, useEffect, useReducer, useRef, useState } from 'react';
+ import PropTypes from 'prop-types';
+ import axios from 'axios';
++import { useRouter } from 'next/router';
+ 
+ const HANDLERS = {
+   INITIALIZE: 'INITIALIZE',
+@@ -60,6 +61,7 @@ export const AuthProvider = (props) => {
+   const [state, dispatch] = useReducer(reducer, initialState);
+   const initialized = useRef(false);
+   const [user, setUser] = useState(null);
++  const router = useRouter();
+ 
+   const isAuthenticated = () => {
+     return Boolean(user);
+@@ -91,11 +93,11 @@ export const AuthProvider = (props) => {
+           },
+         });
+ 
+-        const user = response.data;
++        const users = response.data['AWS-result'];
+ 
+         dispatch({
+           type: HANDLERS.SIGN_IN,
+-          payload: user,
++          payload: users,
+         });
+       } catch (error) {
+         console.error('Error fetching user information:', error);
+@@ -172,6 +174,7 @@ export const AuthProvider = (props) => {
+     dispatch({
+       type: HANDLERS.SIGN_OUT,
+     });
++    router.push('/auth/login')
+   };
+ 
+   return (
+diff --git a/src/guards/auth-guard.js b/src/guards/auth-guard.js
+index 25dd09e..7f7dcf1 100644
+--- a/src/guards/auth-guard.js
++++ b/src/guards/auth-guard.js
+@@ -42,9 +42,6 @@ export const AuthGuard = (props) => {
+     return null;
+   }
+ 
+-  // If got here, it means that the redirect did not occur, and that tells us that the user is
+-  // authenticated / authorized.
+-
+   return children;
+ };
+ 
+diff --git a/src/layouts/dashboard/config.js b/src/layouts/dashboard/config.js
+index 16f60f1..0d61f46 100644
+--- a/src/layouts/dashboard/config.js
++++ b/src/layouts/dashboard/config.js
+@@ -30,7 +30,7 @@ export const items = [
+   },
+   {
+     title: 'Logout',
+-    path: '/auth/login',
++    // path: '/auth/login',
+     icon: (
+       <SvgIcon fontSize="small">
+         <LockClosedIcon />
+diff --git a/src/layouts/dashboard/side-nav-item.js b/src/layouts/dashboard/side-nav-item.js
+index 560be19..a41324a 100644
+--- a/src/layouts/dashboard/side-nav-item.js
++++ b/src/layouts/dashboard/side-nav-item.js
+@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
+ import { Box, ButtonBase } from '@mui/material';
+ 
+ export const SideNavItem = (props) => {
+-  const { active = false, disabled, external, icon, path, title } = props;
++  const { active = false, disabled, external, icon, path, title, onClick } = props;
+ 
+   const linkProps = path
+     ? external
+@@ -18,6 +18,12 @@ export const SideNavItem = (props) => {
+       }
+     : {};
+ 
++    const handleClick = () => {
++      if (title === 'Logout' && onClick) {
++        onClick();
++      }
++    };
++
+   return (
+     <li>
+       <ButtonBase
+@@ -39,6 +45,7 @@ export const SideNavItem = (props) => {
+           }
+         }}
+         {...linkProps}
++        onClick={handleClick}
+       >
+         {icon && (
+           <Box
+@@ -88,5 +95,6 @@ SideNavItem.propTypes = {
+   external: PropTypes.bool,
+   icon: PropTypes.node,
+   path: PropTypes.string,
+-  title: PropTypes.string.isRequired
++  title: PropTypes.string.isRequired,
++  onClick: PropTypes.func,
+ };
+diff --git a/src/layouts/dashboard/side-nav.js b/src/layouts/dashboard/side-nav.js
+index 69e6f13..aa72173 100644
+--- a/src/layouts/dashboard/side-nav.js
++++ b/src/layouts/dashboard/side-nav.js
+@@ -19,11 +19,17 @@ import Logo from '../../../public/favicon-16x16.png';
+ import { Scrollbar } from 'src/components/scrollbar';
+ import { items } from './config';
+ import { SideNavItem } from './side-nav-item';
++import { useAuth } from 'src/hooks/use-auth';
+ 
+ export const SideNav = (props) => {
+   const { open, onClose } = props;
+   const pathname = usePathname();
+   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
++  const auth = useAuth();
++
++  const handleLogout = () => {
++    auth.signOut();
++  };
+ 
+   const content = (
+     <Scrollbar
+@@ -57,17 +63,6 @@ export const SideNav = (props) => {
+         justifyContent: 'center',
+         color: 'black',
+         backgroundColor: "white" }}>
+-          {/* <Box
+-            component={NextLink}
+-            href="/customers"
+-            sx={{
+-              display: 'inline-flex',
+-              height: 100,
+-              width: 100,
+-              backgroundColor: "orange",
+-            }}
+-          > */}
+-            {/* <img src={<Logo />} /> */}
+             <Image
+               src="/logo1.png" // Provide the path to your image in the public directory
+               alt="Description of the image"
+@@ -111,6 +106,21 @@ export const SideNav = (props) => {
+             {items.map((item) => {
+               const active = item.path ? (pathname === item.path) : false;
+ 
++              if (item.title === 'Logout') {
++                return (
++                  <SideNavItem
++                  active={active}
++                  disabled={item.disabled}
++                  external={item.external}
++                  icon={item.icon}
++                  key={item.title}
++                  path={item.path}
++                  title={item.title}
++                  onClick={handleLogout}
++                />
++                );
++              }
++
+               return (
+                 <SideNavItem
+                   active={active}
+-- 
+2.42.0.windows.2
+

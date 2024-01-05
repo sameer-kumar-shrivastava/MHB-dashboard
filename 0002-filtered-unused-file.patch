@@ -1,0 +1,500 @@
+From 58137fb8f61a531c16084da479a6608cf6a555bd Mon Sep 17 00:00:00 2001
+From: shardakumari505 <shardakumari505@gmail.com>
+Date: Fri, 5 Jan 2024 15:05:55 +0530
+Subject: [PATCH 2/5] filtered unused file
+
+---
+ .../user => components}/user-nav-items.js     |   6 +-
+ src/{pages/user => components}/user-nav.js    |  51 ----
+ src/pages/settings/beaconerror.js             |   0
+ src/pages/user/[username].js                  |   1 -
+ src/pages/user/user-config.js                 |  86 ------
+ src/pages/usersettings.js                     | 268 ------------------
+ 6 files changed, 4 insertions(+), 408 deletions(-)
+ rename src/{pages/user => components}/user-nav-items.js (97%)
+ rename src/{pages/user => components}/user-nav.js (78%)
+ delete mode 100644 src/pages/settings/beaconerror.js
+ delete mode 100644 src/pages/user/user-config.js
+ delete mode 100644 src/pages/usersettings.js
+
+diff --git a/src/pages/user/user-nav-items.js b/src/components/user-nav-items.js
+similarity index 97%
+rename from src/pages/user/user-nav-items.js
+rename to src/components/user-nav-items.js
+index 1de385a..18fbf6d 100644
+--- a/src/pages/user/user-nav-items.js
++++ b/src/components/user-nav-items.js
+@@ -2,7 +2,7 @@ import NextLink from 'next/link';
+ import PropTypes from 'prop-types';
+ import { Box, ButtonBase } from '@mui/material';
+ 
+-export const UserNavItem = (props) => {
++const UserNavItem = (props) => {
+   const { active = false, disabled, external, icon, path, title } = props;
+ 
+   const linkProps = path
+@@ -82,6 +82,8 @@ export const UserNavItem = (props) => {
+   );
+ };
+ 
++export default UserNavItem;
++
+ UserNavItem.propTypes = {
+   active: PropTypes.bool,
+   disabled: PropTypes.bool,
+@@ -89,4 +91,4 @@ UserNavItem.propTypes = {
+   icon: PropTypes.node,
+   path: PropTypes.string,
+   title: PropTypes.string.isRequired
+-};
++};
+\ No newline at end of file
+diff --git a/src/pages/user/user-nav.js b/src/components/user-nav.js
+similarity index 78%
+rename from src/pages/user/user-nav.js
+rename to src/components/user-nav.js
+index 388a8b5..2a83ce3 100644
+--- a/src/pages/user/user-nav.js
++++ b/src/components/user-nav.js
+@@ -141,57 +141,6 @@ export const UserNav = (props) => {
+             })}
+           </Stack>
+         </Box>
+-        {/* <Divider sx={{ borderColor: 'neutral.700' }} />
+-        <Box
+-          sx={{
+-            px: 2,
+-            py: 3
+-          }}
+-        >
+-          <Typography
+-            color="neutral.100"
+-            variant="subtitle2"
+-          >
+-            Need more features?
+-          </Typography>
+-          <Typography
+-            color="neutral.500"
+-            variant="body2"
+-          >
+-            Check out our Pro solution template.
+-          </Typography>
+-          <Box
+-            sx={{
+-              display: 'flex',
+-              mt: 2,
+-              mx: 'auto',
+-              width: '160px',
+-              '& img': {
+-                width: '100%'
+-              }
+-            }}
+-          >
+-            <img
+-              alt="Go to pro"
+-              src="/assets/devias-kit-pro.png"
+-            />
+-          </Box>
+-          <Button
+-            component="a"
+-            endIcon={(
+-              <SvgIcon fontSize="small">
+-                <ArrowTopRightOnSquareIcon />
+-              </SvgIcon>
+-            )}
+-            fullWidth
+-            href="https://material-kit-pro-react.devias.io/"
+-            sx={{ mt: 2 }}
+-            target="_blank"
+-            variant="contained"
+-          >
+-            Pro Live Preview
+-          </Button>
+-        </Box> */}
+       </Box>
+     </Scrollbar>
+   );
+diff --git a/src/pages/settings/beaconerror.js b/src/pages/settings/beaconerror.js
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/src/pages/user/[username].js b/src/pages/user/[username].js
+index 0002f6d..0916587 100644
+--- a/src/pages/user/[username].js
++++ b/src/pages/user/[username].js
+@@ -14,7 +14,6 @@ import { ChromePicker } from 'react-color';
+ import Head from 'next/head';
+ import Emergencytable from './emergency-table';
+ import Householdtable from './household-table';
+-import { items } from './user-config';
+ import { latitude, longitude } from '../../sections/customer/material-table';
+ import Dropdown from 'muicss/lib/react/dropdown';
+ import DropdownItem from 'muicss/lib/react/dropdown-item';
+diff --git a/src/pages/user/user-config.js b/src/pages/user/user-config.js
+deleted file mode 100644
+index b461e33..0000000
+--- a/src/pages/user/user-config.js
++++ /dev/null
+@@ -1,86 +0,0 @@
+-import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
+-import CogIcon from '@heroicons/react/24/solid/CogIcon';
+-import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
+-import ShoppingBagIcon from '@heroicons/react/24/solid/ShoppingBagIcon';
+-import UserIcon from '@heroicons/react/24/solid/UserIcon';
+-import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
+-import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
+-import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
+-import { SvgIcon } from '@mui/material';
+-
+-export const items = [
+- 
+-//   {
+-//     title: 'Users',
+-//     path: '/customers',
+-//     icon: (
+-//       <SvgIcon fontSize="small">
+-//         <UsersIcon />
+-//       </SvgIcon>
+-//     )
+-//   },
+-  {
+-    title: 'Settings',
+-    path: '/usersettings',
+-    icon: (
+-      <SvgIcon fontSize="large">
+-        <CogIcon color='black' />
+-      </SvgIcon>
+-    )
+-  },
+-//   {
+-//     title: 'Logout',
+-//     path: '/auth/login',
+-//     icon: (
+-//       <SvgIcon fontSize="small">
+-//         <LockClosedIcon />
+-//       </SvgIcon>
+-//     )
+-//   }
+-   // {
+-  //   title: 'Overview',
+-  //   path: '/',
+-  //   icon: (
+-  //     <SvgIcon fontSize="small">
+-  //       <ChartBarIcon />
+-  //     </SvgIcon>
+-  //   )
+-  // },
+-  // {
+-  //   title: 'Tickets',
+-  //   path: '/companies',
+-  //   icon: (
+-  //     <SvgIcon fontSize="small">
+-  //       <ShoppingBagIcon />
+-  //     </SvgIcon>
+-  //   )
+-  // },
+-  // {
+-  //   title: 'Account',
+-  //   path: '/account',
+-  //   icon: (
+-  //     <SvgIcon fontSize="small">
+-  //       <UserIcon />
+-  //     </SvgIcon>
+-  //   )
+-  // },
+-  
+-  // {
+-  //   title: 'Register',
+-  //   path: '/auth/register',
+-  //   icon: (
+-  //     <SvgIcon fontSize="small">
+-  //       <UserPlusIcon />
+-  //     </SvgIcon>
+-  //   )
+-  // }
+-  // {
+-  //   title: 'Error',
+-  //   path: '/404',
+-  //   icon: (
+-  //     <SvgIcon fontSize="small">
+-  //       <XCircleIcon />
+-  //     </SvgIcon>
+-  //   )
+-  // }
+-];
+diff --git a/src/pages/usersettings.js b/src/pages/usersettings.js
+deleted file mode 100644
+index c013275..0000000
+--- a/src/pages/usersettings.js
++++ /dev/null
+@@ -1,268 +0,0 @@
+-// // src/pages/settings.js
+-// import { useState, useCallback } from 'react';
+-// import Head from 'next/head';
+-// import { Box, Container, Stack, Typography, Button, Grid } from '@mui/material';
+-// import {
+-//   Card,
+-//   CardActions,
+-//   CardContent,
+-//   CardHeader,
+-//   Divider,
+-//   TextField,
+-// } from '@mui/material';
+-// import { SettingsNotifications } from 'src/sections/settings/settings-notifications';
+-// import { SettingsPassword } from 'src/sections/settings/settings-password';
+-// import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
+-// import { useRouter } from 'next/router';
+-// import { ChromePicker } from 'react-color';
+-// import Slider from '@mui/material/Slider';
+-// import { AccountProfile } from 'src/sections/account/account-profile';
+-// import { AccountProfileDetails } from 'src/sections/account/account-profile-details';
+-
+-// const Page = () => {
+-//   const router = useRouter();
+-
+-//   const handleBeconClick = () => {
+-//     router.push('/usersettings/beacon');
+-//   };
+-
+-//   const handleGaragePuckClick = () => {
+-//     router.push('/usersettings/garagepuck');
+-//   };
+-
+-//   const handleUserSettingsClick = () => {
+-//     router.push('/usersettings/usersetting');
+-//   };
+-
+-//   const [beaconData, setBeaconData] = useState({
+-//     color: { r: 0, g: 0, b: 0, a: 1 },
+-//     onTime: '',
+-//     offTime: '',
+-//     duration: '',
+-//   });
+-
+-//   const [buzzerData, setBuzzerData] = useState({
+-//     onTime: '',
+-//     offTime: '',
+-//     duration: '',
+-//   });
+-
+-//   const handleColorChange = (color) => {
+-//     setBeaconData((prevData) => ({
+-//       ...prevData,
+-//       color: color.rgb,
+-//     }));
+-//   };
+-
+-//   const [chargeControlData, setChargeControlData] = useState({
+-//     minBatteryPercentage: '',
+-//   });
+-
+-
+-
+-//   const handleInputChange = (event, section, field) => {
+-//     const value = event.target.value;
+-//     switch (section) {
+-//       case 'beacon':
+-//         setBeaconData((prevData) => ({
+-//           ...prevData,
+-//           [field]: value,
+-//         }));
+-//         break;
+-//       case 'buzzer':
+-//         setBuzzerData((prevData) => ({
+-//           ...prevData,
+-//           [field]: value,
+-//         }));
+-//         break;
+-//       case 'chargeControl':
+-//         setChargeControlData((prevData) => ({
+-//           ...prevData,
+-//           [field]: value,
+-//         }));
+-//         break;
+-//       default:
+-//         break;
+-//     }
+-//   };
+-
+-//   const handleSave = (section) => {
+-//     // Handle saving data or API calls here based on section
+-//     switch (section) {
+-//       case 'beacon':
+-//         alert('Saving Beacon Data:' + beaconData.color);
+-//         console.log('Saving Beacon Data:', beaconData);
+-//         break;
+-//       case 'buzzer':
+-//         alert('Saving Buzzer Data: ' + buzzerData);
+-//         console.log('Saving Buzzer Data:', buzzerData);
+-//         break;
+-//       case 'chargeControl':
+-//         alert('Saving Charge Control Data: ' + chargeControlData.minBatteryPercentage + "%");
+-//         console.log('Saving Charge Control Data:', chargeControlData.minBatteryPercentage);
+-//         break;
+-//       default:
+-//         break;
+-//     }
+-//   };
+-
+-
+-//   const handleSubmit = useCallback((event) => {
+-//     event.preventDefault();
+-//   }, []);
+-
+-//   return (
+-//     <>
+-//       <Head>
+-//         <title>
+-//           Settings | MyHomeBeacon
+-//         </title>
+-//       </Head>
+-//       <Box
+-//         component="main"
+-//         sx={{
+-//           flexGrow: 1,
+-//           py: 8
+-//         }}
+-//       >
+-//         <Container maxWidth="lg">
+-//           <Stack spacing={3} >
+-//             <Typography variant="h4">
+-//               User Settings
+-//             </Typography>
+-//             {/* <Stack spacing={4} direction="row" sx={{ width: '100%' }}> */}
+-//               {/* Buttons to navigate */}
+-//               {/* <Button variant="contained" color="primary" onClick={handleBeconClick}>
+-//                 Beacon Settings
+-//               </Button> */}
+-
+-//               {/* <Button variant="contained" color="primary" onClick={handleUserSettingsClick}>
+-//                 User Settings
+-//               </Button> */}
+-//             {/* </Stack> */}
+-//             {/* <Grid
+-//               container
+-//               spacing={3}
+-//             >
+-//               <Grid
+-//                 xs={12}
+-//                 md={6}
+-//                 lg={8}
+-//               >
+-//                 <AccountProfileDetails />
+-//               </Grid>
+-//               <Grid
+-//                 xs={12}
+-//                 md={6}
+-//                 lg={4}
+-//               > */}
+-//                 {/* <AccountProfile /> */}
+-//               {/* </Grid>
+-
+-//             </Grid> */}
+-//             {/* <SettingsNotifications /> */}
+-//             {/* <SettingsPassword /> */}
+-//           </Stack>
+-//           <Stack spacing={3} sx={{marginTop: '20px'}}>
+-//             {/* <Typography variant="h4">
+-//                             Beacon Settings
+-//                         </Typography> */}
+-//             <Card>
+-//               <CardHeader title="Beacon" />
+-//               <Divider />
+-//               <CardContent>
+-//                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-//                   <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+-//                   <Box sx={{ width: 300 }}>
+-//                     <Typography >Brightness:</Typography>
+-//                     <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+-//                   </Box>
+-//                   <TextField
+-//                     label="Pattern On-Time (ms)"
+-//                     value={beaconData.onTime}
+-//                     onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Pattern Off-Time (ms)"
+-//                     value={beaconData.offTime}
+-//                     onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Active Duration (sec)"
+-//                     value={beaconData.duration}
+-//                     onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+-//                   />
+-//                 </Stack>
+-//               </CardContent>
+-//               <Divider />
+-//               <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//                 <Button variant="contained" onClick={() => handleSave('beacon')}>
+-//                   Save
+-//                 </Button>
+-//               </CardActions>
+-//             </Card>
+-//             <Card>
+-//               <CardHeader title="Buzzer" />
+-//               <Divider />
+-//               <CardContent>
+-//                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-//                   <TextField
+-//                     label="On-Time (ms)"
+-//                     value={buzzerData.onTime}
+-//                     onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Off-Time (ms)"
+-//                     value={buzzerData.offTime}
+-//                     onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Duration"
+-//                     value={buzzerData.duration}
+-//                     onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+-//                   />
+-//                 </Stack>
+-//               </CardContent>
+-//               <Divider />
+-//               <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//                 <Button variant="contained" onClick={() => handleSave('buzzer')}>
+-//                   Save
+-//                 </Button>
+-//               </CardActions>
+-//             </Card>
+-//             <Card spacing={1}>
+-//               <CardHeader title="Charge Control" />
+-//               <Divider />
+-//               <CardContent>
+-//                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-//                   <TextField
+-//                     label="Minimum battery percentage to start charge"
+-//                     value={chargeControlData.minBatteryPercentage}
+-//                     onChange={(e) =>
+-//                       handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+-//                     }
+-//                   />
+-//                 </Stack>
+-//               </CardContent>
+-//               <Divider />
+-//               <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//                 <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+-//                   Save
+-//                 </Button>
+-//               </CardActions>
+-//             </Card>
+-//           </Stack>
+-//         </Container>
+-
+-//       </Box>
+-//     </>
+-//   );
+-// };
+-
+-// Page.getLayout = (page) => (
+-//   <DashboardLayout>
+-//     {page}
+-//   </DashboardLayout>
+-// );
+-
+-// export default Page;
+-- 
+2.42.0.windows.2
+

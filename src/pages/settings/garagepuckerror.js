@@ -149,7 +149,8 @@ const Page = () => {
                             </CardContent>
                             <Divider />
                             <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+                                <Button variant="contained"
+                                    onClick={() => handleSave('chargeControl')}>
                                     Save
                                 </Button>
                             </CardActions>

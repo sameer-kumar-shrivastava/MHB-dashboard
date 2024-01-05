@@ -89,7 +89,8 @@ function CollapsibleRow(props) {
               sx={{ margin: 1 }}>
               <Typography
                 variant="h6"
-                gutterBottom component="div">
+                gutterBottom
+                component="div">
                 Home Hub
               </Typography>
               <Table
@@ -131,7 +132,8 @@ function CollapsibleRow(props) {
             <Box sx={{ margin: 1 }}>
               <Typography
                 variant="h6"
-                gutterBottom component="div">
+                gutterBottom
+                component="div">
                 Beacon
               </Typography>
               <Table
@@ -174,7 +176,8 @@ function CollapsibleRow(props) {
             <Box sx={{ margin: 1 }}>
               <Typography
                 variant="h6"
-                gutterBottom component="div">
+                gutterBottom
+                component="div">
                 Puck
               </Typography>
               <Table

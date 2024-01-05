@@ -195,8 +195,12 @@ const Page = () => {
 
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} indicatorColor="none" aria-label="basic tabs example">
-            <Tab label="Profile Settings" {...a11yProps(0)}
+          <Tabs value={value}
+            onChange={handleChange}
+            indicatorColor="none"
+            aria-label="basic tabs example">
+            <Tab label="Profile Settings"
+              {...a11yProps(0)}
               sx={{
                 backgroundColor: value === 0 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
                 width: "15vw",
@@ -206,7 +210,8 @@ const Page = () => {
                 borderTopRightRadius: value === 0 ? '10px' : '0',
                 borderBottom: value === 0 ? '0' : '1px solid rgb(169, 169, 169)',
               }} />
-            <Tab label="Global Device Settings" {...a11yProps(1)}
+            <Tab label="Global Device Settings"
+              {...a11yProps(1)}
               sx={{
                 backgroundColor: value === 1 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
                 width: "15vw",

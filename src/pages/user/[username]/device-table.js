@@ -75,7 +75,8 @@ const Devicetable = () => {
                 <Typography
                     variant="h6"
                     sx={{ fontSize: "16px" }}
-                    gutterBottom component="div">
+                    gutterBottom
+                    component="div">
                     {`${firstName}'s Hub` || "N/A"}
                 </Typography>
                 <Divider />
@@ -112,7 +113,8 @@ const Devicetable = () => {
                 <Typography
                     variant="h6"
                     sx={{ fontSize: "16px" }}
-                    gutterBottom component="div">
+                    gutterBottom
+                    component="div">
                     {`${firstName}'s Beacon` || "N/A"}
                 </Typography>
                 <Divider />
@@ -169,7 +171,8 @@ const Devicetable = () => {
                 <Typography
                     variant="h6"
                     sx={{ fontSize: "16px" }}
-                    gutterBottom component="div">
+                    gutterBottom
+                    component="div">
                     {`${firstName}'s Puck` || "N/A"}
                 </Typography>
                 <Divider />

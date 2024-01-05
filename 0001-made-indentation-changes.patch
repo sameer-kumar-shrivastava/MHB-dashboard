@@ -1,0 +1,2551 @@
+From d4ab03638dbaedadf973a7334d4fc083b32ca5f9 Mon Sep 17 00:00:00 2001
+From: shardakumari505 <shardakumari505@gmail.com>
+Date: Fri, 5 Jan 2024 13:27:29 +0530
+Subject: [PATCH 1/5] made indentation changes
+
+---
+ src/guards/auth-guard.js                      |   2 +-
+ src/layouts/dashboard/side-nav.js             |  51 ---
+ src/pages/_document.js                        |   9 +-
+ src/pages/customers.js                        | 230 +++++++------
+ src/pages/settings.js                         | 305 ++++++++----------
+ src/pages/settings/beacon.js                  |  36 ++-
+ src/pages/settings/garagepuck.js              |  19 +-
+ src/pages/settings/garagepuckerror.js         |  25 +-
+ src/pages/user/[username].js                  | 198 ++++++++----
+ src/pages/user/[username]/beaconlog-table.js  |   6 +-
+ src/pages/user/[username]/device-table.js     | 200 +++++++-----
+ src/pages/user/[username]/pucklog-table.js    |  37 +--
+ src/pages/user/[username]/userdetails.js      |  49 ++-
+ src/pages/user/emergency-table.js             |   5 +-
+ src/pages/user/household-table.js             |   6 +-
+ src/sections/customer/customers-table.js      | 124 +++----
+ src/sections/customer/demo-data/random.js     |   7 +-
+ src/sections/customer/material-table.js       | 196 ++++++-----
+ .../settings/settings-notifications.js        | 143 ++------
+ 19 files changed, 812 insertions(+), 836 deletions(-)
+
+diff --git a/src/guards/auth-guard.js b/src/guards/auth-guard.js
+index 9db9651..25dd09e 100644
+--- a/src/guards/auth-guard.js
++++ b/src/guards/auth-guard.js
+@@ -35,7 +35,7 @@ export const AuthGuard = (props) => {
+         setChecked(true);
+       }
+     },
+-    [isAuthenticated, router.isReady]
++    [isAuthenticated,router, router.isReady]
+   );
+ 
+   if (!checked) {
+diff --git a/src/layouts/dashboard/side-nav.js b/src/layouts/dashboard/side-nav.js
+index 15db679..73a6d41 100644
+--- a/src/layouts/dashboard/side-nav.js
++++ b/src/layouts/dashboard/side-nav.js
+@@ -147,57 +147,6 @@ export const SideNav = (props) => {
+             })}
+           </Stack>
+         </Box>
+-        {/* <Divider sx={{ borderColor: 'neutral.700' }} />
+-        <Box
+-          sx={{
+-            px: 2,
+-            py: 3
+-          }}
+-        >
+-          <Typography
+-            color="neutral.100"
+-            variant="subtitle2"
+-          >
+-            Need more features?
+-          </Typography>
+-          <Typography
+-            color="neutral.500"
+-            variant="body2"
+-          >
+-            Check out our Pro solution template.
+-          </Typography>
+-          <Box
+-            sx={{
+-              display: 'flex',
+-              mt: 2,
+-              mx: 'auto',
+-              width: '160px',
+-              '& img': {
+-                width: '100%'
+-              }
+-            }}
+-          >
+-            <img
+-              alt="Go to pro"
+-              src="/assets/devias-kit-pro.png"
+-            />
+-          </Box>
+-          <Button
+-            component="a"
+-            endIcon={(
+-              <SvgIcon fontSize="small">
+-                <ArrowTopRightOnSquareIcon />
+-              </SvgIcon>
+-            )}
+-            fullWidth
+-            href="https://material-kit-pro-react.devias.io/"
+-            sx={{ mt: 2 }}
+-            target="_blank"
+-            variant="contained"
+-          >
+-            Pro Live Preview
+-          </Button>
+-        </Box> */}
+       </Box>
+     </Scrollbar>
+   );
+diff --git a/src/pages/_document.js b/src/pages/_document.js
+index 52066ba..76a236e 100644
+--- a/src/pages/_document.js
++++ b/src/pages/_document.js
+@@ -3,7 +3,6 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
+ import createEmotionServer from '@emotion/server/create-instance';
+ import { createEmotionCache } from 'src/utils/create-emotion-cache';
+ 
+-
+ const Favicon = () => (
+   <>
+     <link
+@@ -64,8 +63,8 @@ class CustomDocument extends Document {
+           <Fonts />
+         </Head>
+         <body>
+-        <Main />
+-        <NextScript />
++          <Main />
++          <NextScript />
+         </body>
+       </Html>
+     );
+@@ -83,7 +82,7 @@ CustomDocument.getInitialProps = async (ctx) => {
+         emotionCache={cache}
+         {...props}
+       />
+-    )
++    ),
+   });
+ 
+   const initialProps = await Document.getInitialProps(ctx);
+@@ -99,7 +98,7 @@ CustomDocument.getInitialProps = async (ctx) => {
+ 
+   return {
+     ...initialProps,
+-    styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags]
++    styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags],
+   };
+ };
+ 
+diff --git a/src/pages/customers.js b/src/pages/customers.js
+index bf67244..c5a5a81 100644
+--- a/src/pages/customers.js
++++ b/src/pages/customers.js
+@@ -131,7 +131,7 @@ const Page = () => {
+     };
+ 
+     fetchData();
+-  }, [username]);
++  }, [username, router]);
+ 
+   useEffect(() => {
+     if (defaultSettings) {
+@@ -175,7 +175,7 @@ const Page = () => {
+ 
+   const handleSelectedSubValuesChange = (subValues) => {
+     setSelectedSubValues(subValues);
+-};
++  };
+ 
+   const handleSubmit = async (sub) => {
+     try {
+@@ -275,8 +275,10 @@ const Page = () => {
+           py: 8
+         }}
+       >
+-        <Container maxWidth="xl">
+-          <Stack spacing={3}>
++        <Container
++          maxWidth="xl">
++          <Stack
++            spacing={3}>
+             <Stack
+               direction="row"
+               justifyContent="space-between"
+@@ -285,7 +287,10 @@ const Page = () => {
+               <Typography variant="h4">
+                 Users
+               </Typography>
+-              <SvgIcon fontSize="large" style={{ cursor: "pointer" }} onClick={handleClickOpen}>
++              <SvgIcon
++                fontSize="large"
++                style={{ cursor: "pointer" }}
++                onClick={handleClickOpen}>
+                 <CogIcon color='black' />
+               </SvgIcon>
+               <BootstrapDialog
+@@ -295,7 +300,9 @@ const Page = () => {
+                 fullWidth={fullWidth}
+                 maxWidth={maxWidth}
+               >
+-                <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
++                <DialogTitle
++                  sx={{ m: 0, p: 2 }}
++                  id="customized-dialog-title">
+                   User Device Settings
+                 </DialogTitle>
+                 <IconButton
+@@ -311,98 +318,114 @@ const Page = () => {
+                   <CloseIcon />
+                 </IconButton>
+                 <DialogContent dividers>
+-                  <Stack spacing={1} >
+-                    <Container sx={{ display: "-webkit-flex" }}>
+-                    <Card>
+-                {/* <CardHeader title="Beacon" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} /> */}
+-                {/* <Divider /> */}
+-                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
+-                  <Stack spacing={1} sx={{ maxWidth: 500 }}>
+-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+-                      <Typography fontSize={20} fontWeight="bold" >Beacon</Typography>
+-                    </Box>
+-                    <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+-                  </Stack>
+-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
+-                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+-                      <Typography fontSize={20} fontWeight="bold" >LED:</Typography>
+-                    </Box>
+-
+-                    <TextField
+-                      label="Pattern On-Time (ms)"
+-                      value={beaconData.onTime}
+-                      onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
+-                    />
+-                    <TextField
+-                      label="Pattern Off-Time (ms)"
+-                      value={beaconData.offTime}
+-                      onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
+-                    />
+-                    <TextField
+-                      label="Active Duration (sec)"
+-                      value={beaconData.duration}
+-                      onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+-                    />
+-                    <Box sx={{ width: 300 }}>
+-                      <Typography >Brightness:</Typography>
+-                      <Slider
+-                        value={beaconData.brightness}
+-                        onChange={handleBrightnessChange}
+-                        aria-label="Default"
+-                        valueLabelDisplay="auto" />
+-                    </Box>
+-                  </Stack>
+-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
+-                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+-                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
+-                    </Box>
+-                    <TextField
+-                      label="Pattern On-Time (ms)"
+-                      value={buzzerData.onTime}
+-                      onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+-                    />
+-                    <TextField
+-                      label="Pattern Off-Time (ms)"
+-                      value={buzzerData.offTime}
+-                      onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+-                    />
+-                    <TextField
+-                      label="Active Duration (sec)"
+-                      value={buzzerData.duration}
+-                      onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+-                    />
+-                  </Stack>
+-                </CardContent>
+-                <Card>
+-                  <CardHeader title="Charge Control" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
+-                  {/* <Divider /> */}
+-                  <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+-                    <Stack spacing={1} sx={{ maxWidth: 700 }}>
+-                      <TextField
+-                        label="Minimum battery percentage to start charge"
+-                        value={chargeControlData.minBatteryPercentage}
+-                        onChange={(e) =>
+-                          handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+-                        }
+-                      />
+-                    </Stack>
+-                  </CardContent>
+-                  {/* <Divider />
+-                <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                  <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+-                    Save
+-                  </Button>
+-                </CardActions> */}
+-                </Card>
+-                <Divider />
+-                {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                  <Button variant="contained" onClick={() => {
+-                    handleSubmit();
+-                  }}>
+-                    Save
+-                  </Button>
+-                </CardActions> */}
+-              </Card>
++                  <Stack
++                    spacing={1} >
++                    <Container
++                      sx={{ display: "-webkit-flex" }}>
++                      <Card>
++                        <CardContent
++                          sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
++                          <Stack
++                            spacing={1}
++                            sx={{ maxWidth: 500 }}>
++                            <Box
++                              sx={{ display: "flex", justifyContent: "center" }}>
++                              <Typography
++                                fontSize={20}
++                                fontWeight="bold" >
++                                Beacon</Typography>
++                            </Box>
++                            <ChromePicker
++                              color={beaconData.color}
++                              onChange={handleColorChange} />
++                          </Stack>
++                          <Stack
++                            spacing={1}
++                            paddingLeft={5}
++                            sx={{ maxWidth: 500 }}>
++                            <Box
++                              sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
++                              <Typography
++                                fontSize={20}
++                                fontWeight="bold" >
++                                LED:</Typography>
++                            </Box>
++
++                            <TextField
++                              label="Pattern On-Time (ms)"
++                              value={beaconData.onTime}
++                              onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
++                            />
++                            <TextField
++                              label="Pattern Off-Time (ms)"
++                              value={beaconData.offTime}
++                              onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
++                            />
++                            <TextField
++                              label="Active Duration (sec)"
++                              value={beaconData.duration}
++                              onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
++                            />
++                            <Box
++                              sx={{ width: 300 }}>
++                              <Typography >
++                                Brightness:</Typography>
++                              <Slider
++                                value={beaconData.brightness}
++                                onChange={handleBrightnessChange}
++                                aria-label="Default"
++                                valueLabelDisplay="auto" />
++                            </Box>
++                          </Stack>
++                          <Stack
++                            spacing={1}
++                            paddingLeft={5}
++                            sx={{ maxWidth: 500 }}>
++                            <Box
++                              sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
++                              <Typography
++                                fontSize={20}
++                                fontWeight="bold" >
++                                Buzzer :</Typography>
++                            </Box>
++                            <TextField
++                              label="Pattern On-Time (ms)"
++                              value={buzzerData.onTime}
++                              onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
++                            />
++                            <TextField
++                              label="Pattern Off-Time (ms)"
++                              value={buzzerData.offTime}
++                              onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
++                            />
++                            <TextField
++                              label="Active Duration (sec)"
++                              value={buzzerData.duration}
++                              onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
++                            />
++                          </Stack>
++                        </CardContent>
++                        <Card>
++                          <CardHeader
++                            title="Charge Control"
++                            sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
++                          <CardContent
++                            sx={{ paddingBottom: 0, paddingTop: 0 }}>
++                            <Stack
++                              spacing={1}
++                              sx={{ maxWidth: 700 }}>
++                              <TextField
++                                label="Minimum battery percentage to start charge"
++                                value={chargeControlData.minBatteryPercentage}
++                                onChange={(e) =>
++                                  handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
++                                }
++                              />
++                            </Stack>
++                          </CardContent>
++                        </Card>
++                        <Divider />
++                      </Card>
+                     </Container>
+                     <Container>
+ 
+@@ -410,9 +433,11 @@ const Page = () => {
+                   </Stack>
+                 </DialogContent>
+                 <DialogActions>
+-                  <Button variant="contained" onClick={() => {
+-                    handleSaveButtonClick();
+-                  }}>
++                  <Button
++                    variant="contained"
++                    onClick={() => {
++                      handleSaveButtonClick();
++                    }}>
+                     Save
+                   </Button>
+                 </DialogActions>
+@@ -420,7 +445,8 @@ const Page = () => {
+             </Stack>
+ 
+ 
+-            <Materialtable onSelectedSubValuesChange={handleSelectedSubValuesChange} />
++            <Materialtable
++              onSelectedSubValuesChange={handleSelectedSubValuesChange} />
+ 
+           </Stack>
+         </Container>
+diff --git a/src/pages/settings.js b/src/pages/settings.js
+index 3142b36..bd99282 100644
+--- a/src/pages/settings.js
++++ b/src/pages/settings.js
+@@ -182,49 +182,9 @@ const Page = () => {
+     };
+ 
+     fetchData();
+-  }, [username]);
++  }, [username, router]);
+ 
+ 
+-  // const handleSubmit = async () => {
+-  //   try {
+-  //     const idToken = localStorage.getItem('idToken');
+-  //     const apiUrl = 'https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/storeDeviceProps/';
+-
+-  //     const dataToSend = {
+-  //       user_id: userId,
+-  //       R: beaconData.color.r,
+-  //       G: beaconData.color.g,
+-  //       B: beaconData.color.b,
+-  //       brightness: brightness,
+-  //       led_ON_TIME: beaconData.onTime,
+-  //       led_OFF_TIME: beaconData.offTime,
+-  //       led_DURATION: beaconData.duration,
+-  //       buzz_ON_TIME: buzzerData.onTime,
+-  //       buzz_OFF_TIME: buzzerData.offTime,
+-  //       buzz_DURATION: buzzerData.duration,
+-  //       charge_control: chargeControlData.minBatteryPercentage,
+-  //     };
+-
+-  //     console.log('Data to send:', dataToSend);
+-
+-  //     const response = await axios.post(apiUrl, dataToSend,
+-  //       {
+-  //         headers: {
+-  //             Authorization: `Bearer ${idToken}`,
+-  //             'Content-Type': 'application/json',
+-  //         },
+-  //     });
+-  //     console.log('API Response:', response);
+-
+-  //     if (response.status !== 200) {
+-  //       throw new Error('Failed to save data');
+-  //     }
+-  //     console.log('Data saved successfully');
+-  //   } catch (error) {
+-  //     console.error('Error saving data:', error);
+-  //   }
+-  // };
+-
+   return (
+     <>
+       <Head>
+@@ -236,34 +196,33 @@ const Page = () => {
+       <Box sx={{ width: '100%' }}>
+         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+           <Tabs value={value} onChange={handleChange} indicatorColor="none" aria-label="basic tabs example">
+-            <Tab label="Profile Settings" {...a11yProps(0)} 
+-            sx={{
+-              backgroundColor:value === 0 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+-              width:"15vw",
+-              padding:"5px",
+-              border:value === 0 ? '1px solid rgb(169, 169, 169)': 'transparent',
+-              borderTopLeftRadius:value === 0 ? '10px': '0',
+-              borderTopRightRadius:value === 0 ? '10px': '0',
+-              borderBottom:value === 0 ? '0': '1px solid rgb(169, 169, 169)',
++            <Tab label="Profile Settings" {...a11yProps(0)}
++              sx={{
++                backgroundColor: value === 0 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
++                width: "15vw",
++                padding: "5px",
++                border: value === 0 ? '1px solid rgb(169, 169, 169)' : 'transparent',
++                borderTopLeftRadius: value === 0 ? '10px' : '0',
++                borderTopRightRadius: value === 0 ? '10px' : '0',
++                borderBottom: value === 0 ? '0' : '1px solid rgb(169, 169, 169)',
+               }} />
+-            <Tab label="Global Device Settings" {...a11yProps(1)} 
+-            sx={{
+-              backgroundColor:value === 1 ? 'rgba(229, 228, 226,0.7)': 'inherit',
+-              width:"15vw",
+-              padding:"5px",
+-              border:value === 1 ? '1px solid rgb(169, 169, 169)': 'transparent',
+-              borderTopLeftRadius:value === 1 ? '10px': '0',
+-              borderTopRightRadius:value === 1 ? '10px': '0',
+-              borderBottom:value === 1 ? '0': '1px solid rgb(169, 169, 169)',
++            <Tab label="Global Device Settings" {...a11yProps(1)}
++              sx={{
++                backgroundColor: value === 1 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
++                width: "15vw",
++                padding: "5px",
++                border: value === 1 ? '1px solid rgb(169, 169, 169)' : 'transparent',
++                borderTopLeftRadius: value === 1 ? '10px' : '0',
++                borderTopRightRadius: value === 1 ? '10px' : '0',
++                borderBottom: value === 1 ? '0' : '1px solid rgb(169, 169, 169)',
+               }} />
+           </Tabs>
+         </Box>
+-        <CustomTabPanel value={value} index={0}>
++        <CustomTabPanel
++          value={value}
++          index={0}>
+           <Container maxWidth="lg">
+             <Stack spacing={3} >
+-              {/* <Typography variant="h4">
+-              Settings
+-            </Typography> */}
+               <Grid
+                 container
+                 spacing={3}
+@@ -280,120 +239,130 @@ const Page = () => {
+                   md={6}
+                   lg={4}
+                 >
+-                  {/* <AccountProfile /> */}
+                 </Grid>
+               </Grid>
+             </Stack>
+           </Container>
+         </CustomTabPanel>
+-        <CustomTabPanel value={value} index={1}>
++        <CustomTabPanel
++          value={value}
++          index={1}>
+           <Box
+-          component="main"
+-          sx={{
+-            flexGrow: 1
+-          }}
+-        >
+-
+-          {/* <Stack spacing={3} >
+-                <Typography variant="h4">
+-                  User Settings
+-                </Typography>
+-              </Stack> */}
+-          <Stack spacing={1} >
+-            <Container sx={{ display: "-webkit-flex" }}>
+-              <Card>
+-                <CardHeader title="Beacon" sx={{paddingTop:2, paddingRight:3, paddingBottom:2 }}/>
+-                {/* <Divider /> */}
+-                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0}}>
+-                  <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
+-                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+-                      <Typography fontSize={20} fontWeight="bold" >LED :</Typography>
+-                    </Box>
+-                    <Box sx={{ width: 400 }}>
+-                      <Typography >Brightness:</Typography>
+-                      <Slider
+-                        value={brightness}
+-                        onChange={handleBrightnessChange}
+-                        aria-label="Default"
+-                        valueLabelDisplay="auto" />
+-                    </Box>
+-                    <TextField
+-                      label="Pattern On-Time (ms)"
+-                      value={beaconData.onTime}
+-                      onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
+-                    />
+-                    <TextField
+-                      label="Pattern Off-Time (ms)"
+-                      value={beaconData.offTime}
+-                      onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
+-                    />
+-                    <TextField
+-                      label="Active Duration (sec)"
+-                      value={beaconData.duration}
+-                      onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+-                    />
+-                  </Stack>
+-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
+-                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
+-                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
+-                    </Box>
+-                    <TextField
+-                      label="On-Time (ms)"
+-                      value={buzzerData.onTime}
+-                      onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+-                    />
+-                    <TextField
+-                      label="Off-Time (ms)"
+-                      value={buzzerData.offTime}
+-                      onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+-                    />
+-                    <TextField
+-                      label="Duration"
+-                      value={buzzerData.duration}
+-                      onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+-                    />
+-                  </Stack>
+-                </CardContent>
++            component="main"
++            sx={{
++              flexGrow: 1
++            }}
++          >
++            <Stack spacing={1} >
++              <Container sx={{ display: "-webkit-flex" }}>
+                 <Card>
+-                <CardHeader title="Charge Control" sx={{paddingTop:2, paddingRight:3, paddingBottom:2 }} />
+-                {/* <Divider /> */}
+-                <CardContent sx={{ paddingBottom: 0, paddingTop: 0}}>
+-                  <Stack spacing={1} sx={{ maxWidth: 700 }}>
+-                    <TextField
+-                      label="Minimum battery percentage to start charge"
+-                      value={chargeControlData.minBatteryPercentage}
+-                      onChange={(e) =>
+-                        handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+-                      }
+-                    />
+-                  </Stack>
+-                </CardContent>
+-                {/* <Divider /> */}
+-                {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                  <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+-                    Save
+-                  </Button>
+-                </CardActions> */}
+-              </Card>
+-                {/* <Divider /> */}
+-                <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                <Button variant="contained" onClick={() => {
+-                    handleSave('beacon');
+-                    handleSubmit();
+-                  }}>
+-                    Save
+-                  </Button>
+-                </CardActions>
+-              </Card>
+-            </Container>
+-            <Container>
+-              
+-            </Container>
+-          </Stack>
++                  <CardHeader
++                    title="Beacon"
++                    sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
++                  <CardContent
++                    sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
++                    <ChromePicker
++                      color={beaconData.color}
++                      onChange={handleColorChange} />
++                    <Stack
++                      spacing={1}
++                      paddingLeft={5}
++                      sx={{ maxWidth: 700 }}>
++                      <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
++                        <Typography
++                          fontSize={20}
++                          fontWeight="bold" >LED :</Typography>
++                      </Box>
++                      <Box sx={{ width: 400 }}>
++                        <Typography >Brightness:</Typography>
++                        <Slider
++                          value={brightness}
++                          onChange={handleBrightnessChange}
++                          aria-label="Default"
++                          valueLabelDisplay="auto" />
++                      </Box>
++                      <TextField
++                        label="Pattern On-Time (ms)"
++                        value={beaconData.onTime}
++                        onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
++                      />
++                      <TextField
++                        label="Pattern Off-Time (ms)"
++                        value={beaconData.offTime}
++                        onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
++                      />
++                      <TextField
++                        label="Active Duration (sec)"
++                        value={beaconData.duration}
++                        onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
++                      />
++                    </Stack>
++                    <Stack
++                      spacing={1}
++                      paddingLeft={5}
++                      sx={{ maxWidth: 700 }}>
++                      <Box
++                        sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
++                        <Typography
++                          fontSize={20}
++                          fontWeight="bold" >Buzzer :</Typography>
++                      </Box>
++                      <TextField
++                        label="On-Time (ms)"
++                        value={buzzerData.onTime}
++                        onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
++                      />
++                      <TextField
++                        label="Off-Time (ms)"
++                        value={buzzerData.offTime}
++                        onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
++                      />
++                      <TextField
++                        label="Duration"
++                        value={buzzerData.duration}
++                        onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
++                      />
++                    </Stack>
++                  </CardContent>
++                  <Card>
++                    <CardHeader
++                      title="Charge Control"
++                      sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
++                    <CardContent
++                      sx={{ paddingBottom: 0, paddingTop: 0 }}>
++                      <Stack
++                        spacing={1}
++                        sx={{ maxWidth: 700 }}>
++                        <TextField
++                          label="Minimum battery percentage to start charge"
++                          value={chargeControlData.minBatteryPercentage}
++                          onChange={(e) =>
++                            handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
++                          }
++                        />
++                      </Stack>
++                    </CardContent>
++                  </Card>
++                  {/* <Divider /> */}
++                  <CardActions sx={{ justifyContent: 'flex-end' }}>
++                    <Button
++                      variant="contained"
++                      onClick={() => {
++                        handleSave('beacon');
++                        handleSubmit();
++                      }}>
++                      Save
++                    </Button>
++                  </CardActions>
++                </Card>
++              </Container>
++              <Container>
++
++              </Container>
++            </Stack>
+ 
+ 
+-        </Box>
++          </Box>
+         </CustomTabPanel>
+       </Box>
+     </>
+diff --git a/src/pages/settings/beacon.js b/src/pages/settings/beacon.js
+index 70874f4..b56451d 100644
+--- a/src/pages/settings/beacon.js
++++ b/src/pages/settings/beacon.js
+@@ -71,7 +71,7 @@ const Page = () => {
+                 console.log('Saving Beacon Data:', beaconData);
+                 break;
+             case 'buzzer':
+-                alert('Saving Buzzer Data: '  + buzzerData);
++                alert('Saving Buzzer Data: ' + buzzerData);
+                 console.log('Saving Buzzer Data:', buzzerData);
+                 break;
+             case 'chargeControl':
+@@ -112,11 +112,19 @@ const Page = () => {
+                             <CardHeader title="Beacon" />
+                             <Divider />
+                             <CardContent>
+-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-                                    <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+-                                    <Box sx={{ width: 300 }}>
++                                <Stack
++                                    spacing={2}
++                                    sx={{ maxWidth: 400 }}>
++                                    <ChromePicker
++                                        color={beaconData.color}
++                                        onChange={handleColorChange} />
++                                    <Box
++                                        sx={{ width: 300 }}>
+                                         <Typography >Brightness:</Typography>
+-                                        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
++                                        <Slider
++                                            defaultValue={50}
++                                            aria-label="Default"
++                                            valueLabelDisplay="auto" />
+                                     </Box>
+                                     <TextField
+                                         label="Pattern On-Time (ms)"
+@@ -136,8 +144,11 @@ const Page = () => {
+                                 </Stack>
+                             </CardContent>
+                             <Divider />
+-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                                <Button variant="contained" onClick={() => handleSave('beacon')}>
++                            <CardActions
++                                sx={{ justifyContent: 'flex-end' }}>
++                                <Button
++                                    variant="contained"
++                                    onClick={() => handleSave('beacon')}>
+                                     Save
+                                 </Button>
+                             </CardActions>
+@@ -146,7 +157,9 @@ const Page = () => {
+                             <CardHeader title="Buzzer" />
+                             <Divider />
+                             <CardContent>
+-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
++                                <Stack
++                                    spacing={2}
++                                    sx={{ maxWidth: 400 }}>
+                                     <TextField
+                                         label="On-Time (ms)"
+                                         value={buzzerData.onTime}
+@@ -165,8 +178,11 @@ const Page = () => {
+                                 </Stack>
+                             </CardContent>
+                             <Divider />
+-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                                <Button variant="contained" onClick={() => handleSave('buzzer')}>
++                            <CardActions
++                                sx={{ justifyContent: 'flex-end' }}>
++                                <Button
++                                    variant="contained"
++                                    onClick={() => handleSave('buzzer')}>
+                                     Save
+                                 </Button>
+                             </CardActions>
+diff --git a/src/pages/settings/garagepuck.js b/src/pages/settings/garagepuck.js
+index 698354d..80f96fc 100644
+--- a/src/pages/settings/garagepuck.js
++++ b/src/pages/settings/garagepuck.js
+@@ -16,7 +16,7 @@ import { ChromePicker } from 'react-color';
+ 
+ const Page = () => {
+ 
+-    
++
+ 
+     const [chargeControlData, setChargeControlData] = useState({
+         minBatteryPercentage: '',
+@@ -93,12 +93,14 @@ const Page = () => {
+                         <Typography variant="h4">
+                             Garage Puck Settings
+                         </Typography>
+-                        
++
+                         <Card spacing={1}>
+                             <CardHeader title="Charge Control" />
+                             <Divider />
+                             <CardContent>
+-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
++                                <Stack
++                                    spacing={2}
++                                    sx={{ maxWidth: 400 }}>
+                                     <TextField
+                                         label="Minimum battery percentage to start charge"
+                                         value={chargeControlData.minBatteryPercentage}
+@@ -106,15 +108,14 @@ const Page = () => {
+                                             handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+                                         }
+                                     />
+-                                    {/* <Typography variant="h6">
+-                  {chargeControlData.minBatteryPercentage}
+-        </Typography> */}
+-
+                                 </Stack>
+                             </CardContent>
+                             <Divider />
+-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                                <Button variant="contained" onClick={() => handleSave('chargeControl')}>
++                            <CardActions
++                                sx={{ justifyContent: 'flex-end' }}>
++                                <Button
++                                    variant="contained"
++                                    onClick={() => handleSave('chargeControl')}>
+                                     Save
+                                 </Button>
+                             </CardActions>
+diff --git a/src/pages/settings/garagepuckerror.js b/src/pages/settings/garagepuckerror.js
+index be62a64..49ef74a 100644
+--- a/src/pages/settings/garagepuckerror.js
++++ b/src/pages/settings/garagepuckerror.js
+@@ -101,7 +101,9 @@ const Page = () => {
+                             <CardHeader title="Buzzer" />
+                             <Divider />
+                             <CardContent>
+-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
++                                <Stack
++                                    spacing={2}
++                                    sx={{ maxWidth: 400 }}>
+                                     <TextField
+                                         label="On-Time (ms)"
+                                         value={buzzerData.onTime}
+@@ -120,29 +122,30 @@ const Page = () => {
+                                 </Stack>
+                             </CardContent>
+                             <Divider />
+-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                                <Button variant="contained" onClick={() => handleSave('buzzer')}>
++                            <CardActions
++                                sx={{ justifyContent: 'flex-end' }}>
++                                <Button
++                                    variant="contained"
++                                    onClick={() => handleSave('buzzer')}>
+                                     Save
+                                 </Button>
+                             </CardActions>
+                         </Card>
+-                        <Card spacing={1}>
++                        <Card
++                            spacing={1}>
+                             <CardHeader title="Charge Control" />
+                             <Divider />
+                             <CardContent>
+-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
++                                <Stack
++                                    spacing={2}
++                                    sx={{ maxWidth: 400 }}>
+                                     <TextField
+                                         label="Minimum battery percentage to start charge"
+                                         value={chargeControlData.minBatteryPercentage}
+                                         onChange={(e) =>
+                                             handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+                                         }
+-                                    />
+-                                    {/* <Typography variant="h6">
+-                  {chargeControlData.minBatteryPercentage}
+-        </Typography> */}
+-
+-                                </Stack>
++                                    /></Stack>
+                             </CardContent>
+                             <Divider />
+                             <CardActions sx={{ justifyContent: 'flex-end' }}>
+diff --git a/src/pages/user/[username].js b/src/pages/user/[username].js
+index 5218432..0002f6d 100644
+--- a/src/pages/user/[username].js
++++ b/src/pages/user/[username].js
+@@ -176,7 +176,7 @@ const UserPage = () => {
+     };
+ 
+     fetchData();
+-  }, [username]);
++  }, [router, username]);
+ 
+   useEffect(() => {
+     if (defaultSettings) {
+@@ -258,7 +258,7 @@ const UserPage = () => {
+       console.log('Data saved successfully');
+     } catch (error) {
+       setSnackbarMessage('Error saving data');
+-    setSnackbarOpen(true);
++      setSnackbarOpen(true);
+       console.error('Error saving data:', error);
+     }
+   };
+@@ -382,7 +382,9 @@ const UserPage = () => {
+           variant="fullWidth"
+           aria-label="full width tabs example"
+         >
+-          <Tab label={`User Page: ${username}`} {...a11yProps(0)}
++          <Tab
++            label={`User Page: ${username}`}
++            {...a11yProps(0)}
+             sx={{
+               backgroundColor: value === 0 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+               width: tabWidth,
+@@ -392,7 +394,9 @@ const UserPage = () => {
+               borderBottom: value === 0 ? '0' : '1px solid rgb(169, 169, 169)',
+               margin: 0
+             }} />
+-          <Tab label="HomeHub" {...a11yProps(1)}
++          <Tab
++            label="HomeHub"
++            {...a11yProps(1)}
+             sx={{
+               backgroundColor: value === 1 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+               width: tabWidth,
+@@ -401,7 +405,9 @@ const UserPage = () => {
+               borderTopRightRadius: value === 1 ? '10px' : '0',
+               borderBottom: value === 1 ? '0' : '1px solid rgb(169, 169, 169)',
+             }} />
+-          <Tab label="Beacon" {...a11yProps(2)}
++          <Tab
++            label="Beacon"
++            {...a11yProps(2)}
+             sx={{
+               backgroundColor: value === 2 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+               width: tabWidth,
+@@ -411,7 +417,9 @@ const UserPage = () => {
+               borderBottom: value === 2 ? '0' : '1px solid rgb(169, 169, 169)',
+               margin: 0
+             }} />
+-          <Tab label="Puck" {...a11yProps(3)}
++          <Tab
++            label="Puck"
++            {...a11yProps(3)}
+             sx={{
+               backgroundColor: value === 3 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+               width: tabWidth,
+@@ -420,7 +428,9 @@ const UserPage = () => {
+               borderTopRightRadius: value === 3 ? '10px' : '0',
+               borderBottom: value === 3 ? '0' : '1px solid rgb(169, 169, 169)',
+             }} />
+-          <Tab label="Device Settings" {...a11yProps(4)}
++          <Tab
++            label="Device Settings"
++            {...a11yProps(4)}
+             sx={{
+               backgroundColor: value === 4 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+               width: tabWidth,
+@@ -432,80 +442,105 @@ const UserPage = () => {
+             }} />
+         </Tabs>
+       </Box>
+-      <TabPanel value={value} index={0}>
++      <TabPanel
++        value={value}
++        index={0}>
+         <Stack spacing={2}>
+-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+-            {/* <Stack spacing={1}>
+-                <Typography variant="h4">
+-                  User Page: {username}
+-                </Typography>
+-              </Stack> */}
+-            <Stack sx={{ flex: 0.24, border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "rgba(17, 25, 39,0.8)", color: "aliceblue" }}>
+-              <Typography fontWeight="medium">SET-UP </Typography>
++          <div
++            style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
++            <Stack
++              sx={{ flex: 0.24, border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "rgba(17, 25, 39,0.8)", color: "aliceblue" }}>
++              <Typography
++                fontWeight="medium">SET-UP </Typography>
+               <Typography>Requested: YES </Typography>
+             </Stack>
+-            <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
++            <Typography
++              variant="h6"
++              sx={{ display: "flex", alignItems: "center" }}>
+               Offline Count : 6
+-              {/* {offline} */}
+-              <WarningIcon sx={{ color: warningIconColor, padding: "2px" }} />
+-              <WarningIcon sx={{ color: warningIconColor, padding: "2px" }} />
+-              <WarningIcon sx={{ color: warningIconColor, padding: "2px" }} />
++              <WarningIcon
++                sx={{ color: warningIconColor, padding: "2px" }} />
++              <WarningIcon
++                sx={{ color: warningIconColor, padding: "2px" }} />
++              <WarningIcon
++                sx={{ color: warningIconColor, padding: "2px" }} />
+             </Typography>
+           </div>
+           <Stack spacing={2}>
+-            {/* <Stack> */}
+-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+-              <Stack sx={{ flex: 0.2, border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+-                {/* <Typography fontWeight="bold">Device Time</Typography> */}
+-                <Typography fontWeight="medium">Alive From</Typography>
++            <div
++              style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
++              <Stack
++                sx={{ flex: 0.2, border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginLeft: 0, padding: "5px", display: "flex", alignItems: "center", float: "right", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
++                <Typography
++                  fontWeight="medium">Alive From</Typography>
+                 <Typography >November 19, 2023</Typography>
+                 <Typography >3:30 PM</Typography>
+               </Stack>
+-              <Stack sx={{ flex: 0.2, minHeight: "12vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
++              <Stack
++                sx={{ flex: 0.2, minHeight: "12vh", border: "1px solid rgb(229, 228, 226)", borderRadius: "5px", width: "fit-content", margin: "5px", marginRight: 0, padding: "5px", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(90deg, rgba(219,48,48,0.1) 0%, rgba(39,12,161,0.1) 100%)" }}>
+                 <TimeDisplay />
+               </Stack>
+             </div>
+             <UserDetails />
+           </Stack>
+-          <Stack spacing={1}>
+-            <Typography variant="h6">Devices</Typography>
++          <Stack
++            spacing={1}>
++            <Typography
++              variant="h6">Devices</Typography>
+             <Devicetable />
+           </Stack>
+-          <Stack spacing={1}>
+-            <Typography variant="h6">Emergency Contacts</Typography>
++          <Stack
++            spacing={1}>
++            <Typography
++              variant="h6">Emergency Contacts</Typography>
+             <Emergencytable />
+           </Stack>
+-          <Stack spacing={1}>
++          <Stack
++            spacing={1}>
+             <Typography variant="h6">Household Members</Typography>
+             <Householdtable />
+           </Stack>
+         </Stack>
+       </TabPanel>
+-      <TabPanel value={value} index={1}>
++      <TabPanel
++        value={value}
++        index={1}>
+         <Stack spacing={2}>
+-          <Typography variant="h6">HomeHub Logs</Typography>
++          <Typography
++            variant="h6">HomeHub Logs</Typography>
+           <Homehublogtable />
+-          <Typography variant="h6">HomeHub Errors</Typography>
++          <Typography
++            variant="h6">HomeHub Errors</Typography>
+           <Homehuberrortable />
+         </Stack>
+       </TabPanel>
+-      <TabPanel value={value} index={2}>
++      <TabPanel
++        value={value}
++        index={2}>
+         <Stack spacing={2}>
+-          <Typography variant="h6">Beacon Logs</Typography>
++          <Typography
++            variant="h6">Beacon Logs</Typography>
+           <Beaconlogtable />
+-          <Typography variant="h6">Beacon Errors</Typography>
++          <Typography
++            variant="h6">Beacon Errors</Typography>
+           <Beaconerrortable />
+         </Stack>
+       </TabPanel>
+-      <TabPanel value={value} index={3}>
++      <TabPanel
++        value={value}
++        index={3}>
+         <Stack spacing={2}>
+-          <Typography variant="h6">Puck Logs</Typography>
++          <Typography
++            variant="h6">Puck Logs</Typography>
+           <Pucklogtable />
+-          <Typography variant="h6">Puck Errors</Typography>
++          <Typography
++            variant="h6">Puck Errors</Typography>
+           <Puckerrortable />
+         </Stack>
+       </TabPanel>
+-      <TabPanel value={value} index={4}>
++      <TabPanel
++        value={value}
++        index={4}>
+         <Box
+           component="main"
+           sx={{
+@@ -513,20 +548,33 @@ const UserPage = () => {
+           }}
+         >
+           <Stack spacing={1} >
+-            <Container sx={{ display: "-webkit-flex" }}>
++            <Container
++              sx={{ display: "-webkit-flex" }}>
+               <Card>
+-                {/* <CardHeader title="Beacon" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} /> */}
+-                {/* <Divider /> */}
+-                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
+-                  <Stack spacing={1} sx={{ maxWidth: 500 }}>
+-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+-                      <Typography fontSize={20} fontWeight="bold" >Beacon</Typography>
++                <CardContent
++                  sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
++                  <Stack
++                    spacing={1}
++                    sx={{ maxWidth: 500 }}>
++                    <Box
++                      sx={{ display: "flex", justifyContent: "center" }}>
++                      <Typography
++                        fontSize={20}
++                        fontWeight="bold" >Beacon</Typography>
+                     </Box>
+-                    <ChromePicker color={beaconData.color} onChange={handleColorChange} />
++                    <ChromePicker
++                      color={beaconData.color}
++                      onChange={handleColorChange} />
+                   </Stack>
+-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
+-                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+-                      <Typography fontSize={20} fontWeight="bold" >LED:</Typography>
++                  <Stack
++                    spacing={1}
++                    paddingLeft={5}
++                    sx={{ maxWidth: 500 }}>
++                    <Box
++                      sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
++                      <Typography
++                        fontSize={20}
++                        fontWeight="bold" >LED:</Typography>
+                     </Box>
+ 
+                     <TextField
+@@ -544,7 +592,8 @@ const UserPage = () => {
+                       value={beaconData.duration}
+                       onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+                     />
+-                    <Box sx={{ width: 300 }}>
++                    <Box
++                      sx={{ width: 300 }}>
+                       <Typography >Brightness:</Typography>
+                       <Slider
+                         value={beaconData.brightness}
+@@ -553,9 +602,15 @@ const UserPage = () => {
+                         valueLabelDisplay="auto" />
+                     </Box>
+                   </Stack>
+-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
+-                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+-                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
++                  <Stack
++                    spacing={1}
++                    paddingLeft={5}
++                    sx={{ maxWidth: 500 }}>
++                    <Box
++                      sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
++                      <Typography
++                        fontSize={20}
++                        fontWeight="bold" >Buzzer :</Typography>
+                     </Box>
+                     <TextField
+                       label="Pattern On-Time (ms)"
+@@ -575,10 +630,14 @@ const UserPage = () => {
+                   </Stack>
+                 </CardContent>
+                 <Card>
+-                  <CardHeader title="Charge Control" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
+-                  {/* <Divider /> */}
+-                  <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+-                    <Stack spacing={1} sx={{ maxWidth: 700 }}>
++                  <CardHeader
++                    title="Charge Control"
++                    sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
++                  <CardContent
++                    sx={{ paddingBottom: 0, paddingTop: 0 }}>
++                    <Stack
++                      spacing={1}
++                      sx={{ maxWidth: 700 }}>
+                       <TextField
+                         label="Minimum battery percentage to start charge"
+                         value={chargeControlData.minBatteryPercentage}
+@@ -588,18 +647,15 @@ const UserPage = () => {
+                       />
+                     </Stack>
+                   </CardContent>
+-                  {/* <Divider />
+-                <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                  <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+-                    Save
+-                  </Button>
+-                </CardActions> */}
+                 </Card>
+                 <Divider />
+-                <CardActions sx={{ justifyContent: 'flex-end' }}>
+-                  <Button variant="contained" onClick={() => {
+-                    handleSubmit();
+-                  }}>
++                <CardActions
++                  sx={{ justifyContent: 'flex-end' }}>
++                  <Button
++                    variant="contained"
++                    onClick={() => {
++                      handleSubmit();
++                    }}>
+                     Save
+                   </Button>
+                   <Snackbar
+diff --git a/src/pages/user/[username]/beaconlog-table.js b/src/pages/user/[username]/beaconlog-table.js
+index 69f82de..051a800 100644
+--- a/src/pages/user/[username]/beaconlog-table.js
++++ b/src/pages/user/[username]/beaconlog-table.js
+@@ -11,7 +11,7 @@ import DoneIcon from '@mui/icons-material/Done';
+ const Beaconlogtable = () => {
+ 
+     const [data, setData] = useState([]);
+-
++    const router = useRouter();
+     useEffect(() => {
+         const fetchData = async () => {
+             try {
+@@ -94,9 +94,7 @@ const Beaconlogtable = () => {
+         };
+ 
+         fetchData();
+-    }, []);
+-
+-    const router = useRouter();
++    }, [router]);
+ 
+     const columns = useMemo(
+         //column definitions...
+diff --git a/src/pages/user/[username]/device-table.js b/src/pages/user/[username]/device-table.js
+index 5a58d5d..718d861 100644
+--- a/src/pages/user/[username]/device-table.js
++++ b/src/pages/user/[username]/device-table.js
+@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
+ const Devicetable = () => {
+     const [datafordevicetable, setDatafordevicetable] = useState({});
+     const [firstName, setfirstName] = useState('');
+-
++    const router = useRouter();
+     const fetchData = async () => {
+         try {
+             const idToken = localStorage.getItem('idToken');
+@@ -64,112 +64,146 @@ const Devicetable = () => {
+ 
+     useEffect(() => {
+         fetchData();
+-    }, []);
++    }, [router]);
+ 
+-    const router = useRouter();
+ 
+     return (
+         <div style={{ display: "flex" }}>
+-            <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
+-                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+-                {`${firstName}'s Hub` || "N/A"}
++            <Stack
++                sx={{ width: "33.33%", overflowX: "scroll" }}
++                textAlign='center'>
++                <Typography
++                    variant="h6"
++                    sx={{ fontSize: "16px" }}
++                    gutterBottom component="div">
++                    {`${firstName}'s Hub` || "N/A"}
+                 </Typography>
+                 <Divider />
+-                {/* <Typography sx={{ fontSize: "12px" }} >
+-                    Home Hub
+-                </Typography> */}
+                 <Table size="small">
+                     <TableRow >
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                         <TableCell>{datafordevicetable.hh_id || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
+                         <TableCell>{datafordevicetable.slaves_connected || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                         <TableCell >{datafordevicetable.hh_fw_ver}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
+                         <TableCell >{datafordevicetable.landline}</TableCell>
+                     </TableRow>
+                 </Table>
+             </Stack>
+-            <Stack sx={{ width: "33.33%", overflowX: "scroll"}} textAlign='center'>
+-                    <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
++            <Stack
++                sx={{ width: "33.33%", overflowX: "scroll" }}
++                textAlign='center'>
++                <Typography
++                    variant="h6"
++                    sx={{ fontSize: "16px" }}
++                    gutterBottom component="div">
+                     {`${firstName}'s Beacon` || "N/A"}
+-                    </Typography>
+-                    <Divider />
+-                    {/* <Typography sx={{ fontSize: "12px" }} >
+-                        Beacon
+-                    </Typography> */}
+-
+-                    <Table size="medium" align="center">
+-
+-                        <TableRow >
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+-                            <TableCell>   {datafordevicetable.b_id}</TableCell>
+-                        </TableRow>
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+-                            <TableCell> {datafordevicetable.b_batt_lvl}</TableCell>
+-                        </TableRow>
+-
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
+-                            <TableCell>{datafordevicetable.b_solar_lvl !== undefined ? datafordevicetable.b_solar_lvl.toString() : "N/A"}</TableCell>
+-                        </TableRow>
+-
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
+-                            <TableCell> {datafordevicetable.b_temp}</TableCell>
+-                        </TableRow>
+-
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+-                            <TableCell> {datafordevicetable.b_rssi}</TableCell>
+-                        </TableRow>
+-
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+-                            <TableCell> {datafordevicetable.b_fw_ver}</TableCell>
+-
+-                        </TableRow>
+-                    </Table>
++                </Typography>
++                <Divider />
++                <Table
++                    size="medium"
++                    align="center">
++
++                    <TableRow >
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
++                        <TableCell>   {datafordevicetable.b_id}</TableCell>
++                    </TableRow>
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
++                        <TableCell> {datafordevicetable.b_batt_lvl}</TableCell>
++                    </TableRow>
++
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
++                        <TableCell>{datafordevicetable.b_solar_lvl !== undefined ? datafordevicetable.b_solar_lvl.toString() : "N/A"}</TableCell>
++                    </TableRow>
++
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
++                        <TableCell> {datafordevicetable.b_temp}</TableCell>
++                    </TableRow>
++
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
++                        <TableCell> {datafordevicetable.b_rssi}</TableCell>
++                    </TableRow>
++
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
++                        <TableCell> {datafordevicetable.b_fw_ver}</TableCell>
++
++                    </TableRow>
++                </Table>
+             </Stack>
+-            <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
+-                    <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
++            <Stack
++                sx={{ width: "33.33%", overflowX: "scroll" }}
++                textAlign='center'>
++                <Typography
++                    variant="h6"
++                    sx={{ fontSize: "16px" }}
++                    gutterBottom component="div">
+                     {`${firstName}'s Puck` || "N/A"}
+-                    </Typography>
+-                    <Divider />
+-                    {/* <Typography sx={{ fontSize: "12px" }} >
+-                        Puck
+-                    </Typography> */}
+-                    <Table size="small">
+-                        <TableRow >
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+-                            <TableCell>{datafordevicetable.gp_id}</TableCell>
+-
+-                        </TableRow>
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+-                            <TableCell>{datafordevicetable.g_batt_lvl}</TableCell>
+-                        </TableRow>
+-
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+-                            <TableCell>{datafordevicetable.g_rssi}</TableCell>
+-                        </TableRow>
+-
+-                        <TableRow>
+-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+-                            <TableCell >
+-                                {datafordevicetable.g_fw_ver}
+-                            </TableCell>
+-                        </TableRow>
+-                    </Table>
++                </Typography>
++                <Divider />
++                <Table size="small">
++                    <TableRow >
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
++                        <TableCell>{datafordevicetable.gp_id}</TableCell>
++
++                    </TableRow>
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
++                        <TableCell>{datafordevicetable.g_batt_lvl}</TableCell>
++                    </TableRow>
++
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
++                        <TableCell>{datafordevicetable.g_rssi}</TableCell>
++                    </TableRow>
++
++                    <TableRow>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
++                        <TableCell >
++                            {datafordevicetable.g_fw_ver}
++                        </TableCell>
++                    </TableRow>
++                </Table>
+             </Stack>
+         </div>
+     );
+diff --git a/src/pages/user/[username]/pucklog-table.js b/src/pages/user/[username]/pucklog-table.js
+index 0dd0425..9d55a3d 100644
+--- a/src/pages/user/[username]/pucklog-table.js
++++ b/src/pages/user/[username]/pucklog-table.js
+@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
+ const Pucklogtable = () => {
+ 
+     const [data, setData] = useState([]);
+-
++    const router = useRouter();
+     useEffect(() => {
+         const fetchData = async () => {
+             try {
+@@ -49,36 +49,7 @@ const Pucklogtable = () => {
+                 const data = secondApiResponse.data;
+                 console.log('Puck logs:', data);
+                 setData(data['logs']);
+-                // data['logs'].forEach(log => {
+-                //     const onoff = log.ON_OFF_Time;
+-                //     const onPattern = /ON#(\d+)/;
+-                //     const onMatch = onoff.match(onPattern);
+-                //     const onTime = onMatch ? onMatch[1] : null;
+-                //     log.onTime = onTime;
+-
+-                //     const offPattern = /OFF#(\d+)/;
+-                //     const offmatch = onoff.match(offPattern);
+-                //     const offTime = onMatch ? offmatch[1] : null;
+-                //     log.offTime = offTime;
+-                // })
+-                // data['logs'].forEach(log => {
+-                //     const rgbstring = log.RGBValues;
+-                //     const rgbPattern = /([RGB])#(\d+)/g;
+-                //     let match;
+-                //     log.rgbValues = {
+-                //         R: 0,
+-                //         G: 0,
+-                //         B: 0,
+-                //     };
+-
+-                //     while ((match = rgbPattern.exec(rgbstring)) !== null) {
+-                //         const [, color, value] = match;
+-                //         log.rgbValues[color] = parseInt(value, 10);
+-                //     }
+-
+-                //     const rgbString = `rgb(${log.rgbValues.R},${log.rgbValues.G},${log.rgbValues.B})`;
+-                //     log.rgbString = rgbString;
+-                // });
++                
+                 data['logs'].forEach(log => {
+                     const dateTime = new Date(log.date_time);
+                     const formattedDate = dateTime.toLocaleDateString();
+@@ -96,9 +67,7 @@ const Pucklogtable = () => {
+         };
+ 
+         fetchData();
+-    }, []);
+-
+-    const router = useRouter();
++    }, [router]);
+ 
+     const columns = useMemo(
+         //column definitions...
+diff --git a/src/pages/user/[username]/userdetails.js b/src/pages/user/[username]/userdetails.js
+index fda7ea3..28a4076 100644
+--- a/src/pages/user/[username]/userdetails.js
++++ b/src/pages/user/[username]/userdetails.js
+@@ -24,6 +24,8 @@ const UserDetails = () => {
+     const [phoneNumber, setphoneNumber] = useState('');
+     const [birthDate, setbirthDate] = useState('');
+     const [os, setos] = useState('');
++    
++    const router = useRouter();
+ 
+     const fetchData = async () => {
+         try {
+@@ -88,52 +90,73 @@ const UserDetails = () => {
+ 
+     useEffect(() => {
+         fetchData();
+-    }, []);
++    }, [router]);
+ 
+-    const router = useRouter();
+ 
+     return (
+         <div style={{ display: "flex" }}>
+-            <Stack textAlign='center' sx={{ width: "50%" }}>
++            <Stack
++                textAlign='center'
++                sx={{ width: "50%" }}>
+                 <Table>
+                     <TableRow >
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7', width: "40%" }}>First Name</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7', width: "40%" }}>First Name</TableCell>
+                         <TableCell>{firstName || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Last Name</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>Last Name</TableCell>
+                         <TableCell>{lastName || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Address</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>Address</TableCell>
+                         <TableCell >{address || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>City</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>City</TableCell>
+                         <TableCell >{city || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>ZipCode</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>ZipCode</TableCell>
+                         <TableCell >{pinCode || "N/A"}</TableCell>
+                     </TableRow>
+                 </Table>
+             </Stack>
+-            <Stack textAlign='center' sx={{ width: "50%" }}>
++            <Stack
++                textAlign='center'
++                sx={{ width: "50%" }}>
+                 <Table>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Email</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>Email</TableCell>
+                         <TableCell >{email || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Phone Number</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>Phone Number</TableCell>
+                         <TableCell >{phoneNumber || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Birthdate</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>Birthdate</TableCell>
+                         <TableCell >{birthDate || "N/A"}</TableCell>
+                     </TableRow>
+                     <TableRow>
+-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>OS</TableCell>
++                        <TableCell
++                            variant="head"
++                            sx={{ backgroundColor: '#f7f7f7' }}>OS</TableCell>
+                         <TableCell >{os || "N/A"}</TableCell>
+                     </TableRow>
+                 </Table>
+diff --git a/src/pages/user/emergency-table.js b/src/pages/user/emergency-table.js
+index 58f473b..290f7d8 100644
+--- a/src/pages/user/emergency-table.js
++++ b/src/pages/user/emergency-table.js
+@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
+ 
+ const Emergencytable = () => {
+     const [data, setData] = useState([]);
+-
++    const router = useRouter();
+     useEffect(() => {
+         const fetchData = async () => {
+             try {
+@@ -53,9 +53,8 @@ const Emergencytable = () => {
+         };
+ 
+         fetchData();
+-    }, []);
++    }, [router]);
+ 
+-    const router = useRouter();
+ 
+     const columns = useMemo(
+         //column definitions...
+diff --git a/src/pages/user/household-table.js b/src/pages/user/household-table.js
+index 0b57142..c8d8e89 100644
+--- a/src/pages/user/household-table.js
++++ b/src/pages/user/household-table.js
+@@ -25,7 +25,7 @@ export const data = [
+ 
+ const Householdtable = () => {
+     const [data, setData] = useState([]);
+-
++    const router = useRouter();
+     useEffect(() => {
+         const fetchData = async () => {
+             try {
+@@ -69,9 +69,7 @@ const Householdtable = () => {
+         };
+ 
+         fetchData();
+-    }, []);
+-
+-    const router = useRouter();
++    }, [router]);
+ 
+     const columns = useMemo(
+         //column definitions...
+diff --git a/src/sections/customer/customers-table.js b/src/sections/customer/customers-table.js
+index f1aa303..fbe5b3c 100644
+--- a/src/sections/customer/customers-table.js
++++ b/src/sections/customer/customers-table.js
+@@ -49,44 +49,52 @@ function CollapsibleRow(props) {
+             <TableCell>State</TableCell>
+           </TableRow>
+         </TableHead>
+-   
+-
+-      <TableBody>
+-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
+-          <TableCell>
+-            <IconButton
+-              aria-label="expand row"
+-              size="small"
+-              onClick={onToggle}
+-            >
+-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+-            </IconButton>
+-          </TableCell>
+-          <TableCell component="th" scope="row">
+-            {row.name}
+-          </TableCell>
+-          <TableCell>{row.id}</TableCell>
+-          <TableCell>{row.email}</TableCell>
+-          <TableCell>{row.phone}</TableCell>
+-          <TableCell>{row.address.city}</TableCell>
+-          <TableCell>{row.address.state}</TableCell>
+-          {/* <TableCell align="right">{row.calories}</TableCell>
+-        <TableCell align="right">{row.fat}</TableCell>
+-        <TableCell align="right">{row.carbs}</TableCell>
+-        <TableCell align="right">{row.protein}</TableCell> */}
+-        </TableRow>
+-      </TableBody>
++
++
++        <TableBody>
++          <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
++            <TableCell>
++              <IconButton
++                aria-label="expand row"
++                size="small"
++                onClick={onToggle}
++              >
++                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
++              </IconButton>
++            </TableCell>
++            <TableCell
++              component="th"
++              scope="row">
++              {row.name}
++            </TableCell>
++            <TableCell>{row.id}</TableCell>
++            <TableCell>{row.email}</TableCell>
++            <TableCell>{row.phone}</TableCell>
++            <TableCell>{row.address.city}</TableCell>
++            <TableCell>{row.address.state}</TableCell>
++          </TableRow>
++        </TableBody>
+       </Table>
+ 
+ 
+       <TableRow>
+-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+-          <Collapse in={open} timeout="auto" unmountOnExit>
+-            <Box sx={{ margin: 1 }}>
+-              <Typography variant="h6" gutterBottom component="div">
++        <TableCell
++          style={{ paddingBottom: 0, paddingTop: 0 }}
++          colSpan={7}>
++          <Collapse
++            in={open}
++            timeout="auto"
++            unmountOnExit>
++            <Box
++              sx={{ margin: 1 }}>
++              <Typography
++                variant="h6"
++                gutterBottom component="div">
+                 Home Hub
+               </Typography>
+-              <Table size="small" aria-label="purchases">
++              <Table
++                size="small"
++                aria-label="purchases">
+                 <TableHead>
+                   <TableRow>
+                     <TableCell>ID</TableCell>
+@@ -104,7 +112,9 @@ function CollapsibleRow(props) {
+ 
+                   {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
+                     <TableRow key={historyRow.date}>
+-                      <TableCell component="th" scope="row">
++                      <TableCell
++                        component="th"
++                        scope="row">
+                         {historyRow.date}
+                       </TableCell>
+                       <TableCell>{historyRow.customerId}</TableCell>
+@@ -119,10 +129,14 @@ function CollapsibleRow(props) {
+               </Table>
+             </Box>
+             <Box sx={{ margin: 1 }}>
+-              <Typography variant="h6" gutterBottom component="div">
++              <Typography
++                variant="h6"
++                gutterBottom component="div">
+                 Beacon
+               </Typography>
+-              <Table size="small" aria-label="purchases">
++              <Table
++                size="small"
++                aria-label="purchases">
+                 <TableHead>
+                   <TableRow>
+                     <TableCell>ID</TableCell>
+@@ -139,11 +153,14 @@ function CollapsibleRow(props) {
+ 
+                   {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
+                     <TableRow key={historyRow.date}>
+-                      <TableCell component="th" scope="row">
++                      <TableCell
++                        component="th"
++                        scope="row">
+                         {historyRow.date}
+                       </TableCell>
+                       <TableCell>{historyRow.customerId}</TableCell>
+-                      <TableCell align="right">{historyRow.amount}</TableCell>
++                      <TableCell
++                        align="right">{historyRow.amount}</TableCell>
+                       <TableCell align="right">
+                         {Math.round(historyRow.amount * row.price * 100) / 100}
+                       </TableCell>
+@@ -155,10 +172,14 @@ function CollapsibleRow(props) {
+             </Box>
+ 
+             <Box sx={{ margin: 1 }}>
+-              <Typography variant="h6" gutterBottom component="div">
++              <Typography
++                variant="h6"
++                gutterBottom component="div">
+                 Puck
+               </Typography>
+-              <Table size="small" aria-label="purchases">
++              <Table
++                size="small"
++                aria-label="purchases">
+                 <TableHead>
+                   <TableRow>
+                     <TableCell>ID</TableCell>
+@@ -174,7 +195,9 @@ function CollapsibleRow(props) {
+ 
+                   {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
+                     <TableRow key={historyRow.date}>
+-                      <TableCell component="th" scope="row">
++                      <TableCell
++                        component="th"
++                        scope="row">
+                         {historyRow.date}
+                       </TableCell>
+                       <TableCell>{historyRow.customerId}</TableCell>
+@@ -263,8 +286,6 @@ export const CustomersTable = (props) => {
+ 
+     <>
+ 
+-      {/* //Search bar card */}
+-
+       <Card sx={{ p: 2 }}>
+         <OutlinedInput
+           value={searchQuery}
+@@ -315,19 +336,6 @@ export const CustomersTable = (props) => {
+                 )}
+               </IconButton>
+             </div>
+-            {/* <Table>
+-              <TableHead>
+-                <TableRow>
+-                  <TableCell padding="checkbox"></TableCell>
+-                  <TableCell>ID</TableCell>
+-                  <TableCell>Username</TableCell>
+-                  <TableCell>First Name</TableCell>
+-                  <TableCell>Middle name</TableCell>
+-                  <TableCell>Last Name</TableCell>
+-                  <TableCell>State</TableCell>
+-                </TableRow>
+-              </TableHead>
+-            </Table> */}
+ 
+             <Table>
+ 
+@@ -341,12 +349,6 @@ export const CustomersTable = (props) => {
+                         open={openRows[customer.id] || false}
+                         onToggle={() => handleRowToggle(customer.id)}
+                       />
+-                      {/* <TableCell>{customer.id}</TableCell>
+-                      <TableCell>{customer.email}</TableCell>
+-                      <TableCell>{customer.phone}</TableCell>
+-                      <TableCell>{customer.address.city}</TableCell>
+-                      <TableCell>{customer.address.state}</TableCell> */}
+-                      {/* Additional table cells for other attributes */}
+                     </TableRow>
+ 
+ 
+diff --git a/src/sections/customer/demo-data/random.js b/src/sections/customer/demo-data/random.js
+index 5acc8d4..dba7413 100644
+--- a/src/sections/customer/demo-data/random.js
++++ b/src/sections/customer/demo-data/random.js
+@@ -1,6 +1,6 @@
+-/* eslint no-bitwise: ["error", { "allow": ["<<", ">>", "&"] }] */
++import React from "react";
+ 
+-export default function (seed = 123456789) {
++const Function = (seed = 123456789)  => {
+     let mW = seed;
+     let mZ = 987654321;
+     const mask = 0xffffffff;
+@@ -13,4 +13,5 @@ export default function (seed = 123456789) {
+       return result + 0.5;
+     };
+   }
+-  
+\ No newline at end of file
++  
++  export default Function;
+\ No newline at end of file
+diff --git a/src/sections/customer/material-table.js b/src/sections/customer/material-table.js
+index 3bb7c9a..e0c7a54 100644
+--- a/src/sections/customer/material-table.js
++++ b/src/sections/customer/material-table.js
+@@ -38,7 +38,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+     const [hoveredRow, setHoveredRow] = useState(null);
+     const [checkedRow, setCheckedRow] = useState([]);
+     const [selectAll, setSelectAll] = useState(false);
+-
++    const router = useRouter();
+     const theme = useTheme();
+ 
+     const handleMouseEnter = (row) => {
+@@ -78,14 +78,14 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                     user.city = city;
+                 }
+                 if (user.phone_number) {
+-                            const phone_number = user.phone_number;
+-                            const cleanedNumber = phone_number.replace(/\D/g, '');
+-                            const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
+-                            // Use regular expressions to extract the country code, area code, and local number
+-                            const phonematch = cleanedNumber.match(phonePattern);
+-                            const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
+-                            user.phone_number = formattedNumber;
+-                        }
++                    const phone_number = user.phone_number;
++                    const cleanedNumber = phone_number.replace(/\D/g, '');
++                    const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
++                    // Use regular expressions to extract the country code, area code, and local number
++                    const phonematch = cleanedNumber.match(phonePattern);
++                    const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
++                    user.phone_number = formattedNumber;
++                }
+             });
+             setData(usersData);
+ 
+@@ -126,7 +126,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             const updatedData = usersData.map((user) => ({
+                 checked: false,
+             }));
+-    
++
+             setCheckedRow(updatedData);
+ 
+             await Promise.all(promises);
+@@ -173,19 +173,36 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+     }, []);
+ 
+ 
+-    const router = useRouter();
+-
+     const handleSelectAllClick = () => {
+         setSelectAll(!selectAll);
+-    
++
+         const updatedRows = selectAll
+             ? []
+             : data.map((user) => ({ sub: user.sub }));
+-    
++
+         setCheckedRow(updatedRows);
+         onSelectedSubValuesChange(updatedRows);
+     };
+-    
++
++    const handleCheckboxClick = (event, row) => {
++        event.stopPropagation();
++        const userId = row.original.sub;
++
++        setCheckedRow((prevCheckedRows) => {
++            const isChecked = prevCheckedRows.some((item) => item.sub === userId);
++            let updatedRows;
++
++            if (isChecked) {
++                updatedRows = prevCheckedRows.filter((item) => item.sub !== userId);
++            } else {
++                updatedRows = [...prevCheckedRows, { sub: userId }];
++            }
++
++            onSelectedSubValuesChange(updatedRows);
++            return updatedRows;
++        });
++    };
++
+ 
+     const columns = useMemo(
+         () => [
+@@ -196,7 +213,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                         type="checkbox"
+                         checked={selectAll}
+                         onChange={handleSelectAllClick}
+-        />
++                    />
+                 ),
+                 Cell: ({ row }) => (
+                     <input
+@@ -250,7 +267,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             },
+ 
+         ],
+-        [selectAll, checkedRow]
++        [selectAll, checkedRow, handleCheckboxClick, handleSelectAllClick]
+         //end
+     );
+ 
+@@ -263,29 +280,10 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+         return null;
+     }
+ 
+-   
+ 
+-    const handleCheckboxClick = (event, row) => {
+-        event.stopPropagation();
+-        const userId = row.original.sub;
+-    
+-        setCheckedRow((prevCheckedRows) => {
+-            const isChecked = prevCheckedRows.some((item) => item.sub === userId);
+-            let updatedRows;
+-    
+-            if (isChecked) {
+-                updatedRows = prevCheckedRows.filter((item) => item.sub !== userId);
+-            } else {
+-                updatedRows = [...prevCheckedRows, { sub: userId }];
+-            }
+-    
+-            onSelectedSubValuesChange(updatedRows);
+-            return updatedRows;
+-        });
+-    };  
+-    
+-    
+-    
++
++
++
+     const showCheckedDetails = (checkedRows) => {
+         console.log("Checked Rows:", checkedRows);
+         checkedRows.forEach((sub) => {
+@@ -293,9 +291,9 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             // Uncomment the line below when you want to use handleSubmit
+             // handleSubmit(sub);
+         });
+-    };   
+-    
+-    
++    };
++
++
+ 
+     const handleRowClick = (row) => {
+         const username = row.original.family_name;
+@@ -357,113 +355,143 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                 }}
+             >
+                 {dropdownData ? (
+-                    <Stack direction="row" spacing={5}>
+-
+-                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
+-                            <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
++                    <Stack
++                        direction="row"
++                        spacing={5}>
++
++                        <Stack
++                            sx={{ width: "33.33%", overflowX: "scroll" }}
++                            textAlign='center'>
++                            <Typography
++                                variant="h6"
++                                sx={{ fontSize: "16px" }}
++                                gutterBottom component="div">
+                                 {`${row.original.given_name}'s Hub` || "N/A"}
+                             </Typography>
+                             <Divider />
+-                            {/* <Typography sx={{ fontSize: "12px" }} >
+-                                Home Hub
+-                            </Typography> */}
+-
+                             <Table size="small">
+                                 <TableRow >
+-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
++                                    <TableCell
++                                        variant="head"
++                                        sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                     <TableCell>{dropdownData.hh_id || "N/A"}</TableCell>
+                                 </TableRow>
+                                 <TableRow>
+-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
++                                    <TableCell
++                                        variant="head"
++                                        sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
+                                     <TableCell>{dropdownData.slaves_connected || "N/A"}</TableCell>
+                                 </TableRow>
+                                 <TableRow>
+-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
++                                    <TableCell
++                                        variant="head"
++                                        sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                     <TableCell >{dropdownData.hh_fw_ver}</TableCell>
+                                 </TableRow>
+                                 <TableRow>
+-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
++                                    <TableCell
++                                        variant="head"
++                                        sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
+                                     <TableCell >{dropdownData.landline}</TableCell>
+                                 </TableRow>
+                             </Table>
+                         </Stack>
+-                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
++                        <Stack
++                            sx={{ width: "33.33%", overflowX: "scroll" }}
++                            textAlign='center'>
+                             <Box sx={{}}>
+-                                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
++                                <Typography
++                                    variant="h6"
++                                    sx={{ fontSize: "16px" }}
++                                    gutterBottom component="div">
+                                     {`${row.original.given_name}'s Beacon` || "N/A"}
+                                 </Typography>
+                                 <Divider />
+-                                {/* <Typography sx={{ fontSize: "12px" }} >
+-                                    Beacon
+-                                </Typography> */}
+-
+-                                <Table size="small" align="center">
++                                <Table
++                                    size="small"
++                                    align="center">
+ 
+                                     <TableRow >
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                         <TableCell>   {dropdownData.b_id}</TableCell>
+                                     </TableRow>
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                                         <TableCell> {dropdownData.b_batt_lvl}</TableCell>
+                                     </TableRow>
+ 
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
+                                         <TableCell>{dropdownData.b_solar_lvl !== undefined ? dropdownData.b_solar_lvl.toString() : "N/A"}</TableCell>
+                                     </TableRow>
+ 
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
+                                         <TableCell> {dropdownData.b_temp}</TableCell>
+                                     </TableRow>
+ 
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                                         <TableCell> {dropdownData.b_rssi}</TableCell>
+                                     </TableRow>
+ 
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                         <TableCell> {dropdownData.b_fw_ver}</TableCell>
+ 
+                                     </TableRow>
+                                 </Table>
+                             </Box>
+                         </Stack>
+-                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
++                        <Stack
++                            sx={{ width: "33.33%", overflowX: "scroll" }}
++                            textAlign='center'>
+                             <Box sx={{}}>
+-                                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
++                                <Typography
++                                    variant="h6"
++                                    sx={{ fontSize: "16px" }}
++                                    gutterBottom component="div">
+                                     {`${row.original.given_name}'s Puck` || "N/A"}
+                                 </Typography>
+                                 <Divider />
+-                                {/* <Typography sx={{ fontSize: "12px" }} >
+-                                    Puck
+-                                </Typography> */}
+                                 <Table size="small">
+ 
+                                     <TableRow >
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                         <TableCell>{dropdownData.gp_id}</TableCell>
+ 
+                                     </TableRow>
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                                         <TableCell>{dropdownData.g_batt_lvl}</TableCell>
+                                     </TableRow>
+-
+-                                    {/* <TableRow>
+-                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Accelermeter</TableCell>
+-                                <TableCell>{row.original.puck[0].Accelerometer}</TableCell>
+-                            </TableRow> */}
+-
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                                         <TableCell>{dropdownData.g_rssi}</TableCell>
+                                     </TableRow>
+ 
+                                     <TableRow>
+-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
++                                        <TableCell
++                                            variant="head"
++                                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                         <TableCell >
+                                             {dropdownData.g_fw_ver}
+                                         </TableCell>
+@@ -496,7 +524,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+             placeholder: 'Provide at least four characters',
+             sx: { minWidth: '300px' },
+             variant: 'outlined',
+-          },
++        },
+         muiTableBodyRowProps: ({ row }) => ({
+             onClick: (event) => {
+                 handleRowClick(row);
+@@ -508,7 +536,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                 backgroundColor: getBackgroundColor(row.original),
+             }
+         }),
+-        RenderDetailPanel,
++        renderDetailPanel: RenderDetailPanel,
+ 
+     });
+ 
+diff --git a/src/sections/settings/settings-notifications.js b/src/sections/settings/settings-notifications.js
+index 5d8d370..6c0cb3b 100644
+--- a/src/sections/settings/settings-notifications.js
++++ b/src/sections/settings/settings-notifications.js
+@@ -1,109 +1,3 @@
+-// import { useCallback } from 'react';
+-// import {
+-//   Button,
+-//   Card,
+-//   CardActions,
+-//   CardContent,
+-//   CardHeader,
+-//   Checkbox,
+-//   Divider,
+-//   FormControlLabel,
+-//   Stack,
+-//   Typography,
+-//   Unstable_Grid2 as Grid
+-// } from '@mui/material';
+-
+-// export const SettingsNotifications = () => {
+-//   const handleSubmit = useCallback(
+-//     (event) => {
+-//       event.preventDefault();
+-//     },
+-//     []
+-//   );
+-
+-//   return (
+-//     <form onSubmit={handleSubmit}>
+-//       <Card>
+-//         <CardHeader
+-//           subheader="Manage the notifications"
+-//           title="Notifications"
+-//         />
+-//         <Divider />
+-//         <CardContent>
+-//           <Grid
+-//             container
+-//             spacing={6}
+-//             wrap="wrap"
+-//           >
+-//             <Grid
+-//               xs={12}
+-//               sm={6}
+-//               md={4}
+-//             >
+-//               <Stack spacing={1}>
+-//                 <Typography variant="h6">
+-//                   Notifications
+-//                 </Typography>
+-//                 <Stack>
+-//                   <FormControlLabel
+-//                     control={<Checkbox defaultChecked />}
+-//                     label="Email"
+-//                   />
+-//                   <FormControlLabel
+-//                     control={<Checkbox defaultChecked />}
+-//                     label="Push Notifications"
+-//                   />
+-//                   <FormControlLabel
+-//                     control={<Checkbox />}
+-//                     label="Text Messages"
+-//                   />
+-//                   <FormControlLabel
+-//                     control={<Checkbox defaultChecked />}
+-//                     label="Phone calls"
+-//                   />
+-//                 </Stack>
+-//               </Stack>
+-//             </Grid>
+-//             <Grid
+-//               item
+-//               md={4}
+-//               sm={6}
+-//               xs={12}
+-//             >
+-//               <Stack spacing={1}>
+-//                 <Typography variant="h6">
+-//                   Messages
+-//                 </Typography>
+-//                 <Stack>
+-//                   <FormControlLabel
+-//                     control={<Checkbox defaultChecked />}
+-//                     label="Email"
+-//                   />
+-//                   <FormControlLabel
+-//                     control={<Checkbox />}
+-//                     label="Push Notifications"
+-//                   />
+-//                   <FormControlLabel
+-//                     control={<Checkbox defaultChecked />}
+-//                     label="Phone calls"
+-//                   />
+-//                 </Stack>
+-//               </Stack>
+-//             </Grid>
+-//           </Grid>
+-//         </CardContent>
+-//         <Divider />
+-//         <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//           <Button variant="contained">
+-//             Save
+-//           </Button>
+-//         </CardActions>
+-//       </Card>
+-//     </form>
+-//   );
+-// };
+-
+-
+ import { useState, useCallback } from 'react';
+ import {
+   Button,
+@@ -174,15 +68,15 @@ export const SettingsNotifications = () => {
+     // Handle saving data or API calls here based on section
+     switch (section) {
+       case 'beacon':
+-        alert('Saving Beacon Data:'+ beaconData.color);
++        alert('Saving Beacon Data:' + beaconData.color);
+         console.log('Saving Beacon Data:', beaconData);
+         break;
+       case 'buzzer':
+-        alert('Saving Buzzer Data: '+"On-Time: "+buzzerData.onTime);
++        alert('Saving Buzzer Data: ' + "On-Time: " + buzzerData.onTime);
+         console.log('Saving Buzzer Data:', buzzerData);
+         break;
+       case 'chargeControl':
+-        alert('Saving Charge Control Data: ' + chargeControlData.minBatteryPercentage+"%");
++        alert('Saving Charge Control Data: ' + chargeControlData.minBatteryPercentage + "%");
+         console.log('Saving Charge Control Data:', chargeControlData.minBatteryPercentage);
+         break;
+       default:
+@@ -265,7 +159,9 @@ export const SettingsNotifications = () => {
+       <CardHeader title="Charge Control" />
+       <Divider />
+       <CardContent>
+-        <Stack spacing={2} sx={{ maxWidth: 400 }}>
++        <Stack
++          spacing={2}
++          sx={{ maxWidth: 400 }}>
+           <TextField
+             label="Minimum battery percentage to start charge"
+             value={chargeControlData.minBatteryPercentage}
+@@ -273,15 +169,15 @@ export const SettingsNotifications = () => {
+               handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+             }
+           />
+-          {/* <Typography variant="h6">
+-                  {chargeControlData.minBatteryPercentage}
+-        </Typography> */}
+ 
+         </Stack>
+       </CardContent>
+       <Divider />
+-      <CardActions sx={{ justifyContent: 'flex-end' }}>
+-        <Button variant="contained" onClick={() => handleSave('chargeControl')}>
++      <CardActions
++        sx={{ justifyContent: 'flex-end' }}>
++        <Button
++          variant="contained"
++          onClick={() => handleSave('chargeControl')}>
+           Save
+         </Button>
+       </CardActions>
+@@ -290,14 +186,23 @@ export const SettingsNotifications = () => {
+ 
+   return (
+     <form onSubmit={handleSubmit}>
+-      <Grid container spacing={3} direction="column" alignItems="stretch">
+-        <Grid item xs={12} md={4}>
++      <Grid container
++        spacing={3}
++        direction="column"
++        alignItems="stretch">
++        <Grid item
++          xs={12}
++          md={4}>
+           {renderBeaconSection()}
+         </Grid>
+-        <Grid item xs={12} md={4}>
++        <Grid item
++          xs={12}
++          md={4}>
+           {renderBuzzerSection()}
+         </Grid>
+-        <Grid item xs={12} md={4}>
++        <Grid item
++          xs={12}
++          md={4}>
+           {renderChargeControlSection()}
+         </Grid>
+       </Grid>
+-- 
+2.42.0.windows.2
+

@@ -365,7 +365,8 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                             <Typography
                                 variant="h6"
                                 sx={{ fontSize: "16px" }}
-                                gutterBottom component="div">
+                                gutterBottom
+                                component="div">
                                 {`${row.original.given_name}'s Hub` || "N/A"}
                             </Typography>
                             <Divider />
@@ -403,7 +404,8 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                                 <Typography
                                     variant="h6"
                                     sx={{ fontSize: "16px" }}
-                                    gutterBottom component="div">
+                                    gutterBottom
+                                    component="div">
                                     {`${row.original.given_name}'s Beacon` || "N/A"}
                                 </Typography>
                                 <Divider />
@@ -462,7 +464,8 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                                 <Typography
                                     variant="h6"
                                     sx={{ fontSize: "16px" }}
-                                    gutterBottom component="div">
+                                    gutterBottom
+                                    component="div">
                                     {`${row.original.given_name}'s Puck` || "N/A"}
                                 </Typography>
                                 <Divider />
@@ -501,7 +504,8 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                         </Stack>
                     </Stack>
                 ) : (
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2"
+                        color="textSecondary">
                         No data available.
                     </Typography>
                 )}

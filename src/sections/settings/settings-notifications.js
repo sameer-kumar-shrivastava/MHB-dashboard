@@ -94,8 +94,10 @@ export const SettingsNotifications = () => {
       <CardHeader title="Beacon Color Palette" />
       <Divider />
       <CardContent>
-        <Stack spacing={2} sx={{ maxWidth: 400 }}>
-          <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+        <Stack spacing={2}
+          sx={{ maxWidth: 400 }}>
+          <ChromePicker color={beaconData.color}
+            onChange={handleColorChange} />
           <TextField
             label="On-Time"
             value={beaconData.onTime}
@@ -115,7 +117,8 @@ export const SettingsNotifications = () => {
       </CardContent>
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button variant="contained" onClick={() => handleSave('beacon')}>
+        <Button variant="contained"
+          onClick={() => handleSave('beacon')}>
           Save
         </Button>
       </CardActions>
@@ -127,7 +130,8 @@ export const SettingsNotifications = () => {
       <CardHeader title="Buzzer" />
       <Divider />
       <CardContent>
-        <Stack spacing={2} sx={{ maxWidth: 400 }}>
+        <Stack spacing={2}
+          sx={{ maxWidth: 400 }}>
           <TextField
             label="On-Time"
             value={buzzerData.onTime}
@@ -147,7 +151,8 @@ export const SettingsNotifications = () => {
       </CardContent>
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button variant="contained" onClick={() => handleSave('buzzer')}>
+        <Button variant="contained"
+          onClick={() => handleSave('buzzer')}>
           Save
         </Button>
       </CardActions>
