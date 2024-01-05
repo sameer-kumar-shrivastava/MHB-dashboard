@@ -1,5 +1,3 @@
-// auth-context.js
-
 import { createContext, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -100,7 +98,6 @@ export const AuthProvider = (props) => {
         });
       } catch (error) {
         console.error('Error fetching user information:', error);
-        // Handle error fetching user information if needed
       }
     } else {
       dispatch({
@@ -140,10 +137,7 @@ export const AuthProvider = (props) => {
         email,
         password,
       });
-
-      // Assuming your API response structure has a 'success' property
       if (response.data.success) {
-        // You may need to adapt this based on the actual structure of your API response
         const user = response.data.data.AuthenticationResult;
 
         dispatch({
@@ -153,7 +147,6 @@ export const AuthProvider = (props) => {
 
         window.sessionStorage.setItem('authenticated', 'true');
       } else {
-        // Handle unsuccessful login
         console.error('Authentication failed:', response.data.error);
         throw new Error('Authentication failed. Please check your credentials.');
       }
@@ -165,7 +158,6 @@ export const AuthProvider = (props) => {
 
 
   const signUp = async (email, name, password) => {
-    // Implementation for sign-up can be added here if needed
     throw new Error('Sign up is not implemented');
   };
 
