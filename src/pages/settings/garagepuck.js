@@ -1,4 +1,3 @@
-// src/pages/settings.js
 import { useState, useCallback } from 'react';
 import Head from 'next/head';
 import {
@@ -15,8 +14,6 @@ import { ChromePicker } from 'react-color';
 
 
 const Page = () => {
-
-
 
     const [chargeControlData, setChargeControlData] = useState({
         minBatteryPercentage: '',

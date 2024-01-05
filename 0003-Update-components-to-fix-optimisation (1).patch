@@ -1,0 +1,337 @@
+From 5fb0fc70936ea58f01bc046b2bdfcc9ca0417790 Mon Sep 17 00:00:00 2001
+From: Trilokesh Rangam <rangam.lokesh@gmail.com>
+Date: Thu, 4 Jan 2024 21:18:58 +0530
+Subject: [PATCH 3/4] Update components to fix optimisation
+
+Signed-off-by: Trilokesh Rangam <rangam.lokesh@gmail.com>
+---
+ src/{pages/user => components}/user-config.js |   0
+ .../user => components}/user-nav-items.js     |   0
+ src/{pages/user => components}/user-nav.js    |   2 +-
+ src/pages/settings/beaconerror.js             |   0
+ src/pages/user/[username].js                  |   2 +-
+ src/pages/usersettings.js                     | 268 ------------------
+ 6 files changed, 2 insertions(+), 270 deletions(-)
+ rename src/{pages/user => components}/user-config.js (100%)
+ rename src/{pages/user => components}/user-nav-items.js (100%)
+ rename src/{pages/user => components}/user-nav.js (99%)
+ delete mode 100644 src/pages/settings/beaconerror.js
+ delete mode 100644 src/pages/usersettings.js
+
+diff --git a/src/pages/user/user-config.js b/src/components/user-config.js
+similarity index 100%
+rename from src/pages/user/user-config.js
+rename to src/components/user-config.js
+diff --git a/src/pages/user/user-nav-items.js b/src/components/user-nav-items.js
+similarity index 100%
+rename from src/pages/user/user-nav-items.js
+rename to src/components/user-nav-items.js
+diff --git a/src/pages/user/user-nav.js b/src/components/user-nav.js
+similarity index 99%
+rename from src/pages/user/user-nav.js
+rename to src/components/user-nav.js
+index 0350822..48920a0 100644
+--- a/src/pages/user/user-nav.js
++++ b/src/components/user-nav.js
+@@ -17,7 +17,7 @@ import {
+ // import { Logo } from 'src/components/logo';
+ import Logo from '../../../public/favicon-16x16.png';
+ import { Scrollbar } from 'src/components/scrollbar';
+-import { items } from './user-config';
++import { items } from 'src/components/user-config';
+ import { UserNavItem } from './user-nav-items';
+ 
+ export const UserNav = (props) => {
+diff --git a/src/pages/settings/beaconerror.js b/src/pages/settings/beaconerror.js
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/src/pages/user/[username].js b/src/pages/user/[username].js
+index 5218432..c9fcee0 100644
+--- a/src/pages/user/[username].js
++++ b/src/pages/user/[username].js
+@@ -14,7 +14,7 @@ import { ChromePicker } from 'react-color';
+ import Head from 'next/head';
+ import Emergencytable from './emergency-table';
+ import Householdtable from './household-table';
+-import { items } from './user-config';
++import { Items } from 'src/components/user-config';
+ import { latitude, longitude } from '../../sections/customer/material-table';
+ import Dropdown from 'muicss/lib/react/dropdown';
+ import DropdownItem from 'muicss/lib/react/dropdown-item';
+diff --git a/src/pages/usersettings.js b/src/pages/usersettings.js
+deleted file mode 100644
+index c013275..0000000
+--- a/src/pages/usersettings.js
++++ /dev/null
+@@ -1,268 +0,0 @@
+-// // src/pages/settings.js
+-// import { useState, useCallback } from 'react';
+-// import Head from 'next/head';
+-// import { Box, Container, Stack, Typography, Button, Grid } from '@mui/material';
+-// import {
+-//   Card,
+-//   CardActions,
+-//   CardContent,
+-//   CardHeader,
+-//   Divider,
+-//   TextField,
+-// } from '@mui/material';
+-// import { SettingsNotifications } from 'src/sections/settings/settings-notifications';
+-// import { SettingsPassword } from 'src/sections/settings/settings-password';
+-// import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
+-// import { useRouter } from 'next/router';
+-// import { ChromePicker } from 'react-color';
+-// import Slider from '@mui/material/Slider';
+-// import { AccountProfile } from 'src/sections/account/account-profile';
+-// import { AccountProfileDetails } from 'src/sections/account/account-profile-details';
+-
+-// const Page = () => {
+-//   const router = useRouter();
+-
+-//   const handleBeconClick = () => {
+-//     router.push('/usersettings/beacon');
+-//   };
+-
+-//   const handleGaragePuckClick = () => {
+-//     router.push('/usersettings/garagepuck');
+-//   };
+-
+-//   const handleUserSettingsClick = () => {
+-//     router.push('/usersettings/usersetting');
+-//   };
+-
+-//   const [beaconData, setBeaconData] = useState({
+-//     color: { r: 0, g: 0, b: 0, a: 1 },
+-//     onTime: '',
+-//     offTime: '',
+-//     duration: '',
+-//   });
+-
+-//   const [buzzerData, setBuzzerData] = useState({
+-//     onTime: '',
+-//     offTime: '',
+-//     duration: '',
+-//   });
+-
+-//   const handleColorChange = (color) => {
+-//     setBeaconData((prevData) => ({
+-//       ...prevData,
+-//       color: color.rgb,
+-//     }));
+-//   };
+-
+-//   const [chargeControlData, setChargeControlData] = useState({
+-//     minBatteryPercentage: '',
+-//   });
+-
+-
+-
+-//   const handleInputChange = (event, section, field) => {
+-//     const value = event.target.value;
+-//     switch (section) {
+-//       case 'beacon':
+-//         setBeaconData((prevData) => ({
+-//           ...prevData,
+-//           [field]: value,
+-//         }));
+-//         break;
+-//       case 'buzzer':
+-//         setBuzzerData((prevData) => ({
+-//           ...prevData,
+-//           [field]: value,
+-//         }));
+-//         break;
+-//       case 'chargeControl':
+-//         setChargeControlData((prevData) => ({
+-//           ...prevData,
+-//           [field]: value,
+-//         }));
+-//         break;
+-//       default:
+-//         break;
+-//     }
+-//   };
+-
+-//   const handleSave = (section) => {
+-//     // Handle saving data or API calls here based on section
+-//     switch (section) {
+-//       case 'beacon':
+-//         alert('Saving Beacon Data:' + beaconData.color);
+-//         console.log('Saving Beacon Data:', beaconData);
+-//         break;
+-//       case 'buzzer':
+-//         alert('Saving Buzzer Data: ' + buzzerData);
+-//         console.log('Saving Buzzer Data:', buzzerData);
+-//         break;
+-//       case 'chargeControl':
+-//         alert('Saving Charge Control Data: ' + chargeControlData.minBatteryPercentage + "%");
+-//         console.log('Saving Charge Control Data:', chargeControlData.minBatteryPercentage);
+-//         break;
+-//       default:
+-//         break;
+-//     }
+-//   };
+-
+-
+-//   const handleSubmit = useCallback((event) => {
+-//     event.preventDefault();
+-//   }, []);
+-
+-//   return (
+-//     <>
+-//       <Head>
+-//         <title>
+-//           Settings | MyHomeBeacon
+-//         </title>
+-//       </Head>
+-//       <Box
+-//         component="main"
+-//         sx={{
+-//           flexGrow: 1,
+-//           py: 8
+-//         }}
+-//       >
+-//         <Container maxWidth="lg">
+-//           <Stack spacing={3} >
+-//             <Typography variant="h4">
+-//               User Settings
+-//             </Typography>
+-//             {/* <Stack spacing={4} direction="row" sx={{ width: '100%' }}> */}
+-//               {/* Buttons to navigate */}
+-//               {/* <Button variant="contained" color="primary" onClick={handleBeconClick}>
+-//                 Beacon Settings
+-//               </Button> */}
+-
+-//               {/* <Button variant="contained" color="primary" onClick={handleUserSettingsClick}>
+-//                 User Settings
+-//               </Button> */}
+-//             {/* </Stack> */}
+-//             {/* <Grid
+-//               container
+-//               spacing={3}
+-//             >
+-//               <Grid
+-//                 xs={12}
+-//                 md={6}
+-//                 lg={8}
+-//               >
+-//                 <AccountProfileDetails />
+-//               </Grid>
+-//               <Grid
+-//                 xs={12}
+-//                 md={6}
+-//                 lg={4}
+-//               > */}
+-//                 {/* <AccountProfile /> */}
+-//               {/* </Grid>
+-
+-//             </Grid> */}
+-//             {/* <SettingsNotifications /> */}
+-//             {/* <SettingsPassword /> */}
+-//           </Stack>
+-//           <Stack spacing={3} sx={{marginTop: '20px'}}>
+-//             {/* <Typography variant="h4">
+-//                             Beacon Settings
+-//                         </Typography> */}
+-//             <Card>
+-//               <CardHeader title="Beacon" />
+-//               <Divider />
+-//               <CardContent>
+-//                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-//                   <ChromePicker color={beaconData.color} onChange={handleColorChange} />
+-//                   <Box sx={{ width: 300 }}>
+-//                     <Typography >Brightness:</Typography>
+-//                     <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+-//                   </Box>
+-//                   <TextField
+-//                     label="Pattern On-Time (ms)"
+-//                     value={beaconData.onTime}
+-//                     onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Pattern Off-Time (ms)"
+-//                     value={beaconData.offTime}
+-//                     onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Active Duration (sec)"
+-//                     value={beaconData.duration}
+-//                     onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+-//                   />
+-//                 </Stack>
+-//               </CardContent>
+-//               <Divider />
+-//               <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//                 <Button variant="contained" onClick={() => handleSave('beacon')}>
+-//                   Save
+-//                 </Button>
+-//               </CardActions>
+-//             </Card>
+-//             <Card>
+-//               <CardHeader title="Buzzer" />
+-//               <Divider />
+-//               <CardContent>
+-//                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-//                   <TextField
+-//                     label="On-Time (ms)"
+-//                     value={buzzerData.onTime}
+-//                     onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Off-Time (ms)"
+-//                     value={buzzerData.offTime}
+-//                     onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+-//                   />
+-//                   <TextField
+-//                     label="Duration"
+-//                     value={buzzerData.duration}
+-//                     onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+-//                   />
+-//                 </Stack>
+-//               </CardContent>
+-//               <Divider />
+-//               <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//                 <Button variant="contained" onClick={() => handleSave('buzzer')}>
+-//                   Save
+-//                 </Button>
+-//               </CardActions>
+-//             </Card>
+-//             <Card spacing={1}>
+-//               <CardHeader title="Charge Control" />
+-//               <Divider />
+-//               <CardContent>
+-//                 <Stack spacing={2} sx={{ maxWidth: 400 }}>
+-//                   <TextField
+-//                     label="Minimum battery percentage to start charge"
+-//                     value={chargeControlData.minBatteryPercentage}
+-//                     onChange={(e) =>
+-//                       handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+-//                     }
+-//                   />
+-//                 </Stack>
+-//               </CardContent>
+-//               <Divider />
+-//               <CardActions sx={{ justifyContent: 'flex-end' }}>
+-//                 <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+-//                   Save
+-//                 </Button>
+-//               </CardActions>
+-//             </Card>
+-//           </Stack>
+-//         </Container>
+-
+-//       </Box>
+-//     </>
+-//   );
+-// };
+-
+-// Page.getLayout = (page) => (
+-//   <DashboardLayout>
+-//     {page}
+-//   </DashboardLayout>
+-// );
+-
+-// export default Page;
+-- 
+2.34.1
+

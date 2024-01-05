@@ -1,0 +1,49 @@
+From cf8d9415bd96554490163550e58e5f281227af88 Mon Sep 17 00:00:00 2001
+From: Trilokesh Rangam <rangam.lokesh@gmail.com>
+Date: Thu, 4 Jan 2024 20:31:54 +0530
+Subject: [PATCH 2/4] Fix typo errors
+
+Signed-off-by: Trilokesh Rangam <rangam.lokesh@gmail.com>
+---
+ src/pages/user/user-nav.js              | 2 +-
+ src/sections/customer/material-table.js | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/pages/user/user-nav.js b/src/pages/user/user-nav.js
+index 388a8b5..0350822 100644
+--- a/src/pages/user/user-nav.js
++++ b/src/pages/user/user-nav.js
+@@ -18,7 +18,7 @@ import {
+ import Logo from '../../../public/favicon-16x16.png';
+ import { Scrollbar } from 'src/components/scrollbar';
+ import { items } from './user-config';
+-import { UserNavItem } from './user-nav-item';
++import { UserNavItem } from './user-nav-items';
+ 
+ export const UserNav = (props) => {
+   const { open, onClose } = props;
+diff --git a/src/sections/customer/material-table.js b/src/sections/customer/material-table.js
+index fdac2c7..3bb7c9a 100644
+--- a/src/sections/customer/material-table.js
++++ b/src/sections/customer/material-table.js
+@@ -341,7 +341,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+         return backgroundColor !== undefined ? backgroundColor : 'inherit';
+     };
+ 
+-    const renderDetailPanel = ({ row }) => {
++    const RenderDetailPanel = ({ row }) => {
+         useEffect(() => {
+             if (row.original.sub) {
+                 fetchDropdownData(row.original.sub);
+@@ -508,7 +508,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
+                 backgroundColor: getBackgroundColor(row.original),
+             }
+         }),
+-        renderDetailPanel,
++        RenderDetailPanel,
+ 
+     });
+ 
+-- 
+2.34.1
+

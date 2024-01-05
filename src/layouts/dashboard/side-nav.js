@@ -74,21 +74,6 @@ export const SideNav = (props) => {
               width={150} // Set the width of the image
               height={100}// Set the height of the image
             />
-
-          {/* </Box> */}
-          {/* <Box
-            sx={{
-              alignItems: 'center',
-              backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              borderRadius: 1,
-              cursor: 'pointer',
-              display: 'flex',
-              // justifyContent: 'space-between',
-              mt: 1,
-              p: '12px',
-              backgroundColor: "gray",
-            }}
-          > */}
             <div>
               <Typography
                 color="red"
@@ -104,13 +89,6 @@ export const SideNav = (props) => {
                 Dashboard
               </Typography>
             </div>
-            {/* <SvgIcon
-              fontSize="small"
-              sx={{ color: 'neutral.500' }}
-            >
-              <ChevronUpDownIcon />
-            </SvgIcon> */}
-          {/* </Box> */}
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
         <Box
