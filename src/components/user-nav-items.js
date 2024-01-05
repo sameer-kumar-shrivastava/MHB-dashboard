@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, ButtonBase } from '@mui/material';
 
-export const UserNavItem = (props) => {
+const UserNavItem = (props) => {
   const { active = false, disabled, external, icon, path, title } = props;
 
   const linkProps = path
@@ -81,6 +81,8 @@ export const UserNavItem = (props) => {
     </li>
   );
 };
+
+export default UserNavItem;
 
 UserNavItem.propTypes = {
   active: PropTypes.bool,

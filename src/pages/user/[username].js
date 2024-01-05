@@ -14,7 +14,6 @@ import { ChromePicker } from 'react-color';
 import Head from 'next/head';
 import Emergencytable from './emergency-table';
 import Householdtable from './household-table';
-import { items } from './user-config';
 import { latitude, longitude } from '../../sections/customer/material-table';
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
