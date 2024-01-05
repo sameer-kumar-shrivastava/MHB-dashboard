@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 const Emergencytable = () => {
     const [data, setData] = useState([]);
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -53,9 +53,8 @@ const Emergencytable = () => {
         };
 
         fetchData();
-    }, []);
+    }, [router]);
 
-    const router = useRouter();
 
     const columns = useMemo(
         //column definitions...

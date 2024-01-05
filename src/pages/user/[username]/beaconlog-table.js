@@ -11,7 +11,7 @@ import DoneIcon from '@mui/icons-material/Done';
 const Beaconlogtable = () => {
 
     const [data, setData] = useState([]);
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -94,9 +94,7 @@ const Beaconlogtable = () => {
         };
 
         fetchData();
-    }, []);
-
-    const router = useRouter();
+    }, [router]);
 
     const columns = useMemo(
         //column definitions...

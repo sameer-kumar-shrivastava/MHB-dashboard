@@ -24,6 +24,8 @@ const UserDetails = () => {
     const [phoneNumber, setphoneNumber] = useState('');
     const [birthDate, setbirthDate] = useState('');
     const [os, setos] = useState('');
+    
+    const router = useRouter();
 
     const fetchData = async () => {
         try {
@@ -88,52 +90,73 @@ const UserDetails = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [router]);
 
-    const router = useRouter();
 
     return (
         <div style={{ display: "flex" }}>
-            <Stack textAlign='center' sx={{ width: "50%" }}>
+            <Stack
+                textAlign='center'
+                sx={{ width: "50%" }}>
                 <Table>
                     <TableRow >
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7', width: "40%" }}>First Name</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7', width: "40%" }}>First Name</TableCell>
                         <TableCell>{firstName || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Last Name</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>Last Name</TableCell>
                         <TableCell>{lastName || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Address</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>Address</TableCell>
                         <TableCell >{address || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>City</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>City</TableCell>
                         <TableCell >{city || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>ZipCode</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>ZipCode</TableCell>
                         <TableCell >{pinCode || "N/A"}</TableCell>
                     </TableRow>
                 </Table>
             </Stack>
-            <Stack textAlign='center' sx={{ width: "50%" }}>
+            <Stack
+                textAlign='center'
+                sx={{ width: "50%" }}>
                 <Table>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Email</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>Email</TableCell>
                         <TableCell >{email || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Phone Number</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>Phone Number</TableCell>
                         <TableCell >{phoneNumber || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>Birthdate</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>Birthdate</TableCell>
                         <TableCell >{birthDate || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f7f7f7' }}>OS</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f7f7f7' }}>OS</TableCell>
                         <TableCell >{os || "N/A"}</TableCell>
                     </TableRow>
                 </Table>

@@ -38,7 +38,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
     const [hoveredRow, setHoveredRow] = useState(null);
     const [checkedRow, setCheckedRow] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
-
+    const router = useRouter();
     const theme = useTheme();
 
     const handleMouseEnter = (row) => {
@@ -78,14 +78,14 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                     user.city = city;
                 }
                 if (user.phone_number) {
-                            const phone_number = user.phone_number;
-                            const cleanedNumber = phone_number.replace(/\D/g, '');
-                            const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
-                            // Use regular expressions to extract the country code, area code, and local number
-                            const phonematch = cleanedNumber.match(phonePattern);
-                            const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
-                            user.phone_number = formattedNumber;
-                        }
+                    const phone_number = user.phone_number;
+                    const cleanedNumber = phone_number.replace(/\D/g, '');
+                    const phonePattern = /^(\d{1,4})(\d{3})(\d{3})(\d{4})$/;
+                    // Use regular expressions to extract the country code, area code, and local number
+                    const phonematch = cleanedNumber.match(phonePattern);
+                    const formattedNumber = `+${phonematch[1]} (${phonematch[2]}) ${phonematch[3]}-${phonematch[4]}`;
+                    user.phone_number = formattedNumber;
+                }
             });
             setData(usersData);
 
@@ -126,7 +126,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
             const updatedData = usersData.map((user) => ({
                 checked: false,
             }));
-    
+
             setCheckedRow(updatedData);
 
             await Promise.all(promises);
@@ -173,19 +173,36 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
     }, []);
 
 
-    const router = useRouter();
-
     const handleSelectAllClick = () => {
         setSelectAll(!selectAll);
-    
+
         const updatedRows = selectAll
             ? []
             : data.map((user) => ({ sub: user.sub }));
-    
+
         setCheckedRow(updatedRows);
         onSelectedSubValuesChange(updatedRows);
     };
-    
+
+    const handleCheckboxClick = (event, row) => {
+        event.stopPropagation();
+        const userId = row.original.sub;
+
+        setCheckedRow((prevCheckedRows) => {
+            const isChecked = prevCheckedRows.some((item) => item.sub === userId);
+            let updatedRows;
+
+            if (isChecked) {
+                updatedRows = prevCheckedRows.filter((item) => item.sub !== userId);
+            } else {
+                updatedRows = [...prevCheckedRows, { sub: userId }];
+            }
+
+            onSelectedSubValuesChange(updatedRows);
+            return updatedRows;
+        });
+    };
+
 
     const columns = useMemo(
         () => [
@@ -196,7 +213,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                         type="checkbox"
                         checked={selectAll}
                         onChange={handleSelectAllClick}
-        />
+                    />
                 ),
                 Cell: ({ row }) => (
                     <input
@@ -250,7 +267,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
             },
 
         ],
-        [selectAll, checkedRow]
+        [selectAll, checkedRow, handleCheckboxClick, handleSelectAllClick]
         //end
     );
 
@@ -263,29 +280,10 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
         return null;
     }
 
-   
 
-    const handleCheckboxClick = (event, row) => {
-        event.stopPropagation();
-        const userId = row.original.sub;
-    
-        setCheckedRow((prevCheckedRows) => {
-            const isChecked = prevCheckedRows.some((item) => item.sub === userId);
-            let updatedRows;
-    
-            if (isChecked) {
-                updatedRows = prevCheckedRows.filter((item) => item.sub !== userId);
-            } else {
-                updatedRows = [...prevCheckedRows, { sub: userId }];
-            }
-    
-            onSelectedSubValuesChange(updatedRows);
-            return updatedRows;
-        });
-    };  
-    
-    
-    
+
+
+
     const showCheckedDetails = (checkedRows) => {
         console.log("Checked Rows:", checkedRows);
         checkedRows.forEach((sub) => {
@@ -293,9 +291,9 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
             // Uncomment the line below when you want to use handleSubmit
             // handleSubmit(sub);
         });
-    };   
-    
-    
+    };
+
+
 
     const handleRowClick = (row) => {
         const username = row.original.family_name;
@@ -357,113 +355,143 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                 }}
             >
                 {dropdownData ? (
-                    <Stack direction="row" spacing={5}>
+                    <Stack
+                        direction="row"
+                        spacing={5}>
 
-                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
-                            <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+                        <Stack
+                            sx={{ width: "33.33%", overflowX: "scroll" }}
+                            textAlign='center'>
+                            <Typography
+                                variant="h6"
+                                sx={{ fontSize: "16px" }}
+                                gutterBottom component="div">
                                 {`${row.original.given_name}'s Hub` || "N/A"}
                             </Typography>
                             <Divider />
-                            {/* <Typography sx={{ fontSize: "12px" }} >
-                                Home Hub
-                            </Typography> */}
-
                             <Table size="small">
                                 <TableRow >
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                    <TableCell
+                                        variant="head"
+                                        sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
                                     <TableCell>{dropdownData.hh_id || "N/A"}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
+                                    <TableCell
+                                        variant="head"
+                                        sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
                                     <TableCell>{dropdownData.slaves_connected || "N/A"}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                    <TableCell
+                                        variant="head"
+                                        sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
                                     <TableCell >{dropdownData.hh_fw_ver}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
+                                    <TableCell
+                                        variant="head"
+                                        sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
                                     <TableCell >{dropdownData.landline}</TableCell>
                                 </TableRow>
                             </Table>
                         </Stack>
-                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
+                        <Stack
+                            sx={{ width: "33.33%", overflowX: "scroll" }}
+                            textAlign='center'>
                             <Box sx={{}}>
-                                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+                                <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: "16px" }}
+                                    gutterBottom component="div">
                                     {`${row.original.given_name}'s Beacon` || "N/A"}
                                 </Typography>
                                 <Divider />
-                                {/* <Typography sx={{ fontSize: "12px" }} >
-                                    Beacon
-                                </Typography> */}
-
-                                <Table size="small" align="center">
+                                <Table
+                                    size="small"
+                                    align="center">
 
                                     <TableRow >
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
                                         <TableCell>   {dropdownData.b_id}</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
                                         <TableCell> {dropdownData.b_batt_lvl}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
                                         <TableCell>{dropdownData.b_solar_lvl !== undefined ? dropdownData.b_solar_lvl.toString() : "N/A"}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
                                         <TableCell> {dropdownData.b_temp}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
                                         <TableCell> {dropdownData.b_rssi}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
                                         <TableCell> {dropdownData.b_fw_ver}</TableCell>
 
                                     </TableRow>
                                 </Table>
                             </Box>
                         </Stack>
-                        <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
+                        <Stack
+                            sx={{ width: "33.33%", overflowX: "scroll" }}
+                            textAlign='center'>
                             <Box sx={{}}>
-                                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+                                <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: "16px" }}
+                                    gutterBottom component="div">
                                     {`${row.original.given_name}'s Puck` || "N/A"}
                                 </Typography>
                                 <Divider />
-                                {/* <Typography sx={{ fontSize: "12px" }} >
-                                    Puck
-                                </Typography> */}
                                 <Table size="small">
 
                                     <TableRow >
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
                                         <TableCell>{dropdownData.gp_id}</TableCell>
 
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
                                         <TableCell>{dropdownData.g_batt_lvl}</TableCell>
                                     </TableRow>
-
-                                    {/* <TableRow>
-                                <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Accelermeter</TableCell>
-                                <TableCell>{row.original.puck[0].Accelerometer}</TableCell>
-                            </TableRow> */}
-
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
                                         <TableCell>{dropdownData.g_rssi}</TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                                        <TableCell
+                                            variant="head"
+                                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
                                         <TableCell >
                                             {dropdownData.g_fw_ver}
                                         </TableCell>
@@ -496,7 +524,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
             placeholder: 'Provide at least four characters',
             sx: { minWidth: '300px' },
             variant: 'outlined',
-          },
+        },
         muiTableBodyRowProps: ({ row }) => ({
             onClick: (event) => {
                 handleRowClick(row);
@@ -508,7 +536,7 @@ const Materialtable = ({ onSelectedSubValuesChange }) => {
                 backgroundColor: getBackgroundColor(row.original),
             }
         }),
-        RenderDetailPanel,
+        renderDetailPanel: RenderDetailPanel,
 
     });
 

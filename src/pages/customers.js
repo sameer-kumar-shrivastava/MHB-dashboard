@@ -131,7 +131,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, [username]);
+  }, [username, router]);
 
   useEffect(() => {
     if (defaultSettings) {
@@ -175,7 +175,7 @@ const Page = () => {
 
   const handleSelectedSubValuesChange = (subValues) => {
     setSelectedSubValues(subValues);
-};
+  };
 
   const handleSubmit = async (sub) => {
     try {
@@ -275,8 +275,10 @@ const Page = () => {
           py: 8
         }}
       >
-        <Container maxWidth="xl">
-          <Stack spacing={3}>
+        <Container
+          maxWidth="xl">
+          <Stack
+            spacing={3}>
             <Stack
               direction="row"
               justifyContent="space-between"
@@ -285,7 +287,10 @@ const Page = () => {
               <Typography variant="h4">
                 Users
               </Typography>
-              <SvgIcon fontSize="large" style={{ cursor: "pointer" }} onClick={handleClickOpen}>
+              <SvgIcon
+                fontSize="large"
+                style={{ cursor: "pointer" }}
+                onClick={handleClickOpen}>
                 <CogIcon color='black' />
               </SvgIcon>
               <BootstrapDialog
@@ -295,7 +300,9 @@ const Page = () => {
                 fullWidth={fullWidth}
                 maxWidth={maxWidth}
               >
-                <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                <DialogTitle
+                  sx={{ m: 0, p: 2 }}
+                  id="customized-dialog-title">
                   User Device Settings
                 </DialogTitle>
                 <IconButton
@@ -311,98 +318,114 @@ const Page = () => {
                   <CloseIcon />
                 </IconButton>
                 <DialogContent dividers>
-                  <Stack spacing={1} >
-                    <Container sx={{ display: "-webkit-flex" }}>
-                    <Card>
-                {/* <CardHeader title="Beacon" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} /> */}
-                {/* <Divider /> */}
-                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
-                  <Stack spacing={1} sx={{ maxWidth: 500 }}>
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
-                      <Typography fontSize={20} fontWeight="bold" >Beacon</Typography>
-                    </Box>
-                    <ChromePicker color={beaconData.color} onChange={handleColorChange} />
-                  </Stack>
-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
-                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <Typography fontSize={20} fontWeight="bold" >LED:</Typography>
-                    </Box>
+                  <Stack
+                    spacing={1} >
+                    <Container
+                      sx={{ display: "-webkit-flex" }}>
+                      <Card>
+                        <CardContent
+                          sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
+                          <Stack
+                            spacing={1}
+                            sx={{ maxWidth: 500 }}>
+                            <Box
+                              sx={{ display: "flex", justifyContent: "center" }}>
+                              <Typography
+                                fontSize={20}
+                                fontWeight="bold" >
+                                Beacon</Typography>
+                            </Box>
+                            <ChromePicker
+                              color={beaconData.color}
+                              onChange={handleColorChange} />
+                          </Stack>
+                          <Stack
+                            spacing={1}
+                            paddingLeft={5}
+                            sx={{ maxWidth: 500 }}>
+                            <Box
+                              sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                              <Typography
+                                fontSize={20}
+                                fontWeight="bold" >
+                                LED:</Typography>
+                            </Box>
 
-                    <TextField
-                      label="Pattern On-Time (ms)"
-                      value={beaconData.onTime}
-                      onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
-                    />
-                    <TextField
-                      label="Pattern Off-Time (ms)"
-                      value={beaconData.offTime}
-                      onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
-                    />
-                    <TextField
-                      label="Active Duration (sec)"
-                      value={beaconData.duration}
-                      onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
-                    />
-                    <Box sx={{ width: 300 }}>
-                      <Typography >Brightness:</Typography>
-                      <Slider
-                        value={beaconData.brightness}
-                        onChange={handleBrightnessChange}
-                        aria-label="Default"
-                        valueLabelDisplay="auto" />
-                    </Box>
-                  </Stack>
-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 500 }}>
-                    <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
-                    </Box>
-                    <TextField
-                      label="Pattern On-Time (ms)"
-                      value={buzzerData.onTime}
-                      onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
-                    />
-                    <TextField
-                      label="Pattern Off-Time (ms)"
-                      value={buzzerData.offTime}
-                      onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
-                    />
-                    <TextField
-                      label="Active Duration (sec)"
-                      value={buzzerData.duration}
-                      onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
-                    />
-                  </Stack>
-                </CardContent>
-                <Card>
-                  <CardHeader title="Charge Control" sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
-                  {/* <Divider /> */}
-                  <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
-                    <Stack spacing={1} sx={{ maxWidth: 700 }}>
-                      <TextField
-                        label="Minimum battery percentage to start charge"
-                        value={chargeControlData.minBatteryPercentage}
-                        onChange={(e) =>
-                          handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
-                        }
-                      />
-                    </Stack>
-                  </CardContent>
-                  {/* <Divider />
-                <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Button variant="contained" onClick={() => handleSave('chargeControl')}>
-                    Save
-                  </Button>
-                </CardActions> */}
-                </Card>
-                <Divider />
-                {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Button variant="contained" onClick={() => {
-                    handleSubmit();
-                  }}>
-                    Save
-                  </Button>
-                </CardActions> */}
-              </Card>
+                            <TextField
+                              label="Pattern On-Time (ms)"
+                              value={beaconData.onTime}
+                              onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
+                            />
+                            <TextField
+                              label="Pattern Off-Time (ms)"
+                              value={beaconData.offTime}
+                              onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
+                            />
+                            <TextField
+                              label="Active Duration (sec)"
+                              value={beaconData.duration}
+                              onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+                            />
+                            <Box
+                              sx={{ width: 300 }}>
+                              <Typography >
+                                Brightness:</Typography>
+                              <Slider
+                                value={beaconData.brightness}
+                                onChange={handleBrightnessChange}
+                                aria-label="Default"
+                                valueLabelDisplay="auto" />
+                            </Box>
+                          </Stack>
+                          <Stack
+                            spacing={1}
+                            paddingLeft={5}
+                            sx={{ maxWidth: 500 }}>
+                            <Box
+                              sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                              <Typography
+                                fontSize={20}
+                                fontWeight="bold" >
+                                Buzzer :</Typography>
+                            </Box>
+                            <TextField
+                              label="Pattern On-Time (ms)"
+                              value={buzzerData.onTime}
+                              onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+                            />
+                            <TextField
+                              label="Pattern Off-Time (ms)"
+                              value={buzzerData.offTime}
+                              onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+                            />
+                            <TextField
+                              label="Active Duration (sec)"
+                              value={buzzerData.duration}
+                              onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+                            />
+                          </Stack>
+                        </CardContent>
+                        <Card>
+                          <CardHeader
+                            title="Charge Control"
+                            sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
+                          <CardContent
+                            sx={{ paddingBottom: 0, paddingTop: 0 }}>
+                            <Stack
+                              spacing={1}
+                              sx={{ maxWidth: 700 }}>
+                              <TextField
+                                label="Minimum battery percentage to start charge"
+                                value={chargeControlData.minBatteryPercentage}
+                                onChange={(e) =>
+                                  handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+                                }
+                              />
+                            </Stack>
+                          </CardContent>
+                        </Card>
+                        <Divider />
+                      </Card>
                     </Container>
                     <Container>
 
@@ -410,9 +433,11 @@ const Page = () => {
                   </Stack>
                 </DialogContent>
                 <DialogActions>
-                  <Button variant="contained" onClick={() => {
-                    handleSaveButtonClick();
-                  }}>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      handleSaveButtonClick();
+                    }}>
                     Save
                   </Button>
                 </DialogActions>
@@ -420,7 +445,8 @@ const Page = () => {
             </Stack>
 
 
-            <Materialtable onSelectedSubValuesChange={handleSelectedSubValuesChange} />
+            <Materialtable
+              onSelectedSubValuesChange={handleSelectedSubValuesChange} />
 
           </Stack>
         </Container>

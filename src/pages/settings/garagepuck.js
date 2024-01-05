@@ -16,7 +16,7 @@ import { ChromePicker } from 'react-color';
 
 const Page = () => {
 
-    
+
 
     const [chargeControlData, setChargeControlData] = useState({
         minBatteryPercentage: '',
@@ -93,12 +93,14 @@ const Page = () => {
                         <Typography variant="h4">
                             Garage Puck Settings
                         </Typography>
-                        
+
                         <Card spacing={1}>
                             <CardHeader title="Charge Control" />
                             <Divider />
                             <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+                                <Stack
+                                    spacing={2}
+                                    sx={{ maxWidth: 400 }}>
                                     <TextField
                                         label="Minimum battery percentage to start charge"
                                         value={chargeControlData.minBatteryPercentage}
@@ -106,15 +108,14 @@ const Page = () => {
                                             handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
                                         }
                                     />
-                                    {/* <Typography variant="h6">
-                  {chargeControlData.minBatteryPercentage}
-        </Typography> */}
-
                                 </Stack>
                             </CardContent>
                             <Divider />
-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('chargeControl')}>
+                            <CardActions
+                                sx={{ justifyContent: 'flex-end' }}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleSave('chargeControl')}>
                                     Save
                                 </Button>
                             </CardActions>

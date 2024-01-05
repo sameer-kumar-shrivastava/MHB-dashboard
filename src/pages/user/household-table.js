@@ -25,7 +25,7 @@ export const data = [
 
 const Householdtable = () => {
     const [data, setData] = useState([]);
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -69,9 +69,7 @@ const Householdtable = () => {
         };
 
         fetchData();
-    }, []);
-
-    const router = useRouter();
+    }, [router]);
 
     const columns = useMemo(
         //column definitions...

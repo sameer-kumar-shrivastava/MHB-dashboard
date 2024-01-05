@@ -182,48 +182,8 @@ const Page = () => {
     };
 
     fetchData();
-  }, [username]);
+  }, [username, router]);
 
-
-  // const handleSubmit = async () => {
-  //   try {
-  //     const idToken = localStorage.getItem('idToken');
-  //     const apiUrl = 'https://m1kiyejux4.execute-api.us-west-1.amazonaws.com/dev/api/v1/devices/storeDeviceProps/';
-
-  //     const dataToSend = {
-  //       user_id: userId,
-  //       R: beaconData.color.r,
-  //       G: beaconData.color.g,
-  //       B: beaconData.color.b,
-  //       brightness: brightness,
-  //       led_ON_TIME: beaconData.onTime,
-  //       led_OFF_TIME: beaconData.offTime,
-  //       led_DURATION: beaconData.duration,
-  //       buzz_ON_TIME: buzzerData.onTime,
-  //       buzz_OFF_TIME: buzzerData.offTime,
-  //       buzz_DURATION: buzzerData.duration,
-  //       charge_control: chargeControlData.minBatteryPercentage,
-  //     };
-
-  //     console.log('Data to send:', dataToSend);
-
-  //     const response = await axios.post(apiUrl, dataToSend,
-  //       {
-  //         headers: {
-  //             Authorization: `Bearer ${idToken}`,
-  //             'Content-Type': 'application/json',
-  //         },
-  //     });
-  //     console.log('API Response:', response);
-
-  //     if (response.status !== 200) {
-  //       throw new Error('Failed to save data');
-  //     }
-  //     console.log('Data saved successfully');
-  //   } catch (error) {
-  //     console.error('Error saving data:', error);
-  //   }
-  // };
 
   return (
     <>
@@ -236,34 +196,33 @@ const Page = () => {
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} indicatorColor="none" aria-label="basic tabs example">
-            <Tab label="Profile Settings" {...a11yProps(0)} 
-            sx={{
-              backgroundColor:value === 0 ? 'rgba(229, 228, 226,0.7)': 'inherit',
-              width:"15vw",
-              padding:"5px",
-              border:value === 0 ? '1px solid rgb(169, 169, 169)': 'transparent',
-              borderTopLeftRadius:value === 0 ? '10px': '0',
-              borderTopRightRadius:value === 0 ? '10px': '0',
-              borderBottom:value === 0 ? '0': '1px solid rgb(169, 169, 169)',
+            <Tab label="Profile Settings" {...a11yProps(0)}
+              sx={{
+                backgroundColor: value === 0 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+                width: "15vw",
+                padding: "5px",
+                border: value === 0 ? '1px solid rgb(169, 169, 169)' : 'transparent',
+                borderTopLeftRadius: value === 0 ? '10px' : '0',
+                borderTopRightRadius: value === 0 ? '10px' : '0',
+                borderBottom: value === 0 ? '0' : '1px solid rgb(169, 169, 169)',
               }} />
-            <Tab label="Global Device Settings" {...a11yProps(1)} 
-            sx={{
-              backgroundColor:value === 1 ? 'rgba(229, 228, 226,0.7)': 'inherit',
-              width:"15vw",
-              padding:"5px",
-              border:value === 1 ? '1px solid rgb(169, 169, 169)': 'transparent',
-              borderTopLeftRadius:value === 1 ? '10px': '0',
-              borderTopRightRadius:value === 1 ? '10px': '0',
-              borderBottom:value === 1 ? '0': '1px solid rgb(169, 169, 169)',
+            <Tab label="Global Device Settings" {...a11yProps(1)}
+              sx={{
+                backgroundColor: value === 1 ? 'rgba(229, 228, 226,0.7)' : 'inherit',
+                width: "15vw",
+                padding: "5px",
+                border: value === 1 ? '1px solid rgb(169, 169, 169)' : 'transparent',
+                borderTopLeftRadius: value === 1 ? '10px' : '0',
+                borderTopRightRadius: value === 1 ? '10px' : '0',
+                borderBottom: value === 1 ? '0' : '1px solid rgb(169, 169, 169)',
               }} />
           </Tabs>
         </Box>
-        <CustomTabPanel value={value} index={0}>
+        <CustomTabPanel
+          value={value}
+          index={0}>
           <Container maxWidth="lg">
             <Stack spacing={3} >
-              {/* <Typography variant="h4">
-              Settings
-            </Typography> */}
               <Grid
                 container
                 spacing={3}
@@ -280,120 +239,130 @@ const Page = () => {
                   md={6}
                   lg={4}
                 >
-                  {/* <AccountProfile /> */}
                 </Grid>
               </Grid>
             </Stack>
           </Container>
         </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
+        <CustomTabPanel
+          value={value}
+          index={1}>
           <Box
-          component="main"
-          sx={{
-            flexGrow: 1
-          }}
-        >
-
-          {/* <Stack spacing={3} >
-                <Typography variant="h4">
-                  User Settings
-                </Typography>
-              </Stack> */}
-          <Stack spacing={1} >
-            <Container sx={{ display: "-webkit-flex" }}>
-              <Card>
-                <CardHeader title="Beacon" sx={{paddingTop:2, paddingRight:3, paddingBottom:2 }}/>
-                {/* <Divider /> */}
-                <CardContent sx={{ display: "flex", paddingBottom: 0, paddingTop: 0}}>
-                  <ChromePicker color={beaconData.color} onChange={handleColorChange} />
-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
-                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
-                      <Typography fontSize={20} fontWeight="bold" >LED :</Typography>
-                    </Box>
-                    <Box sx={{ width: 400 }}>
-                      <Typography >Brightness:</Typography>
-                      <Slider
-                        value={brightness}
-                        onChange={handleBrightnessChange}
-                        aria-label="Default"
-                        valueLabelDisplay="auto" />
-                    </Box>
-                    <TextField
-                      label="Pattern On-Time (ms)"
-                      value={beaconData.onTime}
-                      onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
-                    />
-                    <TextField
-                      label="Pattern Off-Time (ms)"
-                      value={beaconData.offTime}
-                      onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
-                    />
-                    <TextField
-                      label="Active Duration (sec)"
-                      value={beaconData.duration}
-                      onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
-                    />
-                  </Stack>
-                  <Stack spacing={1} paddingLeft={5} sx={{ maxWidth: 700 }}>
-                  <Box sx={{ width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>
-                      <Typography fontSize={20} fontWeight="bold" >Buzzer :</Typography>
-                    </Box>
-                    <TextField
-                      label="On-Time (ms)"
-                      value={buzzerData.onTime}
-                      onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
-                    />
-                    <TextField
-                      label="Off-Time (ms)"
-                      value={buzzerData.offTime}
-                      onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
-                    />
-                    <TextField
-                      label="Duration"
-                      value={buzzerData.duration}
-                      onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
-                    />
-                  </Stack>
-                </CardContent>
+            component="main"
+            sx={{
+              flexGrow: 1
+            }}
+          >
+            <Stack spacing={1} >
+              <Container sx={{ display: "-webkit-flex" }}>
                 <Card>
-                <CardHeader title="Charge Control" sx={{paddingTop:2, paddingRight:3, paddingBottom:2 }} />
-                {/* <Divider /> */}
-                <CardContent sx={{ paddingBottom: 0, paddingTop: 0}}>
-                  <Stack spacing={1} sx={{ maxWidth: 700 }}>
-                    <TextField
-                      label="Minimum battery percentage to start charge"
-                      value={chargeControlData.minBatteryPercentage}
-                      onChange={(e) =>
-                        handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
-                      }
-                    />
-                  </Stack>
-                </CardContent>
-                {/* <Divider /> */}
-                {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Button variant="contained" onClick={() => handleSave('chargeControl')}>
-                    Save
-                  </Button>
-                </CardActions> */}
-              </Card>
-                {/* <Divider /> */}
-                <CardActions sx={{ justifyContent: 'flex-end' }}>
-                <Button variant="contained" onClick={() => {
-                    handleSave('beacon');
-                    handleSubmit();
-                  }}>
-                    Save
-                  </Button>
-                </CardActions>
-              </Card>
-            </Container>
-            <Container>
-              
-            </Container>
-          </Stack>
+                  <CardHeader
+                    title="Beacon"
+                    sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
+                  <CardContent
+                    sx={{ display: "flex", paddingBottom: 0, paddingTop: 0 }}>
+                    <ChromePicker
+                      color={beaconData.color}
+                      onChange={handleColorChange} />
+                    <Stack
+                      spacing={1}
+                      paddingLeft={5}
+                      sx={{ maxWidth: 700 }}>
+                      <Box sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Typography
+                          fontSize={20}
+                          fontWeight="bold" >LED :</Typography>
+                      </Box>
+                      <Box sx={{ width: 400 }}>
+                        <Typography >Brightness:</Typography>
+                        <Slider
+                          value={brightness}
+                          onChange={handleBrightnessChange}
+                          aria-label="Default"
+                          valueLabelDisplay="auto" />
+                      </Box>
+                      <TextField
+                        label="Pattern On-Time (ms)"
+                        value={beaconData.onTime}
+                        onChange={(e) => handleInputChange(e, 'beacon', 'onTime')}
+                      />
+                      <TextField
+                        label="Pattern Off-Time (ms)"
+                        value={beaconData.offTime}
+                        onChange={(e) => handleInputChange(e, 'beacon', 'offTime')}
+                      />
+                      <TextField
+                        label="Active Duration (sec)"
+                        value={beaconData.duration}
+                        onChange={(e) => handleInputChange(e, 'beacon', 'duration')}
+                      />
+                    </Stack>
+                    <Stack
+                      spacing={1}
+                      paddingLeft={5}
+                      sx={{ maxWidth: 700 }}>
+                      <Box
+                        sx={{ width: 400, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Typography
+                          fontSize={20}
+                          fontWeight="bold" >Buzzer :</Typography>
+                      </Box>
+                      <TextField
+                        label="On-Time (ms)"
+                        value={buzzerData.onTime}
+                        onChange={(e) => handleInputChange(e, 'buzzer', 'onTime')}
+                      />
+                      <TextField
+                        label="Off-Time (ms)"
+                        value={buzzerData.offTime}
+                        onChange={(e) => handleInputChange(e, 'buzzer', 'offTime')}
+                      />
+                      <TextField
+                        label="Duration"
+                        value={buzzerData.duration}
+                        onChange={(e) => handleInputChange(e, 'buzzer', 'duration')}
+                      />
+                    </Stack>
+                  </CardContent>
+                  <Card>
+                    <CardHeader
+                      title="Charge Control"
+                      sx={{ paddingTop: 2, paddingRight: 3, paddingBottom: 2 }} />
+                    <CardContent
+                      sx={{ paddingBottom: 0, paddingTop: 0 }}>
+                      <Stack
+                        spacing={1}
+                        sx={{ maxWidth: 700 }}>
+                        <TextField
+                          label="Minimum battery percentage to start charge"
+                          value={chargeControlData.minBatteryPercentage}
+                          onChange={(e) =>
+                            handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
+                          }
+                        />
+                      </Stack>
+                    </CardContent>
+                  </Card>
+                  {/* <Divider /> */}
+                  <CardActions sx={{ justifyContent: 'flex-end' }}>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        handleSave('beacon');
+                        handleSubmit();
+                      }}>
+                      Save
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Container>
+              <Container>
+
+              </Container>
+            </Stack>
 
 
-        </Box>
+          </Box>
         </CustomTabPanel>
       </Box>
     </>

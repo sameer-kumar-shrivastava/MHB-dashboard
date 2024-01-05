@@ -71,7 +71,7 @@ const Page = () => {
                 console.log('Saving Beacon Data:', beaconData);
                 break;
             case 'buzzer':
-                alert('Saving Buzzer Data: '  + buzzerData);
+                alert('Saving Buzzer Data: ' + buzzerData);
                 console.log('Saving Buzzer Data:', buzzerData);
                 break;
             case 'chargeControl':
@@ -112,11 +112,19 @@ const Page = () => {
                             <CardHeader title="Beacon" />
                             <Divider />
                             <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
-                                    <ChromePicker color={beaconData.color} onChange={handleColorChange} />
-                                    <Box sx={{ width: 300 }}>
+                                <Stack
+                                    spacing={2}
+                                    sx={{ maxWidth: 400 }}>
+                                    <ChromePicker
+                                        color={beaconData.color}
+                                        onChange={handleColorChange} />
+                                    <Box
+                                        sx={{ width: 300 }}>
                                         <Typography >Brightness:</Typography>
-                                        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+                                        <Slider
+                                            defaultValue={50}
+                                            aria-label="Default"
+                                            valueLabelDisplay="auto" />
                                     </Box>
                                     <TextField
                                         label="Pattern On-Time (ms)"
@@ -136,8 +144,11 @@ const Page = () => {
                                 </Stack>
                             </CardContent>
                             <Divider />
-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('beacon')}>
+                            <CardActions
+                                sx={{ justifyContent: 'flex-end' }}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleSave('beacon')}>
                                     Save
                                 </Button>
                             </CardActions>
@@ -146,7 +157,9 @@ const Page = () => {
                             <CardHeader title="Buzzer" />
                             <Divider />
                             <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+                                <Stack
+                                    spacing={2}
+                                    sx={{ maxWidth: 400 }}>
                                     <TextField
                                         label="On-Time (ms)"
                                         value={buzzerData.onTime}
@@ -165,8 +178,11 @@ const Page = () => {
                                 </Stack>
                             </CardContent>
                             <Divider />
-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('buzzer')}>
+                            <CardActions
+                                sx={{ justifyContent: 'flex-end' }}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleSave('buzzer')}>
                                     Save
                                 </Button>
                             </CardActions>

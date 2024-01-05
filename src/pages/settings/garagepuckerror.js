@@ -101,7 +101,9 @@ const Page = () => {
                             <CardHeader title="Buzzer" />
                             <Divider />
                             <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+                                <Stack
+                                    spacing={2}
+                                    sx={{ maxWidth: 400 }}>
                                     <TextField
                                         label="On-Time (ms)"
                                         value={buzzerData.onTime}
@@ -120,29 +122,30 @@ const Page = () => {
                                 </Stack>
                             </CardContent>
                             <Divider />
-                            <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                <Button variant="contained" onClick={() => handleSave('buzzer')}>
+                            <CardActions
+                                sx={{ justifyContent: 'flex-end' }}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleSave('buzzer')}>
                                     Save
                                 </Button>
                             </CardActions>
                         </Card>
-                        <Card spacing={1}>
+                        <Card
+                            spacing={1}>
                             <CardHeader title="Charge Control" />
                             <Divider />
                             <CardContent>
-                                <Stack spacing={2} sx={{ maxWidth: 400 }}>
+                                <Stack
+                                    spacing={2}
+                                    sx={{ maxWidth: 400 }}>
                                     <TextField
                                         label="Minimum battery percentage to start charge"
                                         value={chargeControlData.minBatteryPercentage}
                                         onChange={(e) =>
                                             handleInputChange(e, 'chargeControl', 'minBatteryPercentage')
                                         }
-                                    />
-                                    {/* <Typography variant="h6">
-                  {chargeControlData.minBatteryPercentage}
-        </Typography> */}
-
-                                </Stack>
+                                    /></Stack>
                             </CardContent>
                             <Divider />
                             <CardActions sx={{ justifyContent: 'flex-end' }}>

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 const Pucklogtable = () => {
 
     const [data, setData] = useState([]);
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -49,36 +49,7 @@ const Pucklogtable = () => {
                 const data = secondApiResponse.data;
                 console.log('Puck logs:', data);
                 setData(data['logs']);
-                // data['logs'].forEach(log => {
-                //     const onoff = log.ON_OFF_Time;
-                //     const onPattern = /ON#(\d+)/;
-                //     const onMatch = onoff.match(onPattern);
-                //     const onTime = onMatch ? onMatch[1] : null;
-                //     log.onTime = onTime;
-
-                //     const offPattern = /OFF#(\d+)/;
-                //     const offmatch = onoff.match(offPattern);
-                //     const offTime = onMatch ? offmatch[1] : null;
-                //     log.offTime = offTime;
-                // })
-                // data['logs'].forEach(log => {
-                //     const rgbstring = log.RGBValues;
-                //     const rgbPattern = /([RGB])#(\d+)/g;
-                //     let match;
-                //     log.rgbValues = {
-                //         R: 0,
-                //         G: 0,
-                //         B: 0,
-                //     };
-
-                //     while ((match = rgbPattern.exec(rgbstring)) !== null) {
-                //         const [, color, value] = match;
-                //         log.rgbValues[color] = parseInt(value, 10);
-                //     }
-
-                //     const rgbString = `rgb(${log.rgbValues.R},${log.rgbValues.G},${log.rgbValues.B})`;
-                //     log.rgbString = rgbString;
-                // });
+                
                 data['logs'].forEach(log => {
                     const dateTime = new Date(log.date_time);
                     const formattedDate = dateTime.toLocaleDateString();
@@ -96,9 +67,7 @@ const Pucklogtable = () => {
         };
 
         fetchData();
-    }, []);
-
-    const router = useRouter();
+    }, [router]);
 
     const columns = useMemo(
         //column definitions...

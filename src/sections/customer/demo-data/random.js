@@ -1,6 +1,6 @@
-/* eslint no-bitwise: ["error", { "allow": ["<<", ">>", "&"] }] */
+import React from "react";
 
-export default function (seed = 123456789) {
+const Function = (seed = 123456789)  => {
     let mW = seed;
     let mZ = 987654321;
     const mask = 0xffffffff;
@@ -14,3 +14,4 @@ export default function (seed = 123456789) {
     };
   }
   
+  export default Function;

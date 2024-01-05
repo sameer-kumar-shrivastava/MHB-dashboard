@@ -49,44 +49,52 @@ function CollapsibleRow(props) {
             <TableCell>State</TableCell>
           </TableRow>
         </TableHead>
-   
 
-      <TableBody>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={onToggle}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {row.name}
-          </TableCell>
-          <TableCell>{row.id}</TableCell>
-          <TableCell>{row.email}</TableCell>
-          <TableCell>{row.phone}</TableCell>
-          <TableCell>{row.address.city}</TableCell>
-          <TableCell>{row.address.state}</TableCell>
-          {/* <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell> */}
-        </TableRow>
-      </TableBody>
+
+        <TableBody>
+          <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
+            <TableCell>
+              <IconButton
+                aria-label="expand row"
+                size="small"
+                onClick={onToggle}
+              >
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </TableCell>
+            <TableCell
+              component="th"
+              scope="row">
+              {row.name}
+            </TableCell>
+            <TableCell>{row.id}</TableCell>
+            <TableCell>{row.email}</TableCell>
+            <TableCell>{row.phone}</TableCell>
+            <TableCell>{row.address.city}</TableCell>
+            <TableCell>{row.address.state}</TableCell>
+          </TableRow>
+        </TableBody>
       </Table>
 
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={7}>
+          <Collapse
+            in={open}
+            timeout="auto"
+            unmountOnExit>
+            <Box
+              sx={{ margin: 1 }}>
+              <Typography
+                variant="h6"
+                gutterBottom component="div">
                 Home Hub
               </Typography>
-              <Table size="small" aria-label="purchases">
+              <Table
+                size="small"
+                aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>ID</TableCell>
@@ -104,7 +112,9 @@ function CollapsibleRow(props) {
 
                   {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
+                      <TableCell
+                        component="th"
+                        scope="row">
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
@@ -119,10 +129,14 @@ function CollapsibleRow(props) {
               </Table>
             </Box>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography
+                variant="h6"
+                gutterBottom component="div">
                 Beacon
               </Typography>
-              <Table size="small" aria-label="purchases">
+              <Table
+                size="small"
+                aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>ID</TableCell>
@@ -139,11 +153,14 @@ function CollapsibleRow(props) {
 
                   {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
+                      <TableCell
+                        component="th"
+                        scope="row">
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell
+                        align="right">{historyRow.amount}</TableCell>
                       <TableCell align="right">
                         {Math.round(historyRow.amount * row.price * 100) / 100}
                       </TableCell>
@@ -155,10 +172,14 @@ function CollapsibleRow(props) {
             </Box>
 
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography
+                variant="h6"
+                gutterBottom component="div">
                 Puck
               </Typography>
-              <Table size="small" aria-label="purchases">
+              <Table
+                size="small"
+                aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>ID</TableCell>
@@ -174,7 +195,9 @@ function CollapsibleRow(props) {
 
                   {row.history && Array.isArray(row.history) && row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
+                      <TableCell
+                        component="th"
+                        scope="row">
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
@@ -263,8 +286,6 @@ export const CustomersTable = (props) => {
 
     <>
 
-      {/* //Search bar card */}
-
       <Card sx={{ p: 2 }}>
         <OutlinedInput
           value={searchQuery}
@@ -315,19 +336,6 @@ export const CustomersTable = (props) => {
                 )}
               </IconButton>
             </div>
-            {/* <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox"></TableCell>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Username</TableCell>
-                  <TableCell>First Name</TableCell>
-                  <TableCell>Middle name</TableCell>
-                  <TableCell>Last Name</TableCell>
-                  <TableCell>State</TableCell>
-                </TableRow>
-              </TableHead>
-            </Table> */}
 
             <Table>
 
@@ -341,12 +349,6 @@ export const CustomersTable = (props) => {
                         open={openRows[customer.id] || false}
                         onToggle={() => handleRowToggle(customer.id)}
                       />
-                      {/* <TableCell>{customer.id}</TableCell>
-                      <TableCell>{customer.email}</TableCell>
-                      <TableCell>{customer.phone}</TableCell>
-                      <TableCell>{customer.address.city}</TableCell>
-                      <TableCell>{customer.address.state}</TableCell> */}
-                      {/* Additional table cells for other attributes */}
                     </TableRow>
 
 

@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 const Devicetable = () => {
     const [datafordevicetable, setDatafordevicetable] = useState({});
     const [firstName, setfirstName] = useState('');
-
+    const router = useRouter();
     const fetchData = async () => {
         try {
             const idToken = localStorage.getItem('idToken');
@@ -64,112 +64,146 @@ const Devicetable = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [router]);
 
-    const router = useRouter();
 
     return (
         <div style={{ display: "flex" }}>
-            <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
-                <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
-                {`${firstName}'s Hub` || "N/A"}
+            <Stack
+                sx={{ width: "33.33%", overflowX: "scroll" }}
+                textAlign='center'>
+                <Typography
+                    variant="h6"
+                    sx={{ fontSize: "16px" }}
+                    gutterBottom component="div">
+                    {`${firstName}'s Hub` || "N/A"}
                 </Typography>
                 <Divider />
-                {/* <Typography sx={{ fontSize: "12px" }} >
-                    Home Hub
-                </Typography> */}
                 <Table size="small">
                     <TableRow >
-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
                         <TableCell>{datafordevicetable.hh_id || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Slaves Connected</TableCell>
                         <TableCell>{datafordevicetable.slaves_connected || "N/A"}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
                         <TableCell >{datafordevicetable.hh_fw_ver}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Landline</TableCell>
                         <TableCell >{datafordevicetable.landline}</TableCell>
                     </TableRow>
                 </Table>
             </Stack>
-            <Stack sx={{ width: "33.33%", overflowX: "scroll"}} textAlign='center'>
-                    <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+            <Stack
+                sx={{ width: "33.33%", overflowX: "scroll" }}
+                textAlign='center'>
+                <Typography
+                    variant="h6"
+                    sx={{ fontSize: "16px" }}
+                    gutterBottom component="div">
                     {`${firstName}'s Beacon` || "N/A"}
-                    </Typography>
-                    <Divider />
-                    {/* <Typography sx={{ fontSize: "12px" }} >
-                        Beacon
-                    </Typography> */}
+                </Typography>
+                <Divider />
+                <Table
+                    size="medium"
+                    align="center">
 
-                    <Table size="medium" align="center">
+                    <TableRow >
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                        <TableCell>   {datafordevicetable.b_id}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                        <TableCell> {datafordevicetable.b_batt_lvl}</TableCell>
+                    </TableRow>
 
-                        <TableRow >
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                            <TableCell>   {datafordevicetable.b_id}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                            <TableCell> {datafordevicetable.b_batt_lvl}</TableCell>
-                        </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
+                        <TableCell>{datafordevicetable.b_solar_lvl !== undefined ? datafordevicetable.b_solar_lvl.toString() : "N/A"}</TableCell>
+                    </TableRow>
 
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Solar Level</TableCell>
-                            <TableCell>{datafordevicetable.b_solar_lvl !== undefined ? datafordevicetable.b_solar_lvl.toString() : "N/A"}</TableCell>
-                        </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
+                        <TableCell> {datafordevicetable.b_temp}</TableCell>
+                    </TableRow>
 
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Temprature</TableCell>
-                            <TableCell> {datafordevicetable.b_temp}</TableCell>
-                        </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                        <TableCell> {datafordevicetable.b_rssi}</TableCell>
+                    </TableRow>
 
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                            <TableCell> {datafordevicetable.b_rssi}</TableCell>
-                        </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                        <TableCell> {datafordevicetable.b_fw_ver}</TableCell>
 
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                            <TableCell> {datafordevicetable.b_fw_ver}</TableCell>
-
-                        </TableRow>
-                    </Table>
+                    </TableRow>
+                </Table>
             </Stack>
-            <Stack sx={{ width: "33.33%", overflowX: "scroll" }} textAlign='center'>
-                    <Typography variant="h6" sx={{ fontSize: "16px" }} gutterBottom component="div">
+            <Stack
+                sx={{ width: "33.33%", overflowX: "scroll" }}
+                textAlign='center'>
+                <Typography
+                    variant="h6"
+                    sx={{ fontSize: "16px" }}
+                    gutterBottom component="div">
                     {`${firstName}'s Puck` || "N/A"}
-                    </Typography>
-                    <Divider />
-                    {/* <Typography sx={{ fontSize: "12px" }} >
-                        Puck
-                    </Typography> */}
-                    <Table size="small">
-                        <TableRow >
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
-                            <TableCell>{datafordevicetable.gp_id}</TableCell>
+                </Typography>
+                <Divider />
+                <Table size="small">
+                    <TableRow >
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>ID</TableCell>
+                        <TableCell>{datafordevicetable.gp_id}</TableCell>
 
-                        </TableRow>
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
-                            <TableCell>{datafordevicetable.g_batt_lvl}</TableCell>
-                        </TableRow>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Battery Level</TableCell>
+                        <TableCell>{datafordevicetable.g_batt_lvl}</TableCell>
+                    </TableRow>
 
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
-                            <TableCell>{datafordevicetable.g_rssi}</TableCell>
-                        </TableRow>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>RSSI</TableCell>
+                        <TableCell>{datafordevicetable.g_rssi}</TableCell>
+                    </TableRow>
 
-                        <TableRow>
-                            <TableCell variant="head" sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
-                            <TableCell >
-                                {datafordevicetable.g_fw_ver}
-                            </TableCell>
-                        </TableRow>
-                    </Table>
+                    <TableRow>
+                        <TableCell
+                            variant="head"
+                            sx={{ backgroundColor: '#f3f3f3' }}>Firmware Version</TableCell>
+                        <TableCell >
+                            {datafordevicetable.g_fw_ver}
+                        </TableCell>
+                    </TableRow>
+                </Table>
             </Stack>
         </div>
     );
