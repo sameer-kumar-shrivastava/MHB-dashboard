@@ -20,15 +20,19 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
 import { useAuth } from 'src/hooks/use-auth';
+import { useRouter } from 'next/router';
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const auth = useAuth();
+  const router = useRouter();
 
   const handleLogout = () => {
+    console.log('Logging out...');
     auth.signOut();
+    // router.push('/auth/login');
   };
 
   const content = (

@@ -25,13 +25,13 @@ const handlers = {
       ...state,
       ...(user
         ? {
-            isAuthenticated: true,
-            isLoading: false,
-            user,
-          }
+          isAuthenticated: true,
+          isLoading: false,
+          user,
+        }
         : {
-            isLoading: false,
-          }),
+          isLoading: false,
+        }),
     };
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
@@ -44,6 +44,7 @@ const handlers = {
     };
   },
   [HANDLERS.SIGN_OUT]: (state) => {
+    console.log("signing out working")
     return {
       ...state,
       isAuthenticated: false,
@@ -74,10 +75,8 @@ export const AuthProvider = (props) => {
 
     initialized.current = true;
 
-    let isAuthenticated = false;
-
     try {
-      isAuthenticated = window.sessionStorage.getItem('authenticated') === 'true';
+      const isAuthenticated = window.sessionStorage.getItem('authenticated') === 'true';
       console.log('Is Authenticated:', isAuthenticated);
     } catch (err) {
       console.error(err);
@@ -141,17 +140,17 @@ export const AuthProvider = (props) => {
         email,
         password,
       });
-  
+
       // Assuming your API response structure has a 'success' property
       if (response.data.success) {
         // You may need to adapt this based on the actual structure of your API response
         const user = response.data.data.AuthenticationResult;
-  
+
         dispatch({
           type: HANDLERS.SIGN_IN,
           payload: user,
         });
-  
+
         window.sessionStorage.setItem('authenticated', 'true');
       } else {
         // Handle unsuccessful login
@@ -163,7 +162,7 @@ export const AuthProvider = (props) => {
       throw new Error('An error occurred while processing your request.');
     }
   };
-  
+
 
   const signUp = async (email, name, password) => {
     // Implementation for sign-up can be added here if needed
@@ -171,8 +170,11 @@ export const AuthProvider = (props) => {
   };
 
   const signOut = () => {
+    localStorage.removeItem('idToken');
+    window.sessionStorage.clear();
     dispatch({
       type: HANDLERS.SIGN_OUT,
+      payload: null,
     });
     router.push('/auth/login')
   };
@@ -180,8 +182,8 @@ export const AuthProvider = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
-        user,
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
         skip,
         signIn,
         signUp,
